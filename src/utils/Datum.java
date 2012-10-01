@@ -5,6 +5,7 @@ import java.io.ObjectInputStream.GetField;
 //? Is bovenstaande import noodzakelijk?
 import java.util.Date;
 //import java.util.Locale;
+//test github
 /**
  * Deze klasse behandeld een datum
  * 

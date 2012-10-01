@@ -19,6 +19,7 @@ public class Datum implements Comparable<Datum>
 	private int dag = 0;
 	private int maand = 0;
 	private int jaar = 0;
+	private String test = "";
 	//
 	// Constructor
 	//

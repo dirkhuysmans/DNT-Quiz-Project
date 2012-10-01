@@ -43,9 +43,15 @@ public class Datum implements Comparable<Datum>
 	}
 	public Datum(String datum) throws IllegalArgumentException
 	{
-		setDag(controleDag(Integer.parseInt(datum.substring(0,2))));
-		setMaand(controleMaand(Integer.parseInt(datum.substring(3, 5))));
-		setJaar(Integer.parseInt(datum.substring(6,10)));
+		try{
+			String[] datumSplitsing = datum.split("/");
+			setDag(controleDag(Integer.parseInt((datumSplitsing[0]))));
+			setMaand(controleMaand(Integer.parseInt((datumSplitsing[1]))));
+			setJaar(Integer.parseInt((datumSplitsing[2])));
+		}
+		catch (Exception ex){
+			System.out.println("Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
+		}
 	}
 	//
 	// Getters
@@ -236,7 +242,7 @@ public class Datum implements Comparable<Datum>
 				System.out.println(datum1.kleinerDan(datum3));
 				
 
-			  
+				
 				//Calendar today = Calendar.getInstance();
 			    //System.out.println(today.getTime());
 			     

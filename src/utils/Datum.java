@@ -212,6 +212,19 @@ public class Datum implements Comparable<Datum>
 	{
 		return new Date(this.getDag(),this.getMaand(),this.getJaar()).compareTo(new Date(datum.getDag(),datum.getMaand(),datum.getJaar()));
 	}
+	public int verschilInJaren (Datum d){
+		int jaar = this.jaar - d.jaar;
+		if (this.maand < d.maand || (this.maand == d.maand && this.dag < d.dag)) {
+		    jaar--;
+		}
+		return jaar;
+	}
+	public int verschilInMaanden(Datum d){
+			return (this.getJaar() * 12 + this.getMaand()) - (d.getJaar() * 12 + d.getMaand());
+	}
+
+	
+	
 	public static void main(String[] args) {
 		try{
 			Datum datum1 = new Datum();

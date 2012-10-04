@@ -1,7 +1,5 @@
 package utils;
 
-import java.io.ObjectInputStream.GetField;
-//import java.text.SimpleDateFormat;
 import java.util.Date;
 //import java.util.Locale;
 /**
@@ -10,8 +8,6 @@ import java.util.Date;
  * @author 		Noella
  * @version		september 2012
  *
- *
- *boe
  */
 public class Datum implements Comparable<Datum>
 {
@@ -102,14 +98,14 @@ public class Datum implements Comparable<Datum>
 	 */
 	public void setDag(int dag) 
 	{
-		this.dag = dag;
+		this.dag = controleDag(dag);
 	}
 	/**
 	 * methode om maand een waarde te geven
 	 */
 	public void setMaand(int maand) 
 	{
-		this.maand = maand;
+		this.maand = controleMaand(maand);
 	}
 	/**
 	 * methode om jaar een waarde te geven
@@ -132,7 +128,7 @@ public class Datum implements Comparable<Datum>
 	 * methode om de maand op een geldige waarde te controleren
 	 * <br>waarde moet tussen 1 en 12 liggen
 	 */
-	public int controleMaand(int maand)
+	private int controleMaand(int maand)
 	{
 		if(maand > 0 && maand < 13){
 			return maand;
@@ -142,30 +138,29 @@ public class Datum implements Comparable<Datum>
 		}
 	}
 	/**
-	 * boolean kleinerDan(Datum datum)
-	 * <br>Returns true indien de eerste datum kleiner is dan de tweede datum anders false
-	 */
-	public boolean kleinerDan(Datum datum)
-	{
-		if(compareTo(datum) > 1){
-		//if(new Date(this.getDag(),this.getMaand(),this.getJaar()).compareTo(new Date(datum.getDag(),datum.getMaand(),datum.getJaar())) > 1){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	/**
 	 * methode om de dag te controleren
 	 * <br>waarde moet tussen 1 en 31 liggen
 	 */
-	public int controleDag(int dag)
+	private int controleDag(int dag)
 	{
 		if(dag > 0 && dag < 31){
 			return dag;
 		}
 		else{
 			throw new IllegalArgumentException("dag moet tussen 01 en 31 liggen");
+		}
+	}
+	/**
+	 * boolean kleinerDan(Datum datum)
+	 * <br>Returns true indien de eerste datum kleiner is dan de tweede datum anders false
+	 */
+	public boolean kleinerDan(Datum datum)
+	{
+		if(compareTo(datum) > 1){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 	/**
@@ -217,41 +212,33 @@ public class Datum implements Comparable<Datum>
 	{
 		return new Date(this.getDag(),this.getMaand(),this.getJaar()).compareTo(new Date(datum.getDag(),datum.getMaand(),datum.getJaar()));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-		public static void main(String[] args) {
-			try{
-				Datum datum1 = new Datum();
-				System.out.println("datum1 : " + datum1);
-				Datum datum2 = new Datum(datum1);
-				System.out.println("datum2 : " + datum2);
-				Datum datum3 = new Datum(8,5,2012);
-				System.out.println(("datum3 : ") + datum3);
-				Datum datum4 = new Datum("01/05/2012");
-				System.out.println(("datum4 :") + datum4);
-				System.out.println("Amerikaans formaat " + datum2.getDatumInAmerikaansFormaat(datum2));
-				System.out.println("Europees formaat " + datum2.getDatumInEuropeesFormaat(datum2));
-				Datum datum5 = new Datum();
-				datum5.setDatum(8, 04, 2012);
-				System.out.println(datum5); 
-				System.out.println(datum1.compareTo(datum3));
-				System.out.println(datum1.kleinerDan(datum3));
-				
+	public static void main(String[] args) {
+		try{
+			Datum datum1 = new Datum();
+			System.out.println("datum1 : " + datum1);
+			Datum datum2 = new Datum(datum1);
+			System.out.println("datum2 : " + datum2);
+			Datum datum3 = new Datum(8,5,2012);
+			System.out.println(("datum3 : ") + datum3);
+			Datum datum4 = new Datum("01/05/2012");
+			System.out.println(("datum4 :") + datum4);
+			System.out.println("Amerikaans formaat " + datum2.getDatumInAmerikaansFormaat(datum2));
+			System.out.println("Europees formaat " + datum2.getDatumInEuropeesFormaat(datum2));
+			Datum datum5 = new Datum();
+			datum5.setDatum(8, 04, 2012);
+			System.out.println(datum5); 
+			System.out.println(datum1.compareTo(datum3));
+			System.out.println(datum1.kleinerDan(datum3));
+			
 
-				
-				//Calendar today = Calendar.getInstance();
-			    //System.out.println(today.getTime());
-			     
-			    //Locale dutchLoc = new Locale("nl");
-			    //SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy", dutchLoc);
-			    //System.out.println(sdf.format(datum1));
-			}
-			catch (IllegalArgumentException ex){System.out.println(ex.getMessage());}
+			
+			//Calendar today = Calendar.getInstance();
+		    //System.out.println(today.getTime());
+		     
+		    //Locale dutchLoc = new Locale("nl");
+		    //SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy", dutchLoc);
+		    //System.out.println(sdf.format(datum1));
+		}
+		catch (IllegalArgumentException ex){System.out.println(ex.getMessage());}
 	}
 }

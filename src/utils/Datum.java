@@ -1,5 +1,9 @@
 package utils;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 //import java.util.Locale;
 /**
@@ -28,18 +32,27 @@ public class Datum implements Comparable<Datum>
 		jaar = today.getYear()+1900;
 	}
 	public Datum(Datum datum)
-	{	
-		this.dag = datum.getDag();
-		this.maand = datum.getMaand();
-		this.jaar = datum.getJaar();
+	{	try{
+			this.dag = datum.getDag();
+			this.maand = datum.getMaand();
+			this.jaar = datum.getJaar();
+		}
+		catch(Exception ex){
+			throw new RuntimeException("object datum kan niet null zijn");
+		}
 	}
 	public Datum(int dag, int maand, int jaar) throws IllegalArgumentException
 	{
-		setDag(controleDag(dag));
-		setMaand(controleMaand(maand));
-		setJaar(jaar);
+		try{
+			setDag(controleDag(dag));
+			setMaand(controleMaand(maand));
+			setJaar(jaar);
+		}
+		catch (IllegalArgumentException argEx){
+			throw new IllegalArgumentException("verkeerde input");
+		}
 	}
-	public Datum(String datum) throws IllegalArgumentException
+	public Datum(String datum) 
 	{
 		try{
 			String[] datumSplitsing = datum.split("/");
@@ -48,7 +61,7 @@ public class Datum implements Comparable<Datum>
 			setJaar(Integer.parseInt((datumSplitsing[2])));
 		}
 		catch (Exception ex){
-			System.out.println("Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
+			throw new RuntimeException("Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
 		}
 	}
 	//
@@ -78,17 +91,23 @@ public class Datum implements Comparable<Datum>
 	/**
 	 * 
 	 * @return de datum in Amerikaans formaat jaar/maand/dag
+	 * @throws RequiredField 
 	 */
-	public String getDatumInAmerikaansFormaat(Datum datum)
+	public String getDatumInAmerikaansFormaat(Datum datum) 
 	{
-		return String.format("%d/%d/%d",datum.getJaar(),datum.getMaand(),dag);
+		if(datum == null) {
+			throw new RuntimeException("datum kan niet null zijn");
+		}
+		else {
+			return String.format("%04d/%02d/%02d",datum.getJaar(),datum.getMaand(),dag);
+		}
 	}
 	/**
 	 * @return de datum in Europees formaat dag/maand/jaar
 	 */
 	public String getDatumInEuropeesFormaat(Datum datum)
 	{
-		return String.format("%d/%d/%d",datum.getDag(),datum.getMaand(),datum.getJaar());		
+		return String.format("%02d/%02d/%04d",datum.getDag(),datum.getMaand(),datum.getJaar());		
 	}
 	//
 	// Setters
@@ -143,7 +162,7 @@ public class Datum implements Comparable<Datum>
 	 */
 	private int controleDag(int dag)
 	{
-		if(dag > 0 && dag < 31){
+		if(dag > 0 && dag < 32){
 			return dag;
 		}
 		else{
@@ -157,10 +176,10 @@ public class Datum implements Comparable<Datum>
 	public boolean kleinerDan(Datum datum)
 	{
 		if(compareTo(datum) > 1){
-			return true;
+			return false;
 		}
 		else{
-			return false;
+			return true;
 		}
 	}
 	/**
@@ -169,10 +188,10 @@ public class Datum implements Comparable<Datum>
 	@Override
 	public String toString()
 	{
-		//Locale dutchLoc = new Locale("nl");
-	    //SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy", dutchLoc);
-	    //System.out.println(sdf.format(datum));
-		return "Dag " + dag + " Maand " + maand + " Jaar " + jaar;
+		Calendar cal = Calendar.getInstance();
+		cal.set(jaar, maand, dag);
+		DateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+		return format.format(cal.getTime());
 	}
 	@Override
 	public int hashCode() 
@@ -212,6 +231,7 @@ public class Datum implements Comparable<Datum>
 	{
 		return new Date(this.getDag(),this.getMaand(),this.getJaar()).compareTo(new Date(datum.getDag(),datum.getMaand(),datum.getJaar()));
 	}
+	
 	public int verschilInJaren (Datum d){
 		int jaar = this.jaar - d.jaar;
 		if (this.maand < d.maand || (this.maand == d.maand && this.dag < d.dag)) {
@@ -222,7 +242,8 @@ public class Datum implements Comparable<Datum>
 	public int verschilInMaanden(Datum d){
 			return (this.getJaar() * 12 + this.getMaand()) - (d.getJaar() * 12 + d.getMaand());
 	}
-
+	
+	
 	
 	
 	public static void main(String[] args) {
@@ -235,6 +256,7 @@ public class Datum implements Comparable<Datum>
 			System.out.println(("datum3 : ") + datum3);
 			Datum datum4 = new Datum("01/05/2012");
 			System.out.println(("datum4 :") + datum4);
+			
 			System.out.println("Amerikaans formaat " + datum2.getDatumInAmerikaansFormaat(datum2));
 			System.out.println("Europees formaat " + datum2.getDatumInEuropeesFormaat(datum2));
 			Datum datum5 = new Datum();
@@ -242,16 +264,9 @@ public class Datum implements Comparable<Datum>
 			System.out.println(datum5); 
 			System.out.println(datum1.compareTo(datum3));
 			System.out.println(datum1.kleinerDan(datum3));
-			
-
-			
-			//Calendar today = Calendar.getInstance();
-		    //System.out.println(today.getTime());
-		     
-		    //Locale dutchLoc = new Locale("nl");
-		    //SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy", dutchLoc);
-		    //System.out.println(sdf.format(datum1));
+			System.out.println(datum1.setDatum(10, 10, 2012));
 		}
 		catch (IllegalArgumentException ex){System.out.println(ex.getMessage());}
+		catch (RuntimeException ex){System.out.println(ex.getMessage());}
 	}
 }

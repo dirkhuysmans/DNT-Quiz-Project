@@ -13,7 +13,7 @@ import java.util.TimeZone;
 
 public class GregorianDatum {
 
-	static GregorianCalendar kalender = new GregorianCalendar();
+	static GregorianCalendar kalender;
 	int dag, maand, jaar;
 
 	/**
@@ -23,6 +23,7 @@ public class GregorianDatum {
 		dag = kalender.get(GregorianCalendar.DAY_OF_MONTH);
 		maand = kalender.get(GregorianCalendar.MONTH);
 		jaar = kalender.get(GregorianCalendar.YEAR);
+		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
 	/**
@@ -37,12 +38,14 @@ public class GregorianDatum {
 		dag = datum.getDag();
 		maand = datum.getMaand();
 		jaar = datum.getJaar();
+		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
 	public GregorianDatum(int dag, int maand, int jaar) {
 		this.dag = dag;
 		this.maand = maand;
 		this.jaar = jaar;
+		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
 	/**
@@ -60,6 +63,7 @@ public class GregorianDatum {
 			throw new RuntimeException(
 					"Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
 		}
+		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
 	@Override
@@ -84,7 +88,6 @@ public class GregorianDatum {
 			}
 		}
 		throw new IllegalArgumentException("maand moet tussen 01 en 12 liggen");
-
 	}
 
 	/**
@@ -115,21 +118,17 @@ public class GregorianDatum {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		/*final int prime = 31;
 		int result = 1;
 		result = prime * result + dag;
 		result = prime * result + jaar;
-		result = prime * result + maand;
-		return result;
+		result = prime * result + maand;*/
+		return kalender.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this.hashCode() == obj.hashCode()) {
-			return true;
-		} else {
-			return false;
-		}
+		return kalender.equals(obj);
 	}
 
 	/**
@@ -148,10 +147,6 @@ public class GregorianDatum {
 				return i;
 			}else return i;
 		}else return i;
-		
-		/*return (this.getDag(), this.getMaand(), this.getJaar())
-				.compareTo(new Date(datum.getDag(), datum.getMaand(), datum
-						.getJaar()));*/
 	}
 
 	public int verschilInJaren(GregorianDatum d) {
@@ -162,10 +157,29 @@ public class GregorianDatum {
 		return jaar;
 	}
 
-	public int verschilInMaanden(Datum d) {
+	public int verschilInMaanden(GregorianDatum d) {
 		return (this.getJaar() * 12 + this.getMaand())
 				- (d.getJaar() * 12 + d.getMaand());
 	}
+	
+	public int verschilInDagen(GregorianDatum d){
+		try {
+			Object a = d.clone();
+			int verschil;
+			for(int i=0; ((GregorianDatum) a).kleinerDan(this); i++ ){
+				verschil = i;
+				
+			}
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GregorianCalendar kalender2 = new GregorianCalendar(d.getDag(), d.getMaand(), d.getJaar());
+		/*return (kalender.computeTime() - kalender2.computeTime())/
+				(24*60*60*1000);*/
+		
+		return 0;
+		}
 
 	public int getDag() {
 		return dag;
@@ -190,5 +204,13 @@ public class GregorianDatum {
 	public void setJaar(int jaar) {
 		this.jaar = jaar;
 	}
-
+	
+	public boolean setDatum(int dag, int maand, int jaar)
+			throws IllegalArgumentException {
+		setDag(controleDag(dag));
+		setMaand(controleMaand(maand));
+		setJaar(jaar);
+		kalender = new GregorianCalendar (dag, maand, jaar);
+		return true;
+	}
 }

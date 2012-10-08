@@ -11,6 +11,7 @@ import java.util.Date;
  * Deze klasse behandeld een datum
  * 
  * @author Noella
+ * @
  * @version september 2012
  * 
  */
@@ -238,7 +239,7 @@ public class Datum implements Comparable<Datum> {
 						.getJaar()));
 	}
 
-	public int verschilInJaren(Datum d) {
+	public int verschilInJaren(Datum d) throws Exception {
 		int jaar = this.jaar - d.jaar;
 		if (this.maand < d.maand || (this.maand == d.maand && this.dag < d.dag)) {
 			jaar--;
@@ -246,7 +247,7 @@ public class Datum implements Comparable<Datum> {
 		return jaar;
 	}
 
-	public int verschilInMaanden(Datum d) {
+	public int verschilInMaanden(Datum d) throws Exception {
 		return (this.getJaar() * 12 + this.getMaand())
 				- (d.getJaar() * 12 + d.getMaand());
 	}

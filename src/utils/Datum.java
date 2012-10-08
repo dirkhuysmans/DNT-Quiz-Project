@@ -252,7 +252,7 @@ public class Datum implements Comparable<Datum> {
 				- (d.getJaar() * 12 + d.getMaand());
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		try {
 			Datum datum1 = new Datum();
 			System.out.println("datum1 : " + datum1);
@@ -260,9 +260,10 @@ public class Datum implements Comparable<Datum> {
 			System.out.println("datum2 : " + datum2);
 			Datum datum3 = new Datum(8, 5, 2012);
 			System.out.println(("datum3 : ") + datum3);
+			System.out.print("Verschil in jaren: " + datum1.verschilInJaren(datum3));
+			System.out.println("Verschil in maanden: " + datum1.verschilInMaanden(datum3));
 			Datum datum4 = new Datum("01/05/2012");
 			System.out.println(("datum4 :") + datum4);
-
 			System.out.println("Amerikaans formaat "
 					+ datum2.getDatumInAmerikaansFormaat(datum2));
 			System.out.println("Europees formaat "

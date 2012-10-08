@@ -29,8 +29,9 @@ public class Datum implements Comparable<Datum> {
 	public Datum() {
 		Date today = new Date();
 		dag = today.getDate();
-		maand = today.getMonth() + 1; // + 1 want maand ligt in java tussen 0 en
+		//maand = today.getMonth() + 1; // + 1 want maand ligt in java tussen 0 en
 										// 11
+		maand = today.getMonth();
 		jaar = today.getYear() + 1900;
 	}
 
@@ -154,7 +155,7 @@ public class Datum implements Comparable<Datum> {
 	private int controleMaand(int maand) {
 		if (maand > 0 && maand < 13) {
 			String m = String.valueOf(maand);
-			if (m.length() == 2) {
+			if ((m.length() == 2)|| (m.length()==1)) {
 				return maand;
 			}
 		}
@@ -258,7 +259,7 @@ public class Datum implements Comparable<Datum> {
 			System.out.println("datum1 : " + datum1);
 			Datum datum2 = new Datum(datum1);
 			System.out.println("datum2 : " + datum2);
-			Datum datum3 = new Datum(8, 5, 2012);
+			Datum datum3 = new Datum(8, 05, 2012);
 			System.out.println(("datum3 : ") + datum3);
 			System.out.print("Verschil in jaren: " + datum1.verschilInJaren(datum3));
 			System.out.println("Verschil in maanden: " + datum1.verschilInMaanden(datum3));

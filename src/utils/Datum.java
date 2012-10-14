@@ -316,13 +316,13 @@ public class Datum implements Comparable<Datum> {
 		int dag2 = 0;
 		
 		try{
-			if(this.datumGroterDan(datum)){
-				dag2=this.berekenDagDecimaal();
-				dag1 = datum.berekenDagDecimaal();
+			if(this.kleinerDan(datum)){
+				dag1=this.berekenDagDecimaal();
+				dag2 = datum.berekenDagDecimaal();
 			}
 			else{
-				dag1= this.berekenDagDecimaal();
-				dag2 = datum.berekenDagDecimaal();
+				dag2= this.berekenDagDecimaal();
+				dag1 = datum.berekenDagDecimaal();
 			}
 			
 			return dag2-dag1;

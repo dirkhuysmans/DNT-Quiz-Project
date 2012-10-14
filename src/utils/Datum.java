@@ -234,23 +234,211 @@ public class Datum implements Comparable<Datum> {
 	 * Returns een negatief getal indien de eerste datum kleiner is. <br>
 	 * Returns een positief getal indien de eerste datum groter is.
 	 */
-	public int compareTo(Datum datum) {
+	/*public int compareTo(Datum datum) {
 		return new Date(this.getDag(), this.getMaand(), this.getJaar())
 				.compareTo(new Date(datum.getDag(), datum.getMaand(), datum
 						.getJaar()));
 	}
-
-	public int verschilInJaren(Datum d) throws Exception {
-		int jaar = this.jaar - d.jaar;
-		if (this.maand < d.maand || (this.maand == d.maand && this.dag < d.dag)) {
-			jaar--;
-		}
-		return jaar;
+	*/
+	/**
+	 * 
+	 * @Bovenstaande vergelijking van 2 datums werkt blijkbaar niet zoals het hoort
+	 * @Aangepast op onderstaande manier
+	 * 
+	 * vergelijkt twee datums. <br>
+	 * Returns 0 indien datums gelijk zijn. <br>
+	 * Returns een negatief getal indien de eerste datum kleiner is. <br>
+	 * Returns een positief getal indien de eerste datum groter is.
+	 */
+	public int compareTo(Datum datum){
+	return (this.jaar*10000+this.maand*100+this.dag) - (datum.jaar*10000+datum.maand*100+datum.dag);
+			
+	}
+	/**
+	 * Berekent de dagnummer in het jaar
+	 * @returns de dag van het jaar
+	 * @throws Exception
+	 */
+	public int berekenDagVanJaar() throws Exception{
+		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		int dagen = 0;
+		
+			try {
+				dagen += this.dag;
+				if(this.jaar%4==0){
+					dagenInMaand[1] = 29;
+				}
+				else{
+					dagenInMaand[1]=28;
+				}
+				for (int m=0; m<this.maand-1;m++){
+					dagen += dagenInMaand[m];
+				}
+				return dagen;
+			} 
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new Exception("De bewerking berekenDagVanJaar kan niet uitgevoerd worden. " + e.getMessage());
+			}
 	}
 
-	public int verschilInMaanden(Datum d) throws Exception {
-		return (this.getJaar() * 12 + this.getMaand())
-				- (d.getJaar() * 12 + d.getMaand());
+	
+	/**
+	 * berekenDagDecimaal rekent de datum om naar decimaal  
+	 * aantal jaren * 365 dagen en + het aantal schrikkeljaren * 1 dag
+	 * @throws Exception
+	 */
+
+	public int berekenDagDecimaal() throws Exception {
+		int dag=0;
+		int jaar=0;
+		
+			try {
+				if((this.jaar-1)%4==0){
+					jaar = (this.jaar-1)/4;
+				}
+				else{
+					jaar = (this.jaar-1) - ((this.jaar-1)%4);
+				}
+					
+				dag = ((this.jaar-1) * 365) + jaar/4;
+				
+				dag += this.berekenDagVanJaar();
+				
+				return dag;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new Exception("De bewerking berekenDagDecimaal kan niet uitgevoerd worden. " + e.getMessage());
+			}
+	}
+	public int verschilIndagen(Datum datum) throws Exception{
+		int dag1 = 0;
+		int dag2 = 0;
+		
+		try{
+			if(this.datumGroterDan(datum)){
+				dag2=this.berekenDagDecimaal();
+				dag1 = datum.berekenDagDecimaal();
+			}
+			else{
+				dag1= this.berekenDagDecimaal();
+				dag2 = datum.berekenDagDecimaal();
+			}
+			
+			return dag2-dag1;
+		}
+		catch (Exception e){
+			throw new Exception("Bij het berekenen van verschil in dagen is volgende fout opgetreden" + e.getMessage());
+		}
+	}
+	
+	public int verschilInJaren(Datum datum) throws Exception{
+		
+		try {
+			int jaren=0;
+			int mnd1 = this.maand*100 + this.dag;
+			int mnd2 = datum.maand*100 + datum.dag;
+		
+			if (datum.kleinerDan(this)){
+			//if (this.compareTo(datum)){
+				jaren = this.jaar - datum.jaar;
+				if (((this.jaar!=datum.jaar) && (mnd1>mnd2))){
+					jaren--;
+				}
+			}
+			else{
+				jaren = datum.jaar - this.jaar;
+				if ((this.jaar!= datum.jaar) && (mnd2<mnd1)){
+					jaren--;
+				}
+			}	
+			return jaren;
+		}	
+		 catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("De bewerking verschilInJaren kan niet uitgevoerd worden. " + e.getMessage());
+		}
+	}
+	
+	public int verschilInMaanden(Datum datum) throws Exception{
+		
+		try {
+			int maanden = 0;
+			
+			maanden = this.verschilInJaren(datum) * 12;
+			return maanden;	
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("De bewerking verschilInMaanden kan niet uitgevoerd worden. " + e.getMessage());
+		}
+	}
+	
+	public void veranderDatum(int aantalDagen) throws Exception{
+		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		try {
+			for(int d= aantalDagen;d>0;){
+				if((this.dag+d) >  dagenInMaand[this.maand-1]){
+					if(this.jaar%4==0 && this.maand-1 ==1){
+						d -= 29 - this.dag;	
+					}
+					else{
+						d -= dagenInMaand[this.maand-1] - this.dag;
+					}
+					
+					this.dag=1;
+					this.maand++;
+						if(this.maand>12){
+							this.jaar++;
+							this.maand=1;
+						}
+				}
+				else{
+					this.dag+=d;
+					d=0;
+					
+				}
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("De bewerking veranderDatum kan niet uitgevoerd worden. " +e.getMessage());
+		}
+		
+	}
+	
+	public Datum veranderDatum1(int aantalDagen) throws Exception{
+		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		try {
+			Datum nDatum = new Datum(this.dag, this.maand, this.jaar);
+			for(int d= aantalDagen;d>0;){
+				if((nDatum.dag+d) >  dagenInMaand[nDatum.maand-1]){
+					if(nDatum.jaar%4==0 && nDatum.maand-1 ==1){
+						d -= 29 - nDatum.dag;	
+					}
+					else{
+						d -= dagenInMaand[nDatum.maand-1] - nDatum.dag;
+					}
+					
+					nDatum.dag=1;
+					nDatum.maand++;
+						if(nDatum.maand>12){
+							nDatum.jaar++;
+							nDatum.maand=1;
+						}
+				}
+				else{
+					nDatum.dag+=d;
+					d=0;
+					
+				}
+				
+			}
+			return nDatum;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("De bewerking VeranderDatum1 kan geen waarde teruggeven. " + e.getMessage());
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

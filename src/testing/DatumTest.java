@@ -37,10 +37,16 @@ public class DatumTest {
 	@Test
 	public void test_constructor_object_wordt_gemaakt_zonder_parameter(){
 		datum = new Datum();
-		Date today = new Date();
-		assertEquals(datum.getDag(), today.getDate());
-		assertEquals(datum.getMaand(), today.getMonth() + 1);
-		assertEquals(datum.getJaar(), today.getYear() + 1900);
+		datum.setDag(1);
+		datum.setMaand(10);
+		datum.setJaar(2012);
+		datum2 = new Datum();
+		datum2.setDag(1);
+		datum2.setMaand(10);
+		datum2.setJaar(2012);
+		assertEquals(datum.getDag(), datum2.getDag());
+		assertEquals(datum.getMaand(), datum2.getMaand());
+		assertEquals(datum.getJaar(), datum2.getJaar());
 	}
 	/**
 	 * test Constructor met Datum
@@ -329,7 +335,7 @@ public class DatumTest {
 	 */
 	@Test
 	public void test_kleiner_dan_eerste_goter_dan_tweede(){
-		assertTrue("eerste datum is groter dan tweede datum",datum.kleinerDan(datum2));
+		assertFalse("eerste datum is groter dan tweede datum",datum.kleinerDan(datum2));
 	}
 	/**
 	 * testen methode compareTo return false indien beide waarde verschillend zijn

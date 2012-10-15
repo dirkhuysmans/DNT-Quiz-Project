@@ -1,9 +1,11 @@
-package utils;
+package utils.gregorian;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import utils.MaandEnum;
 
 /**
  * 
@@ -11,7 +13,7 @@ import java.util.TimeZone;
  * 
  */
 
-public class GregorianDatum {
+public class Datum {
 
 	static GregorianCalendar kalender;
 	int dag, maand, jaar;
@@ -19,10 +21,11 @@ public class GregorianDatum {
 	/**
 	 * default constructor zonder parameters
 	 */
-	public GregorianDatum() {
+	public Datum() {
 		dag = kalender.get(GregorianCalendar.DAY_OF_MONTH);
 		maand = kalender.get(GregorianCalendar.MONTH);
 		jaar = kalender.get(GregorianCalendar.YEAR);
+		//getters schrijven
 		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
@@ -34,14 +37,14 @@ public class GregorianDatum {
 	 *            met een GregorianDatum object als input...is mijn
 	 *            interpretatie juist?
 	 */
-	public GregorianDatum(GregorianDatum datum) {
+	public Datum(Datum datum) {
 		dag = datum.getDag();
 		maand = datum.getMaand();
 		jaar = datum.getJaar();
 		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
-	public GregorianDatum(int dag, int maand, int jaar) {
+	public Datum(int dag, int maand, int jaar) {
 		this.dag = dag;
 		this.maand = maand;
 		this.jaar = jaar;
@@ -53,7 +56,7 @@ public class GregorianDatum {
 	 * 
 	 * @param datum
 	 */
-	public GregorianDatum(String datum) {
+	public Datum(String datum) {
 		try {
 			String[] datumSplitsing = datum.split("/");
 			setDag(controleDag(Integer.parseInt((datumSplitsing[0]))));
@@ -73,7 +76,7 @@ public class GregorianDatum {
 
 	public static void main(String[] args) {
 		try {
-			GregorianDatum datum1 = new GregorianDatum();
+			Datum datum1 = new Datum();
 			System.out.println("datum1 : " + datum1);
 		} catch (IllegalArgumentException ex) {
 			System.out.println(ex.getMessage());
@@ -108,7 +111,7 @@ public class GregorianDatum {
 	 * Returns true indien de eerste datum kleiner is dan de tweede datum anders
 	 * false
 	 */
-	public boolean kleinerDan(GregorianDatum datum) {
+	public boolean kleinerDan(Datum datum) {
 		if (this.compareTo(datum) >= 0) {
 			return false;
 		} else {
@@ -137,7 +140,7 @@ public class GregorianDatum {
 	 * Returns een negatief getal indien de eerste datum kleiner is. <br>
 	 * Returns een positief getal indien de eerste datum groter is.
 	 */
-	public int compareTo(GregorianDatum datum) {
+	public int compareTo(Datum datum) {
 		int i;
 		i = this.getJaar() - datum.getJaar();
 		if (i==0){
@@ -149,7 +152,7 @@ public class GregorianDatum {
 		}else return i;
 	}
 
-	public int verschilInJaren(GregorianDatum d) {
+	public int verschilInJaren(Datum d) {
 		int jaar = this.jaar - d.jaar;
 		if (this.maand < d.maand || (this.maand == d.maand && this.dag < d.dag)) {
 			jaar--;
@@ -157,16 +160,16 @@ public class GregorianDatum {
 		return jaar;
 	}
 
-	public int verschilInMaanden(GregorianDatum d) {
+	public int verschilInMaanden(Datum d) {
 		return (this.getJaar() * 12 + this.getMaand())
 				- (d.getJaar() * 12 + d.getMaand());
 	}
 	
-	public int verschilInDagen(GregorianDatum d){
+	public int verschilInDagen(Datum d){
 		try {
 			Object a = d.clone();
 			int verschil;
-			for(int i=0; ((GregorianDatum) a).kleinerDan(this); i++ ){
+			for(int i=0; ((Datum) a).kleinerDan(this); i++ ){
 				verschil = i;
 				
 			}

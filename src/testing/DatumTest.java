@@ -346,4 +346,20 @@ public class DatumTest {
 		assertFalse("beide waarden zijn verschillend",datum.equals(datum2));
 		assertFalse("beide waarden zijn verschillend",datum2.equals(datum));
 	}
+	/**
+	 * testen methode verschil in jaren
+	 * @throws Exception 
+	 */
+	@Test
+	public void test_verschilInJaren() throws Exception{
+		Datum dat1 = new Datum(1,1,2012);
+		Datum dat2 = new Datum(10,1,2011);
+		try {
+			assertEquals(0,dat1.verschilInJaren(dat2));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Fout opgetreden");
+		}
+	}
+	
 }

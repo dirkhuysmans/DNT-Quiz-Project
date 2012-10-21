@@ -196,7 +196,7 @@ public class Datum implements Comparable<Datum> {
 	 */
 	@Override
 	public String toString() {
-		return dag + " " + MaandEnum.values()[maand] + " " + jaar;
+		return dag + " " + MaandEnum.values()[maand-1] + " " + jaar;
 		/*
 		 * Calendar cal = Calendar.getInstance(); cal.set(jaar, maand, dag);
 		 * DateFormat format = new SimpleDateFormat("dd MMMM yyyy"); return
@@ -287,7 +287,7 @@ public class Datum implements Comparable<Datum> {
 	
 	/**
 	 * berekenDagDecimaal rekent de datum om naar decimaal  
-	 * aantal jaren * 365 dagen en + het aantal schrikkeljaren * 1 dag
+	 * aantal volledige jaren * 365 dagen en + het aantal schrikkeljaren + kalenderdag van huidig jaar
 	 * @throws Exception
 	 */
 
@@ -296,14 +296,8 @@ public class Datum implements Comparable<Datum> {
 		int jaar=0;
 		
 			try {
-				if((this.jaar-1)%4==0){
-					jaar = (this.jaar-1)/4;
-				}
-				else{
-					jaar = (this.jaar-1) - ((this.jaar-1)%4);
-				}
-					
-				dag = ((this.jaar-1) * 365) + jaar/4;
+					jaar = ((this.jaar-1) - ((this.jaar-1)%4))/4;
+					dag = ((this.jaar-1) * 365) + jaar;
 				
 				dag += this.berekenDagVanJaar();
 				
@@ -344,13 +338,18 @@ public class Datum implements Comparable<Datum> {
 			if (datum.kleinerDan(this)){
 			//if (this.compareTo(datum)){
 				jaren = this.jaar - datum.jaar;
-				if (((this.jaar!=datum.jaar) && (mnd1>mnd2))){
+				if ((this.jaar!=datum.jaar) && (mnd1<mnd2)){
 					jaren--;
 				}
+				
+				
 			}
 			else{
 				jaren = datum.jaar - this.jaar;
-				if ((this.jaar!= datum.jaar) && (mnd2<mnd1)){
+				if ((this.jaar!= datum.jaar) && (mnd1>mnd2)){
+					jaren--;
+				}
+				if((this.jaar!=datum.jaar)&&(this.maand==datum.maand)&&(datum.dag<this.dag)){
 					jaren--;
 				}
 			}	
@@ -368,6 +367,19 @@ public class Datum implements Comparable<Datum> {
 			int maanden = 0;
 			
 			maanden = this.verschilInJaren(datum) * 12;
+			if(this.kleinerDan(datum)){
+				maanden += datum.maand - this.maand;
+					if((this.maand == datum.maand) && (this.dag>datum.dag)){
+						maanden--;
+					}
+					
+			}
+			else{
+				maanden+= this.maand-datum.maand;
+				if((this.maand==datum.maand) && (this.dag < datum.dag)){
+					maanden--;
+				}
+			}
 			return maanden;	
 		} 
 		catch (Exception e) {
@@ -451,8 +463,6 @@ public class Datum implements Comparable<Datum> {
 			System.out.println("datum2 : " + datum2);
 			Datum datum3 = new Datum(8, 05, 2012);
 			System.out.println(("datum3 : ") + datum3);
-			System.out.print("Verschil in jaren: " + datum1.verschilInJaren(datum3));
-			System.out.println("Verschil in maanden: " + datum1.verschilInMaanden(datum3));
 			Datum datum4 = new Datum("01/05/2012");
 			System.out.println(("datum4 :") + datum4);
 			System.out.println("Amerikaans formaat "
@@ -470,5 +480,14 @@ public class Datum implements Comparable<Datum> {
 		} catch (RuntimeException ex) {
 			System.out.println(ex.getMessage());
 		}
+		Datum datum11 = new Datum(1,1,2013);
+		Datum datum10 = new Datum(1,1,2012);
+		System.out.println("Datum 10: " + datum10 + ", datum 11: " + datum11);
+		System.out.println("Verschil in jaren: " + datum10.verschilInJaren(datum11));
+		System.out.println("Verschil in maanden: " + datum10.verschilInMaanden(datum11));
+		System.out.println("Verschil in dagen: " + datum10.verschilIndagen(datum11));
+		System.out.println("Datum 10 dag decimaal: " + datum10.berekenDagDecimaal());
+		System.out.println("Datum 10 dag van jaar :" + datum10.berekenDagVanJaar());
+
 	}
 }

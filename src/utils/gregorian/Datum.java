@@ -19,35 +19,38 @@ public class Datum {
 	int dag, maand, jaar;
 
 	/**
+	 * 
+	 * @return
+	 * getters voor dag, maand, jaar
+	 * 
+	 */
+	public int getDag() {
+		return kalender.get(GregorianCalendar.DAY_OF_MONTH);
+	}
+
+	public int getMaand() {
+		return kalender.get(GregorianCalendar.MONTH);
+	}
+
+	public int getJaar() {
+		return kalender.get(GregorianCalendar.YEAR);
+	}
+	
+	/**
 	 * default constructor zonder parameters
 	 */
 	public Datum() {
-		dag = kalender.get(GregorianCalendar.DAY_OF_MONTH);
-		maand = kalender.get(GregorianCalendar.MONTH);
-		jaar = kalender.get(GregorianCalendar.YEAR);
-		//getters schrijven
-		kalender = new GregorianCalendar (dag, maand, jaar);
+		kalender = new GregorianCalendar(getDag(), getMaand(), getJaar());
 	}
 
 	/**
 	 * @param datum
-	 * 
-	 *            ik vind het wat vreemd maar deze klasse dient toch een andere
-	 *            naam te krijgen dan de klasse Datum? daarom deze constructor
-	 *            met een GregorianDatum object als input...is mijn
-	 *            interpretatie juist?
 	 */
 	public Datum(Datum datum) {
-		dag = datum.getDag();
-		maand = datum.getMaand();
-		jaar = datum.getJaar();
-		kalender = new GregorianCalendar (dag, maand, jaar);
+		kalender = new GregorianCalendar (datum.getDag(), datum.getMaand(), datum.getJaar());
 	}
 
 	public Datum(int dag, int maand, int jaar) {
-		this.dag = dag;
-		this.maand = maand;
-		this.jaar = jaar;
 		kalender = new GregorianCalendar (dag, maand, jaar);
 	}
 
@@ -57,16 +60,17 @@ public class Datum {
 	 * @param datum
 	 */
 	public Datum(String datum) {
+		int d,m,j;
 		try {
 			String[] datumSplitsing = datum.split("/");
-			setDag(controleDag(Integer.parseInt((datumSplitsing[0]))));
-			setMaand(controleMaand(Integer.parseInt((datumSplitsing[1]))));
-			setJaar(Integer.parseInt((datumSplitsing[2])));
+			d = (controleDag(Integer.parseInt((datumSplitsing[0]))));
+			m = (controleMaand(Integer.parseInt((datumSplitsing[1]))));
+			j = (Integer.parseInt((datumSplitsing[2])));
 		} catch (Exception ex) {
 			throw new RuntimeException(
 					"Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
 		}
-		kalender = new GregorianCalendar (dag, maand, jaar);
+		kalender = new GregorianCalendar (d, m, j);
 	}
 
 	@Override
@@ -183,36 +187,11 @@ public class Datum {
 		
 		return 0;
 		}
-
-	public int getDag() {
-		return dag;
-	}
-
-	public void setDag(int dag) {
-		this.dag = dag;
-	}
-
-	public int getMaand() {
-		return maand;
-	}
-
-	public void setMaand(int maand) {
-		this.maand = maand;
-	}
-
-	public int getJaar() {
-		return jaar;
-	}
-
-	public void setJaar(int jaar) {
-		this.jaar = jaar;
-	}
 	
 	public boolean setDatum(int dag, int maand, int jaar)
 			throws IllegalArgumentException {
-		setDag(controleDag(dag));
-		setMaand(controleMaand(maand));
-		setJaar(jaar);
+		controleDag(dag);
+		controleMaand(maand);
 		kalender = new GregorianCalendar (dag, maand, jaar);
 		return true;
 	}

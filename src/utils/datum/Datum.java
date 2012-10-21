@@ -394,10 +394,10 @@ public class Datum implements Comparable<Datum> {
 			for(int d= aantalDagen;d>0;){
 				if((this.dag+d) >  dagenInMaand[this.maand-1]){
 					if(this.jaar%4==0 && this.maand-1 ==1){
-						d -= 29 - this.dag;	
+						d -= 29 - this.dag + 1;	
 					}
 					else{
-						d -= dagenInMaand[this.maand-1] - this.dag;
+						d -= dagenInMaand[this.maand-1] - this.dag + 1;
 					}
 					
 					this.dag=1;
@@ -425,13 +425,14 @@ public class Datum implements Comparable<Datum> {
 		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		try {
 			Datum nDatum = new Datum(this.dag, this.maand, this.jaar);
+			
 			for(int d= aantalDagen;d>0;){
 				if((nDatum.dag+d) >  dagenInMaand[nDatum.maand-1]){
 					if(nDatum.jaar%4==0 && nDatum.maand-1 ==1){
-						d -= 29 - nDatum.dag;	
+						d -= 29 - nDatum.dag+1;	
 					}
 					else{
-						d -= dagenInMaand[nDatum.maand-1] - nDatum.dag;
+						d -= dagenInMaand[nDatum.maand-1] - nDatum.dag+1;
 					}
 					
 					nDatum.dag=1;
@@ -480,7 +481,7 @@ public class Datum implements Comparable<Datum> {
 		} catch (RuntimeException ex) {
 			System.out.println(ex.getMessage());
 		}
-		Datum datum11 = new Datum(1,1,2013);
+		Datum datum11 = new Datum(3,3,2012);
 		Datum datum10 = new Datum(1,1,2012);
 		System.out.println("Datum 10: " + datum10 + ", datum 11: " + datum11);
 		System.out.println("Verschil in jaren: " + datum10.verschilInJaren(datum11));
@@ -488,6 +489,7 @@ public class Datum implements Comparable<Datum> {
 		System.out.println("Verschil in dagen: " + datum10.verschilIndagen(datum11));
 		System.out.println("Datum 10 dag decimaal: " + datum10.berekenDagDecimaal());
 		System.out.println("Datum 10 dag van jaar :" + datum10.berekenDagVanJaar());
+		System.out.println("Datum 10 + 1 dagen: " + datum10.veranderDatum1(60));
 
 	}
 }

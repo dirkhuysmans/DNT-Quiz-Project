@@ -353,13 +353,32 @@ public class DatumTest {
 	@Test
 	public void test_verschilInJaren() throws Exception{
 		Datum dat1 = new Datum(1,1,2012);
-		Datum dat2 = new Datum(10,1,2011);
+		Datum dat2 = new Datum(1,1,2013);
 		try {
-			assertEquals(0,dat1.verschilInJaren(dat2));
-		} catch (Exception e) {
+			assertEquals(1,dat1.verschilInJaren(dat2));
+		} 
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new Exception("Fout opgetreden");
 		}
 	}
-	
+
+	/**
+	 * testen methode verschil in jaren
+	 * @throws Exception 
+	 */
+	@Test
+	public void test_VeranderDatum1() throws Exception{
+		Datum dat1=new Datum(1,1,2011);
+		Datum dat2 = new Datum(1,3,2011);
+		try{
+			assertEquals(dat2,dat1.veranderDatum1(59));
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
 }
+}
+	
+
+

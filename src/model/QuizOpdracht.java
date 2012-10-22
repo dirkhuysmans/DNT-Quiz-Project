@@ -1,7 +1,7 @@
 package model;
 
 public class QuizOpdracht {
-	private Quiz quiz = new Quiz();
+	private Quiz quiz;
 	private Opdracht opdracht;
 	private int maxScore;
 	

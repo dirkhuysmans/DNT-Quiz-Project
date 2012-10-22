@@ -15,13 +15,12 @@ import utils.MaandEnum;
 
 public class Datum {
 
-	static GregorianCalendar kalender;
+	GregorianCalendar kalender;
 	int dag, maand, jaar;
 
 	/**
 	 * 
-	 * @return
-	 * getters voor dag, maand, jaar
+	 * @return getters voor dag, maand, jaar
 	 * 
 	 */
 	public int getDag() {
@@ -35,7 +34,7 @@ public class Datum {
 	public int getJaar() {
 		return kalender.get(GregorianCalendar.YEAR);
 	}
-	
+
 	/**
 	 * default constructor zonder parameters
 	 */
@@ -47,11 +46,12 @@ public class Datum {
 	 * @param datum
 	 */
 	public Datum(Datum datum) {
-		kalender = new GregorianCalendar (datum.getDag(), datum.getMaand(), datum.getJaar());
+		kalender = new GregorianCalendar(datum.getDag(), datum.getMaand(),
+				datum.getJaar());
 	}
 
 	public Datum(int dag, int maand, int jaar) {
-		kalender = new GregorianCalendar (dag, maand, jaar);
+		kalender = new GregorianCalendar(dag, maand, jaar);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Datum {
 	 * @param datum
 	 */
 	public Datum(String datum) {
-		int d,m,j;
+		int d, m, j;
 		try {
 			String[] datumSplitsing = datum.split("/");
 			d = (controleDag(Integer.parseInt((datumSplitsing[0]))));
@@ -70,7 +70,7 @@ public class Datum {
 			throw new RuntimeException(
 					"Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
 		}
-		kalender = new GregorianCalendar (d, m, j);
+		kalender = new GregorianCalendar(d, m, j);
 	}
 
 	@Override
@@ -103,11 +103,13 @@ public class Datum {
 	 */
 	private int controleDag(int dag) {
 		if (dag > 0 && dag < 32) {
-			return dag;
-		} else {
-			throw new IllegalArgumentException(
-					"dag moet tussen 01 en 31 liggen");
+			String d = String.valueOf(dag);
+			if (d.length() == 2) {
+				return dag;
+			}
+
 		}
+		throw new IllegalArgumentException("dag moet tussen 01 en 31 liggen");
 	}
 
 	/**
@@ -125,11 +127,10 @@ public class Datum {
 
 	@Override
 	public int hashCode() {
-		/*final int prime = 31;
-		int result = 1;
-		result = prime * result + dag;
-		result = prime * result + jaar;
-		result = prime * result + maand;*/
+		/*
+		 * final int prime = 31; int result = 1; result = prime * result + dag;
+		 * result = prime * result + jaar; result = prime * result + maand;
+		 */
 		return kalender.hashCode();
 	}
 
@@ -147,13 +148,15 @@ public class Datum {
 	public int compareTo(Datum datum) {
 		int i;
 		i = this.getJaar() - datum.getJaar();
-		if (i==0){
+		if (i == 0) {
 			i = this.getMaand() - datum.getMaand();
-			if (i==0){
+			if (i == 0) {
 				i = this.getDag() - datum.getDag();
 				return i;
-			}else return i;
-		}else return i;
+			} else
+				return i;
+		} else
+			return i;
 	}
 
 	public int verschilInJaren(Datum d) {
@@ -168,31 +171,52 @@ public class Datum {
 		return (this.getJaar() * 12 + this.getMaand())
 				- (d.getJaar() * 12 + d.getMaand());
 	}
+
 	
-	public int verschilInDagen(Datum d){
-		try {
-			Object a = d.clone();
-			int verschil;
-			for(int i=0; ((Datum) a).kleinerDan(this); i++ ){
-				verschil = i;
-				
-			}
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public int verschilInDagen(Datum d) throws CloneNotSupportedException{
+		int verschil = 0;
+		Datum d2 = (Datum) kalender.clone();			
+		for (int i = 0; (d.kleinerDan(d2)); i++) {
+			verschil = i++;
+			d2.kalender.add(dag, -1);			 
 		}
-		GregorianCalendar kalender2 = new GregorianCalendar(d.getDag(), d.getMaand(), d.getJaar());
-		/*return (kalender.computeTime() - kalender2.computeTime())/
-				(24*60*60*1000);*/
+		/*GregorianCalendar kalender2 = new GregorianCalendar(d.getDag(),
+				d.getMaand(), d.getJaar());
 		
-		return 0;
-		}
-	
+		 * return (kalender.computeTime() - kalender2.computeTime())/
+		 * (24*60*60*1000);
+		 */
+		return verschil;
+	}
+
 	public boolean setDatum(int dag, int maand, int jaar)
 			throws IllegalArgumentException {
 		controleDag(dag);
 		controleMaand(maand);
-		kalender = new GregorianCalendar (dag, maand, jaar);
+		kalender = new GregorianCalendar(dag, maand, jaar);
 		return true;
+	}
+	
+	public String getDatumInAmerikaansFormaat(Datum datum) {
+		if (datum == null) {
+			throw new RuntimeException("datum kan niet null zijn");
+		} else {
+			return String.format("%04d/%02d/%02d", datum.getJaar(),
+					datum.getMaand(), dag);
+		}
+	}
+
+	public String getDatumInEuropeesFormaat(Datum datum) {
+		return String.format("%02d/%02d/%04d", datum.getDag(),
+				datum.getMaand(), datum.getJaar());
+	}
+	
+	public void veranderDatum (int aantalDagen){
+		kalender.add(dag, aantalDagen);
+	}
+	
+	public Datum nieuweDatum (int aantalDagen){
+		kalender.add(dag, aantalDagen); 
+		return (Datum)this; 
 	}
 }

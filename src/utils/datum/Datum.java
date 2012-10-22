@@ -409,10 +409,8 @@ public class Datum implements Comparable<Datum> {
 				}
 				else{
 					this.dag+=d;
-					d=0;
-					
-				}
-				
+					d=0;					
+				}				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -444,10 +442,8 @@ public class Datum implements Comparable<Datum> {
 				}
 				else{
 					nDatum.dag+=d;
-					d=0;
-					
-				}
-				
+					d=0;					
+				}				
 			}
 			return nDatum;
 		} catch (Exception e) {

@@ -23,6 +23,7 @@ public class Opdracht {
 	private OpdrachtCategorie categorie;
 	private Leraar auteur;
 	private Datum opmaakDatum;
+	private List<QuizOpdracht> quizOpdrachten = new ArrayList<QuizOpdracht>();
 	
 	/**
 	 * 
@@ -144,5 +145,13 @@ public class Opdracht {
 	
 	public String toonOpdracht(){
 		return (categorie + ": " + vraag + "\n\t antwoord:");
+	}
+	
+	public void verwijderQuiz(QuizOpdracht qo){
+		quizOpdrachten.remove(qo);
+	}
+	
+	public void voegQuizToe(QuizOpdracht qo){
+		quizOpdrachten.add(qo);
 	}
 }

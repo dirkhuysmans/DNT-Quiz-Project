@@ -15,7 +15,7 @@ import utils.MaandEnum;
 
 public class Datum {
 
-	GregorianCalendar kalender;
+	GregorianCalendar kalender = new GregorianCalendar();
 	int dag, maand, jaar;
 
 	/**
@@ -24,15 +24,15 @@ public class Datum {
 	 * 
 	 */
 	public int getDag() {
-		return kalender.get(GregorianCalendar.DAY_OF_MONTH);
+		return GregorianCalendar.DAY_OF_MONTH;
 	}
 
 	public int getMaand() {
-		return kalender.get(GregorianCalendar.MONTH);
+		return GregorianCalendar.MONTH;
 	}
 
 	public int getJaar() {
-		return kalender.get(GregorianCalendar.YEAR);
+		return GregorianCalendar.YEAR;
 	}
 
 	/**
@@ -79,6 +79,8 @@ public class Datum {
 	}
 
 	public static void main(String[] args) {
+		GregorianCalendar c = new GregorianCalendar();
+		System.out.println(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH + 1));
 		try {
 			Datum datum1 = new Datum();
 			System.out.println("datum1 : " + datum1);

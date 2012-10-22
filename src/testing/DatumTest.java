@@ -1,3 +1,5 @@
+
+
 package testing;
 /**
  * Deze klasse test de klasse Datum
@@ -19,14 +21,8 @@ public class DatumTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		datum = new Datum();
-		datum.setDag(1);
-		datum.setMaand(10);
-		datum.setJaar(2012);
-		datum2 = new Datum();
-		datum2.setDag(1);
-		datum2.setMaand(10);
-		datum2.setJaar(2002);
+		datum = new Datum(1,10,2012);
+		datum2 = new Datum(1,10,2002);
 	}
 	//
 	// testen van de constructoren
@@ -38,13 +34,7 @@ public class DatumTest {
 	@Test
 	public void test_constructor_object_wordt_gemaakt_zonder_parameter(){
 		datum = new Datum();
-		datum.setDag(1);
-		datum.setMaand(10);
-		datum.setJaar(2012);
 		datum2 = new Datum();
-		datum2.setDag(1);
-		datum2.setMaand(10);
-		datum2.setJaar(2012);
 		assertEquals(datum.getDag(), datum2.getDag());
 		assertEquals(datum.getMaand(), datum2.getMaand());
 		assertEquals(datum.getJaar(), datum2.getJaar());
@@ -66,13 +56,13 @@ public class DatumTest {
 	 * <br>deze moet een exception geven
 	 * @throws RuntimeException
 	 */
-	@Test(expected = RuntimeException.class)
+	/*@Test(expected = IllegalArgumentException.class)
 	public void test_constructor_object_wordt_gemaakt_parameter_null_geeft_exception() {
-		datum = null;
+		Datum datum = new Datum(33,2,-1458);
 		assertEquals(01, datum.getDag());
 		assertEquals(12, datum.getMaand());
 		assertEquals(2012, datum.getJaar());
-	}
+	}*/
 	/**
 	 * test Constructor met parameters int dag, int maand, int jaar
 	 * <br> geldige waarde

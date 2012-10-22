@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class OpdrachtCatalogus {
 	
-	static List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
+	List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
 	
 	
 	/**
@@ -19,11 +19,11 @@ public class OpdrachtCatalogus {
 	 * 
 	 * toevoegen en verwijderen van opdracht aan catalogus
 	 */
-	public static void voegOpdrachtToe(Opdracht opdracht){
+	public void voegOpdrachtToe(Opdracht opdracht){
 		opdrachtenCatalogus.add(opdracht);
 	}
 	
-	public static void verwijderOpdracht (Opdracht opdracht){
+	public void verwijderOpdracht (Opdracht opdracht){
 		opdrachtenCatalogus.remove(opdracht);
 	}
 	

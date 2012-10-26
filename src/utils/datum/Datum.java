@@ -256,77 +256,6 @@ public class Datum implements Comparable<Datum> {
 	return (this.jaar*10000+this.maand*100+this.dag) - (datum.jaar*10000+datum.maand*100+datum.dag);
 			
 	}
-	/**
-	 * Berekent de dagnummer in het jaar
-	 * @returns de dag van het jaar
-	 * @throws Exception
-	 */
-	public int berekenDagVanJaar() throws Exception{
-		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-		int dagen = 0;
-		
-			try {
-				dagen += this.dag;
-				if(this.jaar%4==0){
-					dagenInMaand[1] = 29;
-				}
-				else{
-					dagenInMaand[1]=28;
-				}
-				for (int m=0; m<this.maand-1;m++){
-					dagen += dagenInMaand[m];
-				}
-				return dagen;
-			} 
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				throw new Exception("De bewerking berekenDagVanJaar kan niet uitgevoerd worden. " + e.getMessage());
-			}
-	}
-
-	
-	/**
-	 * berekenDagDecimaal rekent de datum om naar decimaal  
-	 * aantal volledige jaren * 365 dagen en + het aantal schrikkeljaren + kalenderdag van huidig jaar
-	 * @throws Exception
-	 */
-
-	public int berekenDagDecimaal() throws Exception {
-		int dag=0;
-		int jaar=0;
-		
-			try {
-					jaar = ((this.jaar-1) - ((this.jaar-1)%4))/4;
-					dag = ((this.jaar-1) * 365) + jaar;
-				
-				dag += this.berekenDagVanJaar();
-				
-				return dag;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				throw new Exception("De bewerking berekenDagDecimaal kan niet uitgevoerd worden. " + e.getMessage());
-			}
-	}
-	public int verschilIndagen(Datum datum) throws Exception{
-		int dag1 = 0;
-		int dag2 = 0;
-		
-		try{
-			if(this.kleinerDan(datum)){
-				dag1=this.berekenDagDecimaal();
-				dag2 = datum.berekenDagDecimaal();
-			}
-			else{
-				dag2= this.berekenDagDecimaal();
-				dag1 = datum.berekenDagDecimaal();
-			}
-			
-			return dag2-dag1;
-		}
-		catch (Exception e){
-			throw new Exception("Bij het berekenen van verschil in dagen is volgende fout opgetreden" + e.getMessage());
-		}
-	}
 	
 	public int verschilInJaren(Datum datum) throws Exception{
 		
@@ -387,70 +316,215 @@ public class Datum implements Comparable<Datum> {
 			throw new Exception("De bewerking verschilInMaanden kan niet uitgevoerd worden. " + e.getMessage());
 		}
 	}
-	
-	public void veranderDatum(int aantalDagen) throws Exception{
-		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-		try {
-			for(int d= aantalDagen;d>0;){
-				if((this.dag+d) >  dagenInMaand[this.maand-1]){
-					if(this.jaar%4==0 && this.maand-1 ==1){
-						d -= 29 - this.dag + 1;	
-					}
-					else{
-						d -= dagenInMaand[this.maand-1] - this.dag + 1;
-					}
-					
-					this.dag=1;
-					this.maand++;
-						if(this.maand>12){
-							this.jaar++;
-							this.maand=1;
-						}
-				}
-				else{
-					this.dag+=d;
-					d=0;					
-				}				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new Exception("De bewerking veranderDatum kan niet uitgevoerd worden. " +e.getMessage());
+
+	/**
+	 * Definitie schrikkeljaar volgens Wikipedia
+	 * Een schrikkeldag valt op 29 februari 
+	 * en komt in de gregoriaanse kalender voor in elk jaar dat deelbaar is door 4, 
+	 * met uitzondering van eeuwjaren. 
+	 * Deze hebben enkel een schrikkeldag als ze deelbaar zijn door 400.
+	 * @return
+	 */
+	public boolean isSchrikkeljaar(){
+		if(this.jaar%4==0 && this.jaar%100!=0){
+			return true;
 		}
+		if(this.jaar%400==0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	/**
+	 * 
+	 * @return naam van de maand in Nederlands
+	 * @throws Exception indien maand niet bestaat
+	 */
+	public String getNaamMaand() throws Exception{
+		switch (this.maand){
+		case 1:
+			return "januari";
+		case 2:
+			return "februari";
+		case 3:
+			return "maart";
+		case 4:
+			return "april";
+		case 5:
+			return "mei";
+		case 6:
+			return "juni";
+		case 7:
+			return "juli";
+		case 8:
+			return "augustus";
+		case 9:
+			return "september";
+		case 10:
+			return "oktober";
+		case 11:
+			return "november";
+		case 12:
+			return "december";
+			default:
+				throw new Exception("De naam van de maand kan niet weergegeven worden. Gelieve de maand in de meegegeven datum na te kijken.");
+		}
+	}
+	
+	/**
+	 * 
+	 * @return aantal dagen in maand
+	 * @throws Exception indiend meegegeven int maand niet in lijst
+	 */
+	public int aantalDageninMaand() throws Exception{
+		switch (this.maand) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return 31;
+			
+		case 2:
+			if(this.isSchrikkeljaar()){
+				return 29;
+			}
+			else{
+				return 28;
+			}
+			
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return 30;
+
+		default:
+			throw new Exception("Aantal dagen kon niet bepaald worden");
+		} 
 		
 	}
 	
-	public Datum veranderDatum1(int aantalDagen) throws Exception{
-		int [] dagenInMaand = new int [] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-		try {
-			Datum nDatum = new Datum(this.dag, this.maand, this.jaar);
-			
-			for(int d= aantalDagen;d>0;){
-				if((nDatum.dag+d) >  dagenInMaand[nDatum.maand-1]){
-					if(nDatum.jaar%4==0 && nDatum.maand-1 ==1){
-						d -= 29 - nDatum.dag+1;	
-					}
-					else{
-						d -= dagenInMaand[nDatum.maand-1] - nDatum.dag+1;
-					}
-					
-					nDatum.dag=1;
-					nDatum.maand++;
-						if(nDatum.maand>12){
-							nDatum.jaar++;
-							nDatum.maand=1;
-						}
+	public int verschilInDagen(Datum datum) throws Exception{
+		int d = 0;
+		Datum datKleinste = new Datum();
+		Datum datGrootste = new Datum();
+		if(this.kleinerDan(datum)){
+			datKleinste= this;
+			datGrootste = datum;
+		}
+		else{
+			datKleinste= datum;
+			datGrootste= this;
+		}
+		
+		while(!datKleinste.equals(datGrootste)){
+			d++;
+			if(datKleinste.dag==datKleinste.aantalDageninMaand()){
+				datKleinste.dag=1;
+				if(datKleinste.maand==12){
+					datKleinste.maand=1;
+					datKleinste.jaar++;
 				}
 				else{
-					nDatum.dag+=d;
-					d=0;					
-				}				
+					datKleinste.maand++;
+				}
 			}
-			return nDatum;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new Exception("De bewerking VeranderDatum1 kan geen waarde teruggeven. " + e.getMessage());
+			else{
+				datKleinste.dag++;
+			}
 		}
+		return d;
 	}
+	
+	/**
+	 * Wijzigt de geselecteerde datum met het meegegeven aantal dagen
+	 * Indien aantalDagen positief controle of aantal dagen in maand overschreden wordt
+	 * dan wordt maand en eventueel jaar verhoogt
+	 * Indien aantalDagen negatief controle of niet in lagere maand terecht gekomen, want dan maand en eventueel met 1 verlagen
+	 * @param aantalDagen
+	 * @throws Exception
+	 */
+	public void veranderDatum(int aantalDagen) throws Exception{
+		while(aantalDagen>0){
+			//int aantalDagenInMaand = this.aantalDageninMaand();
+			if(this.dag==this.aantalDageninMaand()){
+				this.dag=1;
+				if(this.maand==12){
+					this.maand=1;
+					this.jaar++;
+				}
+				else{
+					this.maand++;
+				}
+			}
+			else{
+				this.dag++;
+			}
+			aantalDagen--;
+		}
+		while(aantalDagen<0){
+			if(this.dag==1){
+				if(this.maand==1){
+					this.jaar--;
+					this.maand=12;
+				}
+				else{
+					this.maand--;
+				}
+				dag = this.aantalDageninMaand();
+			}
+			else{
+				this.dag--;
+			}
+			aantalDagen++;
+		}
+	
+	}
+	
+	public Datum veranderDatum1(int aantalDagen) throws Exception{
+		Datum datum = this;
+		while(aantalDagen>0){
+			//int aantalDagenInMaand = this.aantalDageninMaand();
+			if(datum.dag==datum.aantalDageninMaand()){
+				datum.dag=1;
+				if(datum.maand==12){
+					datum.maand=1;
+					datum.jaar++;
+				}
+				else{
+					datum.maand++;
+				}
+			}
+			else{
+				datum.dag++;
+			}
+			aantalDagen--;
+		}
+		while(aantalDagen<0){
+			if(datum.dag==1){
+				if(datum.maand==1){
+					datum.jaar--;
+					datum.maand=12;
+				}
+				else{
+					datum.maand--;
+				}
+				dag = datum.aantalDageninMaand();
+			}
+			else{
+				datum.dag--;
+			}
+			aantalDagen++;
+		}
+			return datum;
+	}
+	
+	
+
 
 	public static void main(String[] args) throws Exception {
 		try {
@@ -482,10 +556,29 @@ public class Datum implements Comparable<Datum> {
 		System.out.println("Datum 10: " + datum10 + ", datum 11: " + datum11);
 		System.out.println("Verschil in jaren: " + datum10.verschilInJaren(datum11));
 		System.out.println("Verschil in maanden: " + datum10.verschilInMaanden(datum11));
-		System.out.println("Verschil in dagen: " + datum10.verschilIndagen(datum11));
-		System.out.println("Datum 10 dag decimaal: " + datum10.berekenDagDecimaal());
-		System.out.println("Datum 10 dag van jaar :" + datum10.berekenDagVanJaar());
+		System.out.println("Verschil in dagen: " + datum10.verschilInDagen(datum11));
 		System.out.println("Datum 10 + 1 dagen: " + datum10.veranderDatum1(60));
+		//Controle van toegevoegde of aangepaste procedures
+		Datum datums1 = new Datum(1,1,2013);
+		if(datums1.isSchrikkeljaar()){
+		System.out.println("datums1 : " + datums1 + " is schrikkeljaar");
+		}
+		else {
+			System.out.println("datums1 : " + datums1 + " is geen schrikkeljaar");
+		}
+		Datum datums2 = new Datum(1,1,2012);
+		if(datums2.isSchrikkeljaar()){
+		System.out.println("datums2 : " + datums2 + " is schrikkeljaar");
+		}
+		else {
+			System.out.println("datums2 : " + datums2 + " is geen schrikkeljaar");
+		}
+		System.out.println("Maand van datums1 : " + datums1 + " bevat " + datums1.aantalDageninMaand() + " dagen.");
+		System.out.println("Maand van datums2 : " + datums2 + " bevat " + datums2.aantalDageninMaand() + " dagen.");	
+		System.out.println("Maand van datums1 : " + datums1.getNaamMaand());
+		System.out.println("Maand van datums2 : " + datums2.getNaamMaand());
+		System.out.println("Het verschil in dagen tussen datums1 en datums2 bedraagt : " + datums1.verschilInDagen(datums2) + " dagen.");
+		System.out.println("datums1 + 365 dagen = " + datums1.veranderDatum1(365));
 
 	}
 }

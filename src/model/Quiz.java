@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
 import utils.gregorian.Datum;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
@@ -33,6 +35,7 @@ public class Quiz {
 		this.onderwerp = onderwerp;
 		this.leerJaar = controleLeerjaar(leerJaar);
 		this.isUniekeDeelname= isUniekeDeelname;
+		this.isTest = isTest;
 	}
 	
 	//
@@ -98,7 +101,9 @@ public class Quiz {
 	//
 	/**
 	 * methode om het leerJaar op een geldige waarde te controleren <br>
-	 * waarde min 1 en max 6 	 
+	 * waarde min 1 en max 6
+	 * @param leerJaar
+	 * @return leerjaar
 	 */
 	private int controleLeerjaar(int leerJaar) {
 		if (leerJaar > 0 && leerJaar < 7) {
@@ -124,9 +129,25 @@ public class Quiz {
 	 * @param score
 	 */
 	public static void verwijderQuizOpdracht(Quiz quiz, Opdracht opdracht, int score){
-		QuizOpdracht qo = new QuizOpdracht(quiz,opdracht,score);
-		quizOpdracht.remove(qo);
+		QuizOpdracht qo = zoekQuizOpdracht(quiz,opdracht,score);
+		//qo.equals(qo);
+		if(qo != null){
+			quizOpdracht.remove(qo);
+		}
 	}
+	
+	private static QuizOpdracht zoekQuizOpdracht(Quiz quiz, Opdracht opdracht, int score)
+	{
+		for(QuizOpdracht lijst : quizOpdracht){
+			if(lijst.getMaxScore() == score &&
+			   lijst.getOpdracht().equals(opdracht) &&
+			   lijst.getQuiz().equals(quiz)){
+				return lijst;
+			}
+		}
+		throw new IllegalArgumentException("quizOpdracht kan niet verwijderd worden, geen gegevens gevonden");
+	}
+	
 	@Override
 	public String toString(){
 		String aangemaakteQuiz = "";
@@ -137,9 +158,67 @@ public class Quiz {
 	}
 	
 	
-	
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((auteur == null) ? 0 : auteur.hashCode());
+		result = prime * result + (isTest ? 1231 : 1237);
+		result = prime * result + (isUniekeDeelname ? 1231 : 1237);
+		result = prime * result + leerJaar;
+		result = prime * result + ((leraar == null) ? 0 : leraar.hashCode());
+		result = prime * result
+				+ ((onderwerp == null) ? 0 : onderwerp.hashCode());
+		result = prime * result
+				+ ((quizStatus == null) ? 0 : quizStatus.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Quiz other = (Quiz) obj;
+		if (auteur == null) {
+			if (other.auteur != null) {
+				return false;
+			}
+		} else if (!auteur.equals(other.auteur)) {
+			return false;
+		}
+		if (isTest != other.isTest) {
+			return false;
+		}
+		if (isUniekeDeelname != other.isUniekeDeelname) {
+			return false;
+		}
+		if (leerJaar != other.leerJaar) {
+			return false;
+		}
+		if (leraar != other.leraar) {
+			return false;
+		}
+		if (onderwerp == null) {
+			if (other.onderwerp != null) {
+				return false;
+			}
+		} else if (!onderwerp.equals(other.onderwerp)) {
+			return false;
+		}
+		if (quizStatus != other.quizStatus) {
+			return false;
+		}
+		return true;
+	}
+
 	public static void main(String[] args) throws Exception {
 		try {
 			Quiz quiz = new Quiz("rekenen",1,true,false);
@@ -169,8 +248,8 @@ public class Quiz {
 				System.out.println(lijst.getQuiz().toString() + "met als max score " + lijst.getMaxScore());
 			}
 			
-			verwijderQuizOpdracht(quiz3,opdracht1,8);
-			
+			verwijderQuizOpdracht(quiz3,opdracht1,9);
+			System.out.println("");
 			for(QuizOpdracht lijst : quizOpdracht){
 				System.out.println(lijst.getQuiz().toString() + "met als max score " + lijst.getMaxScore());
 			}

@@ -14,23 +14,15 @@ package model.enumKlassen;
  */
 
 public enum QuizStatussen {
-	inConstructie,afgewerkt,opengesteld,laatsteKans,afgesloten;
 	
-	public static QuizStatussen convertInt(int x){
-		x = x-1;
-		switch (x){
-		case 0: 
-			return inConstructie;
-		case 1: 
-			return afgewerkt;
-			
-		case 2:
-			return opengesteld;
-		case 3: 
-			return laatsteKans;
-		case 4: 
-			return afgesloten;
-		}
-		return null;
-	}
+	INCONSTRUCTIE(1), AFGEWERKT(2), OPENGESTELD(3), LAATSTEKANS(4), AFGESLOTEN(5);
+
+    private final int id;
+    QuizStatussen(int id) { 
+    	this.id = id; 
+    }
+    public int getValue() { 
+    	return id; 
+    }
+
 }

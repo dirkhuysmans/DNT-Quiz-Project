@@ -1,5 +1,8 @@
 package model;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,5 +37,16 @@ public class QuizCatalogus {
 			catalogus += quiz + "\n";
 		}
 		return catalogus;
+	}
+	
+	public void wegschrijvenNaarFile (Quiz quiz){
+		FileOutputStream file = null; 
+		ObjectOutputStream obj = null;
+		try{
+			file = new FileOutputStream("Quizzen.ser");
+			obj.writeObject(quiz);
+		}catch (IOException ex){
+			System.out.println("Error om naar de file te schrijven");
+		}
 	}
 }

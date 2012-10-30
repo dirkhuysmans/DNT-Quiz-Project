@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,16 @@ import model.enumKlassen.OpdrachtCategorie;
  *
  */
 
-public class Opdracht {
+public class Opdracht  implements Serializable{
 	private String vraag="";
 	private String antwoord="";
 	private List<String> hints= new ArrayList<String>();
+	private int poging=0;
 	private int maxAantalPogingen = 1;
 	private Time maxAntwoordTijd = null;
 	private OpdrachtCategorie categorie;
 	private Leraar auteur;
-	private Datum opmaakDatum;
+	protected Datum opmaakDatum;
 	private List<QuizOpdracht> quizOpdrachten = new ArrayList<QuizOpdracht>();
 	
 	/**
@@ -33,12 +35,11 @@ public class Opdracht {
 	 * @param maxAntwoordTijd
 	 * @param categorie
 	 * @param auteur
-	 * @param opmaak
 	 * Constructor om de opdracht aan te maken
 	 */
 	
 	public Opdracht (String vraag, String antwoord, List<String> hints, int maxAantalPogingen, 
-			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaak){
+			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
 		setVraag(vraag);
 		setAntwoord(antwoord);
 		setHints(hints);
@@ -46,9 +47,19 @@ public class Opdracht {
 		setMaxAntwoordTijd(maxAntwoordTijd);
 		setCategorie(categorie);
 		setAuteur(auteur);
-		setOpmaakDatum(opmaak);		
+		setOpmaakDatum(new Datum());		
 	}
-		
+	
+	public Opdracht (String vraag, List<String> hints, int maxAantalPogingen, 
+			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
+		setVraag(vraag);
+		setHints(hints);
+		setMaxAantalPogingen(maxAantalPogingen);
+		setMaxAntwoordTijd(maxAntwoordTijd);
+		setCategorie(categorie);
+		setAuteur(auteur);
+		setOpmaakDatum(new Datum());		
+	}
 	/**
 	 * 
 	 * getters en setters voor de opdracht - variabelen
@@ -153,5 +164,9 @@ public class Opdracht {
 	
 	public void voegQuizToe(QuizOpdracht qo){
 		quizOpdrachten.add(qo);
+	}
+	
+	public void verhoogPoging(){
+		
 	}
 }

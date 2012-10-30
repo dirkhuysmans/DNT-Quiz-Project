@@ -4,6 +4,7 @@ public class QuizOpdracht {
 	private Quiz quiz;
 	private Opdracht opdracht;
 	private int maxScore;
+	private int volgNummer;
 	
 	public QuizOpdracht (Quiz quiz, Opdracht opdracht, int score){
 		setQuiz(quiz);

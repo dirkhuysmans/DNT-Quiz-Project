@@ -109,7 +109,6 @@ public class Datum {
 			if (d.length() == 2) {
 				return dag;
 			}
-
 		}
 		throw new IllegalArgumentException("dag moet tussen 01 en 31 liggen");
 	}

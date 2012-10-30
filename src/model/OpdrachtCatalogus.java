@@ -1,16 +1,18 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * 
  * @author thijs
  *
  */
-public class OpdrachtCatalogus {
+public class OpdrachtCatalogus implements Iterable{
 	
-	List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
+	Set<Opdracht> opdrachtenCatalogus = new HashSet<Opdracht>();
 	
 	
 	/**
@@ -34,6 +36,12 @@ public class OpdrachtCatalogus {
 			catalogus = opdracht +"/n";
 		}
 		return catalogus;
+	}
+
+	@Override
+	public Iterator iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

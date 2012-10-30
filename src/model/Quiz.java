@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import model.enumKlassen.QuizStatussen;
  * @author Noella
  *
  */
-public class Quiz {
+public class Quiz  implements Serializable{
 	//
 	// Attributen
 	//
@@ -27,7 +28,8 @@ public class Quiz {
 	private QuizStatussen quizStatus;
 	private Leraar leraar;
 	private static List<QuizOpdracht> quizOpdracht = new ArrayList();
-	private String auteur; 
+	private String auteur;
+	private int score=0;
 	//
 	// Constructor
 	//
@@ -226,6 +228,8 @@ public class Quiz {
 			QuizCatalogus catalogus = new QuizCatalogus();
 			catalogus.voegQuizToe(quiz);
 			catalogus.voegQuizToe(quiz2);
+			catalogus.wegschrijvenNaarFile(quiz);
+			catalogus.wegschrijvenNaarFile(quiz2);
 			System.out.println(catalogus.toString());
 			
 			
@@ -234,7 +238,7 @@ public class Quiz {
 			Time time = new Time(120*1000);
 			Datum datum = new Datum();
 			Opdracht opdracht1 = new Opdracht("welke dag", "maandag",hints, 2, 
-				time, OpdrachtCategorie.algemeneKennis, Leraar.Carla, datum);
+				time, OpdrachtCategorie.algemeneKennis, Leraar.Carla);
 			
 			Quiz quiz3 = new Quiz("rekenen",1,true,false);
 			Quiz quiz4 = new Quiz("rekenen",6,false,false);

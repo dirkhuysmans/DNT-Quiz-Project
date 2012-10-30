@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -7,7 +9,7 @@ package model;
  *
  */
 
-public class Leerling {
+public class Leerling implements Serializable{
 	
 /**
  *  attributen	

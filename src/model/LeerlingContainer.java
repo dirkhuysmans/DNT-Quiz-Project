@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LeerlingContainer {
 
@@ -9,7 +11,7 @@ public class LeerlingContainer {
 	 * @author Dirk Huysmans
 	 */
 	
-	private List<Leerling> LeerlingContainer = new ArrayList<Leerling>();
+	private Set<Leerling> LeerlingContainer = new HashSet<Leerling>();
 	
 	/**
 	 * Voegt een leerling toe, indien deze nog niet in de lijst opgenomen is

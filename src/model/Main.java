@@ -8,18 +8,34 @@ public class Main {
 
 	/**
 	 * @param args
-	 * mainklasse aangemaakt om opdrachten en quizzen te testen
+	 *            mainklasse aangemaakt om opdrachten en quizzen te testen
 	 * 
 	 */
 	public static void main(String[] args) {
 		OpdrachtCategorie categorie;
-		int keuze=0;
+		int keuze = 0;
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		
+		System.out.println("1.Registreren of 2.Inloggen");
+		keuze = sc.nextInt();
+		if (keuze == 1) {
+
+		} else if (keuze == 2) {
+			int k=0;
+			do {
+				System.out.println("1.Leraar of 2.Leerling");
+				k = sc.nextInt();
+				if (k == 1) {
+					// één of andere functie
+				} else {
+					// één of andere andere functie
+				}
+			} while (k != 1 && k != 2);
+
+		}
 		do {
 			System.out.print("Keuzemenu:");
-			System.out.println("\t1. Beheren van opdrachten");
+			System.out.println("\n\t1. Beheren van opdrachten");
 			System.out.println("\t2. Beheren van Quizzen/testen");
 			System.out.println("\t3. Deelnemen aan Quiz");
 			System.out.println("\t4. Overzicht scores");
@@ -28,7 +44,7 @@ public class Main {
 			System.out.println("\t7. Stoppen");
 			System.out.println("\n\t");
 			keuze = sc.nextInt();
-			System.out.println("\n\n\n");
+			System.out.println("\n");
 			switch (keuze) {
 			case 1:
 				System.out.println("\t1. Aanmaken opdracht");
@@ -56,24 +72,28 @@ public class Main {
 					System.out.println(opdrachtCatalogus);
 					break;
 				}
+				break;
 
 			case 2:
-				System.out.println("Iets doen met Quiz en zo");
-				Quiz quiz;
-				System.out.println("Onderwerp: ");
+				QuizCatalogus catalogus = new QuizCatalogus();
+				catalogus.lezenFile();
+				System.out.println(catalogus);
+				
+				System.out.println("\n\nOnderwerp: ");
 				String onderwerp = sc.nextLine();
 				System.out.println("leerjaar: ");
 				int leerjaar = sc.nextInt();
 				System.out.println("unieke deelname?(j/n): ");
-				String temp = sc.nextLine();
+				String temp = sc.next();
 				boolean uniek = temp.equals("j");
 				System.out.println("test?(j/n): ");
-				temp = sc.nextLine();
+				temp = sc.next();
 				boolean test = temp.equals("j");
+				Quiz quiz;
 				quiz = new Quiz(onderwerp, leerjaar, uniek, test);
-				QuizCatalogus quizCatalogus = new QuizCatalogus();
-				quizCatalogus.voegQuizToe(quiz);
-				quizCatalogus.wegschrijvenNaarFile(quiz);
+				
+				catalogus.voegQuizToe(quiz);
+				catalogus.wegschrijvenNaarFile();
 				break;
 			}
 		} while (keuze != 7);

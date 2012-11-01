@@ -1,5 +1,10 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -100,6 +105,30 @@ public class LeerlingContainer {
 		}
 				
 		return LijstLeerlingen;
+	}
+	
+	public void wegschrijvenNaarFile (Leerling leerling){
+		FileOutputStream file = null; 
+		ObjectOutputStream obj = null;
+		try{
+			file = new FileOutputStream("Leerlingen.ser");
+			obj = new ObjectOutputStream(file);
+			obj.writeObject(leerling);
+		}catch (IOException ex){
+			System.out.println("Error om naar de leerlingen-file te schrijven");
+		}
+	}
+	
+	public void lezenFile(){
+		FileInputStream file = null;
+		ObjectInputStream obj = null;
+		try{
+			file = new FileInputStream("Leerlingen.ser");
+			obj = new ObjectInputStream(file);
+			List<Leerling> leerlingen = (List<Leerling>) obj.readObject();
+		}catch (Exception ex){
+			System.out.println("Er is iets fout gegaan met het inlezen van de leerlingen " + ex.getMessage());
+		}
 	}
 	
 }

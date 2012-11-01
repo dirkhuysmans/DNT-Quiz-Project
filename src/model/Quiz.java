@@ -228,8 +228,8 @@ public class Quiz  implements Serializable{
 			QuizCatalogus catalogus = new QuizCatalogus();
 			catalogus.voegQuizToe(quiz);
 			catalogus.voegQuizToe(quiz2);
-			catalogus.wegschrijvenNaarFile(quiz);
-			catalogus.wegschrijvenNaarFile(quiz2);
+			catalogus.wegschrijvenNaarFile();
+			catalogus.lezenFile();
 			System.out.println(catalogus.toString());
 			
 			
@@ -242,11 +242,15 @@ public class Quiz  implements Serializable{
 			
 			Quiz quiz3 = new Quiz("rekenen",1,true,false);
 			Quiz quiz4 = new Quiz("rekenen",6,false,false);
-			
+			catalogus.voegQuizToe(quiz3);
+			catalogus.voegQuizToe(quiz4);
 			voegQuizOpdrachtToe(quiz,opdracht1,4);
 			voegQuizOpdrachtToe(quiz2,opdracht1,6);
 			voegQuizOpdrachtToe(quiz3,opdracht1,8);
 			voegQuizOpdrachtToe(quiz4,opdracht1,1);
+			catalogus.wegschrijvenNaarFile();
+			catalogus.lezenFile();
+			System.out.println(catalogus);
 			
 			for(QuizOpdracht lijst : quizOpdracht){
 				System.out.println(lijst.getQuiz().toString() + "met als max score " + lijst.getMaxScore());

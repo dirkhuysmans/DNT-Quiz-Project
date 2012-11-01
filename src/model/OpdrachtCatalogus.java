@@ -1,8 +1,14 @@
 package model;
 
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,6 +48,30 @@ public class OpdrachtCatalogus implements Iterable{
 	public Iterator iterator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void wegschrijvenNaarFile (Opdracht opdracht){
+		FileOutputStream file = null; 
+		ObjectOutputStream obj = null;
+		try{
+			file = new FileOutputStream("Opdrachten.ser");
+			obj = new ObjectOutputStream(file);
+			obj.writeObject(opdracht);
+		}catch (IOException ex){
+			System.out.println("Error om naar de opdrachten-file te schrijven");
+		}
+	}
+	
+	public void lezenFile(){
+		FileInputStream file = null;
+		ObjectInputStream obj = null;
+		try{
+			file = new FileInputStream("Opdrachten.ser");
+			obj = new ObjectInputStream(file);
+			List<Opdracht> opdrachten = (List<Opdracht>) obj.readObject();
+		}catch (Exception ex){
+			System.out.println("Er is iets fout gegaan met het inlezen van de opdrachten " + ex.getMessage());
+		}
 	}
 	
 }

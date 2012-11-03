@@ -18,6 +18,11 @@ import model.enumKlassen.OpdrachtCategorie;
 public class Opdracht  implements Serializable{
 	private String vraag="";
 	private String antwoord="";
+	
+	public List<QuizOpdracht> getQuizOpdrachten() {
+		return quizOpdrachten;
+	}
+
 	private List<String> hints= new ArrayList<String>();
 	private int poging=0;
 	private int maxAantalPogingen = 1;

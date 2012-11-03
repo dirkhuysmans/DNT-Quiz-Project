@@ -1,5 +1,6 @@
 package model;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class LeerlingContainer {
 	 * @author Dirk Huysmans
 	 */
 	
-	private Set<Leerling> LeerlingContainer = new HashSet<Leerling>();
-	
+	private Set<Leerling> leerlingContainer = new HashSet<Leerling>();
+	private ObjectOutputStream obj = null;
 	/**
 	 * Voegt een leerling toe, indien deze nog niet in de lijst opgenomen is
 	 * @throws Exception 
@@ -25,11 +26,11 @@ public class LeerlingContainer {
 	
 	public void voegLeerlingToe(Leerling leerling) throws Exception{
 		try{
-			if(LeerlingContainer.contains(leerling)){
+			if(leerlingContainer.contains(leerling)){
 				throw new Exception("Deze leerling bestaat al in de lijst.");
 			}
 			else{
-				LeerlingContainer.add(leerling);
+				leerlingContainer.add(leerling);
 			}
 		}
 		catch (Exception e)
@@ -46,8 +47,8 @@ public class LeerlingContainer {
 	 */
 	public void verwijderLeerling(Leerling leerling) throws Exception{
 		try{
-			if(LeerlingContainer.contains(leerling)){
-				LeerlingContainer.remove(leerling);
+			if(leerlingContainer.contains(leerling)){
+				leerlingContainer.remove(leerling);
 			}
 			else{
 				throw new Exception("Leerling werd niet in de lijst gevonden en kan dan ook niet verwijderd worden.");
@@ -65,7 +66,7 @@ public class LeerlingContainer {
 	 */
 	public void wijzigNaamLeerling(Leerling leerling, String nieuweNaam) throws Exception{
 		try{
-			if(LeerlingContainer.contains(leerling)){
+			if(leerlingContainer.contains(leerling)){
 				leerling.setLeerlingNaam(nieuweNaam);
 			}
 			else{
@@ -82,7 +83,7 @@ public class LeerlingContainer {
 	 */
 	public void wijzigKlasVanLeerling(Leerling leerling, int nieuwLeerjaar) throws Exception{
 		try{
-			if(LeerlingContainer.contains(leerling)){
+			if(leerlingContainer.contains(leerling)){
 				leerling.setLeerjaar(nieuwLeerjaar);
 			}
 			else{
@@ -97,7 +98,7 @@ public class LeerlingContainer {
 	@Override
 	public String toString() {
 		String LijstLeerlingen ="";
-		for (Leerling leerling : LeerlingContainer) {
+		for (Leerling leerling : leerlingContainer) {
 			LijstLeerlingen += leerling + "/n";
 		}
 		if(LijstLeerlingen==""){
@@ -107,27 +108,44 @@ public class LeerlingContainer {
 		return LijstLeerlingen;
 	}
 	
-	public void wegschrijvenNaarFile (Leerling leerling){
-		FileOutputStream file = null; 
-		ObjectOutputStream obj = null;
-		try{
-			file = new FileOutputStream("Leerlingen.ser");
-			obj = new ObjectOutputStream(file);
-			obj.writeObject(leerling);
-		}catch (IOException ex){
+	public void wegschrijvenNaarFile() {
+		try {
+			obj = new ObjectOutputStream(new FileOutputStream("Leerlingen.ser"));
+			obj.writeObject(leerlingContainer);
+		} catch (IOException ex) {
 			System.out.println("Error om naar de leerlingen-file te schrijven");
+		} finally {
+			try {
+				obj.close();
+			} catch (IOException iox) {
+				System.out.println("probleem met het sluiten van de file "
+						+ iox.getMessage());
+			}
 		}
 	}
-	
-	public void lezenFile(){
-		FileInputStream file = null;
-		ObjectInputStream obj = null;
-		try{
-			file = new FileInputStream("Leerlingen.ser");
-			obj = new ObjectInputStream(file);
-			List<Leerling> leerlingen = (List<Leerling>) obj.readObject();
-		}catch (Exception ex){
-			System.out.println("Er is iets fout gegaan met het inlezen van de leerlingen " + ex.getMessage());
+
+	public void lezenFile() {
+		ObjectInputStream input = null;
+		try {
+			input = new ObjectInputStream(new FileInputStream("Leerlingen.ser"));
+			Set<Leerling> leerlingen = (Set<Leerling>) input.readObject();
+			for (Leerling leerling : leerlingen) {
+				leerlingContainer.add(leerling);
+			}
+		} catch (EOFException eofx) {
+			System.out.println("End of file was reached " + eofx.getMessage());
+			return;
+		} catch (Exception ex) {
+			System.out
+					.println("Er is iets fout gegaan met het inlezen van de leerlingen "
+							+ ex.getMessage());
+		} finally {
+			try {
+				input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

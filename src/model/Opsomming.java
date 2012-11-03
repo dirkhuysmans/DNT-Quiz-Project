@@ -8,7 +8,7 @@ import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 import utils.gregorian.Datum;
 
-public class Opsomming extends Opdracht{
+public class Opsomming extends Opdracht implements Valideerbaar{
 	private String antwoord;
 
 	public Opsomming(String vraag, String antwoord, List<String> hints,
@@ -22,6 +22,18 @@ public class Opsomming extends Opdracht{
 
 	public void setAntwoord(String antwoord) {
 		this.antwoord = antwoord;
+	}
+
+	@Override
+	public boolean isValide(String antwoord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getValideerTekst() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

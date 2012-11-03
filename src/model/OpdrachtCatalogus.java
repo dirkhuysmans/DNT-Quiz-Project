@@ -1,14 +1,17 @@
 package model;
 
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,8 +21,9 @@ import java.util.Set;
  */
 public class OpdrachtCatalogus implements Iterable{
 	
-	Set<Opdracht> opdrachtenCatalogus = new HashSet<Opdracht>();
-	
+	Map<Integer, Opdracht> opdrachtenCatalogus = new HashMap<Integer, Opdracht>();
+	private ObjectOutputStream obj = null;
+	static int i = 1;
 	
 	/**
 	 * 
@@ -28,17 +32,23 @@ public class OpdrachtCatalogus implements Iterable{
 	 * toevoegen en verwijderen van opdracht aan catalogus
 	 */
 	public void voegOpdrachtToe(Opdracht opdracht){
-		opdrachtenCatalogus.add(opdracht);
+		lezenFile();
+		opdrachtenCatalogus.put(i, opdracht);
+		i++;
+		wegschrijvenNaarFile();
 	}
 	
-	public void verwijderOpdracht (Opdracht opdracht){
-		opdrachtenCatalogus.remove(opdracht);
+	public void verwijderOpdracht (int i){
+		lezenFile();
+		opdrachtenCatalogus.remove(i);
+		wegschrijvenNaarFile();
 	}
 	
 	@Override
 	public String toString(){
+		lezenFile();
 		String catalogus = "";
-		for(Opdracht opdracht : opdrachtenCatalogus){
+		for(Opdracht opdracht : opdrachtenCatalogus.values()){
 			catalogus = opdracht +"/n";
 		}
 		return catalogus;
@@ -50,28 +60,53 @@ public class OpdrachtCatalogus implements Iterable{
 		return null;
 	}
 	
-	public void wegschrijvenNaarFile (Opdracht opdracht){
-		FileOutputStream file = null; 
-		ObjectOutputStream obj = null;
-		try{
-			file = new FileOutputStream("Opdrachten.ser");
-			obj = new ObjectOutputStream(file);
-			obj.writeObject(opdracht);
-		}catch (IOException ex){
+	public void wegschrijvenNaarFile() {
+		try {
+			obj = new ObjectOutputStream(new FileOutputStream("Opdrachten.ser"));
+			obj.writeObject(opdrachtenCatalogus);
+		} catch (IOException ex) {
 			System.out.println("Error om naar de opdrachten-file te schrijven");
+		} finally {
+			try {
+				obj.close();
+			} catch (IOException iox) {
+				System.out.println("probleem met het sluiten van de file "
+						+ iox.getMessage());
+			}
 		}
 	}
-	
-	public void lezenFile(){
-		FileInputStream file = null;
-		ObjectInputStream obj = null;
-		try{
-			file = new FileInputStream("Opdrachten.ser");
-			obj = new ObjectInputStream(file);
-			List<Opdracht> opdrachten = (List<Opdracht>) obj.readObject();
-		}catch (Exception ex){
-			System.out.println("Er is iets fout gegaan met het inlezen van de opdrachten " + ex.getMessage());
+
+	public void lezenFile() {
+		ObjectInputStream input = null;
+		try {
+			input = new ObjectInputStream(new FileInputStream("Opdrachten.ser"));
+			Map<Integer, Opdracht> opdrachten = (Map<Integer, Opdracht>) input.readObject();
+			int i = 1;
+			for (Opdracht opdracht : opdrachten.values()) {
+				opdrachtenCatalogus.put(i, opdracht);
+				i++;
+			}
+		} catch (EOFException eofx) {
+			System.out.println("End of file was reached " + eofx.getMessage());
+			return;
+		} catch (Exception ex) {
+			System.out
+					.println("Er is iets fout gegaan met het inlezen van de opdrachten "
+							+ ex.getMessage());
+		} finally {
+			try {
+				input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+	}
+
+	public Opdracht getOpdracht(int k) {
+		return null;
+		
+		
 	}
 	
 }

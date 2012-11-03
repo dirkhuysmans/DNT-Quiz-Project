@@ -21,7 +21,7 @@ public class Main {
 		if (keuze == 1) {
 
 		} else if (keuze == 2) {
-			int k=0;
+			int k = 0;
 			do {
 				System.out.println("1.Leraar of 2.Leerling");
 				k = sc.nextInt();
@@ -64,12 +64,38 @@ public class Main {
 					String vraag = sc.nextLine();
 					System.out.print("\nantwoord: ");
 					String antwoord = sc.nextLine();
+					System.out.print("Aantal pogingen: ");
+					int pogingen = sc.nextInt();
+					Opdracht opdracht = new Opdracht(vraag, antwoord, null,
+							pogingen, null, categorie, null);
 					break;
 				case 2:
 					System.out
 							.println("Kies de opdracht die je wil wijzigen uit volgende lijst: ");
 					OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
 					System.out.println(opdrachtCatalogus);
+					int k = sc.nextInt();
+					Opdracht op = opdrachtCatalogus.opdrachtenCatalogus.get(k);
+					if (!op.getQuizOpdrachten().isEmpty()) {
+						System.out
+								.println("Je kan deze opdracht niet wijzigen omdat ze al gelinkt is aan een quiz");
+					} else {
+						System.out.print(op);
+						System.out
+								.print("Voer de nieuwe parameters in voor deze opdracht");
+						System.out
+								.print("Categorie (1.rekenen, 2.NederlandseTaal, 3.FranseTaal, 4.algemeneKennis): ");
+						intCategorie = sc.nextInt();
+						categorie = OpdrachtCategorie.convertInt(intCategorie);
+						System.out.print("\nvraag: ");
+						vraag = sc.nextLine();
+						System.out.print("\nantwoord: ");
+						antwoord = sc.nextLine();
+						System.out.print("Aantal pogingen: ");
+						pogingen = sc.nextInt();
+						op = new Opdracht(vraag, antwoord, null,
+								pogingen, null, categorie, null);
+					}
 					break;
 				}
 				break;
@@ -78,7 +104,7 @@ public class Main {
 				QuizCatalogus catalogus = new QuizCatalogus();
 				catalogus.lezenFile();
 				System.out.println(catalogus);
-				
+
 				System.out.println("\n\nOnderwerp: ");
 				String onderwerp = sc.nextLine();
 				System.out.println("leerjaar: ");
@@ -89,9 +115,8 @@ public class Main {
 				System.out.println("test?(j/n): ");
 				temp = sc.next();
 				boolean test = temp.equals("j");
-				Quiz quiz;
-				quiz = new Quiz(onderwerp, leerjaar, uniek, test);
-				
+				Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test);
+
 				catalogus.voegQuizToe(quiz);
 				catalogus.wegschrijvenNaarFile();
 				break;

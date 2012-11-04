@@ -3,10 +3,17 @@ package model;
 import java.sql.Time;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 import utils.gregorian.Datum;
+
+/**
+ * 
+ * @author thijs
+ *
+ */
 
 public class Opsomming extends Opdracht implements Valideerbaar{
 	private String antwoord;
@@ -25,9 +32,14 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	}
 
 	@Override
-	public boolean isValide(String antwoord) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isValide(String antw) {
+		StringTokenizer binnenkomend = new StringTokenizer(antw, " ; ");
+		StringTokenizer origineel = new StringTokenizer(antw, " ; ");
+		if (binnenkomend.countTokens() == origineel.countTokens()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	@Override

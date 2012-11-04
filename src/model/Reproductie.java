@@ -7,6 +7,11 @@ import java.util.Set;
 
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
+/**
+ * 
+ * @author thijs
+ *
+ */
 
 public class Reproductie extends Opdracht{
 	public Reproductie(String vraag, List<String> hints, int maxAantalPogingen,

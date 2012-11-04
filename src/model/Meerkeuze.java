@@ -2,20 +2,27 @@ package model;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 import utils.gregorian.Datum;
 
-public class Meerkeuze extends Opdracht implements Valideerbaar{
-	private Set<String> antwoord;
+/**
+ * 
+ * @author thijs
+ *
+ */
 
-	public void setAntwoord(Set<String> antwoord) {
+public class Meerkeuze extends Opdracht implements Valideerbaar{
+	private Map<Integer, String> antwoord;
+
+	public void setAntwoord(Map<Integer, String> antwoord) {
 		this.antwoord = antwoord;
 	}
 
-	public Meerkeuze(String vraag, Set<String> antwoord, List<String> hints, int maxAantalPogingen,
+	public Meerkeuze(String vraag, Map<Integer, String> antwoord, List<String> hints, int maxAantalPogingen,
 			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		setAntwoord(antwoord);
@@ -23,9 +30,18 @@ public class Meerkeuze extends Opdracht implements Valideerbaar{
 	}
 
 	@Override
-	public boolean isValide(String antwoord) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isValide(String ant) {
+		int temp = Integer.parseInt(ant);
+		boolean uitkomst = false;
+		for (int i : antwoord.keySet()){
+			if(temp == i){
+				uitkomst = true;
+				break;
+			}else{
+				uitkomst = false;
+			}
+		}
+		return uitkomst;
 	}
 
 	@Override

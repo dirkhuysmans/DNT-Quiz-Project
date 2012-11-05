@@ -26,9 +26,9 @@ public class Main {
 				System.out.println("1.Leraar of 2.Leerling");
 				k = sc.nextInt();
 				if (k == 1) {
-					// één of andere functie
+					// ï¿½ï¿½n of andere functie
 				} else {
-					// één of andere andere functie
+					// ï¿½ï¿½n of andere andere functie
 				}
 			} while (k != 1 && k != 2);
 
@@ -66,7 +66,7 @@ public class Main {
 					String antwoord = sc.nextLine();
 					System.out.print("Aantal pogingen: ");
 					int pogingen = sc.nextInt();
-					Opdracht opdracht = new Opdracht(vraag, antwoord, null,
+					Opdracht opdracht = new Opsomming(vraag, antwoord, null,
 							pogingen, null, categorie, null);
 					break;
 				case 2:
@@ -93,7 +93,7 @@ public class Main {
 						antwoord = sc.nextLine();
 						System.out.print("Aantal pogingen: ");
 						pogingen = sc.nextInt();
-						op = new Opdracht(vraag, antwoord, null,
+						op = new Opsomming(vraag, antwoord, null,
 								pogingen, null, categorie, null);
 					}
 					break;

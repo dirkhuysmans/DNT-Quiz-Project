@@ -34,7 +34,7 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	@Override
 	public boolean isValide(String antw) {
 		StringTokenizer binnenkomend = new StringTokenizer(antw, " ; ");
-		StringTokenizer origineel = new StringTokenizer(antw, " ; ");
+		StringTokenizer origineel = new StringTokenizer(antwoord, " ; ");
 		if (binnenkomend.countTokens() == origineel.countTokens()){
 			return true;
 		}else{

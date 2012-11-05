@@ -65,6 +65,10 @@ public class Opdracht  implements Serializable{
 		setAuteur(auteur);
 		setOpmaakDatum(new Datum());		
 	}
+	public Opdracht(String vraag, String antwoord){
+		this.vraag = vraag;
+		this.antwoord = antwoord;
+	}
 	/**
 	 * 
 	 * getters en setters voor de opdracht - variabelen
@@ -154,9 +158,7 @@ public class Opdracht  implements Serializable{
 	 */
 	@Override
 	public String toString(){
-		return (auteur + " " + categorie + ": " + vraag + "\n\t " + antwoord + 
-				"\n\t" + hints + "\n\t" + maxAantalPogingen + "mogelijke pogingen in " + 
-				maxAntwoordTijd + " aantal seconden");
+		return ( vraag + " " + antwoord );
 	}
 	
 	public String toonOpdracht(){

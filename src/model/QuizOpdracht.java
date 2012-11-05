@@ -6,10 +6,10 @@ public class QuizOpdracht {
 	private int maxScore;
 	private int volgNummer;
 	
-	public QuizOpdracht (Quiz quiz, Opdracht opdracht, int score){
-		setQuiz(quiz);
-		setOpdracht(opdracht);
-		setMaxScore(score);
+	private QuizOpdracht (Quiz quiz, Opdracht opdracht, int maxScore){
+		this.quiz = quiz;
+		this.opdracht = opdracht;
+		this.maxScore = maxScore;		
 	}
 
 	public Quiz getQuiz() {
@@ -35,4 +35,17 @@ public class QuizOpdracht {
 	public void setMaxScore(int maxScore) {
 		this.maxScore = maxScore;
 	}
+	
+	public static void koppelOpdrachtAanQuiz(Quiz quiz, Opdracht opdracht, int maxScore){
+		QuizOpdracht quizOpdracht = 
+		new QuizOpdracht(quiz,opdracht,maxScore);
+		quiz.voegQuizOpdrachtToe(quizOpdracht);
+		opdracht.voegQuizToe(quizOpdracht);
+		}
+
+		public void ontKoppelOpdrachtVanQuiz(){
+			quiz.verwijderQuizOpdracht(this);
+			opdracht.verwijderQuiz(this);
+		}	
+
 }

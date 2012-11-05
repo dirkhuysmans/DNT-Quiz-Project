@@ -27,12 +27,17 @@ public class Quiz  implements Serializable{
 	private boolean isUniekeDeelname;
 	private QuizStatussen quizStatus;
 	private Leraar leraar;
-	private static List<QuizOpdracht> quizOpdracht = new ArrayList();
+	private List<QuizOpdracht> quizOpdrachten = new ArrayList();
 	private String auteur;
 	private int score=0;
 	//
 	// Constructor
 	//
+	public Quiz (String onderwerp){
+		this.onderwerp = onderwerp;
+		quizOpdrachten = new ArrayList<QuizOpdracht>();
+	}
+
 	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest){
 		this.onderwerp = onderwerp;
 		this.leerJaar = controleLeerjaar(leerJaar);
@@ -66,7 +71,7 @@ public class Quiz  implements Serializable{
 		return leraar;
 	}
 	public List<QuizOpdracht> getQuizOpdracht() {
-		return quizOpdracht;
+		return quizOpdrachten;
 	}
 	public String getAuteur() {
 		return auteur;
@@ -93,7 +98,7 @@ public class Quiz  implements Serializable{
 		this.leraar = leraar;
 	}
 	public void setQuizOpdracht(List<QuizOpdracht> quizOpdracht) {
-		this.quizOpdracht = quizOpdracht;
+		this.quizOpdrachten = quizOpdracht;
 	}
 	public void setAuteur(String auteur) {
 		this.auteur = auteur;
@@ -120,35 +125,33 @@ public class Quiz  implements Serializable{
 	 * @param opdracht
 	 * @param score
 	 */
-	public static void voegQuizOpdrachtToe(Quiz quiz, Opdracht opdracht, int score){
-		QuizOpdracht qo = new QuizOpdracht(quiz,opdracht,score);
-		quizOpdracht.add(qo);
+	protected void voegQuizOpdrachtToe(QuizOpdracht quizOpdracht){
+		quizOpdrachten.add(quizOpdracht);
 	}
+
 	/**
 	 * verwijder een quizOpdracht
 	 * @param quiz
 	 * @param opdracht
 	 * @param score
 	 */
-	public static void verwijderQuizOpdracht(Quiz quiz, Opdracht opdracht, int score){
-		QuizOpdracht qo = zoekQuizOpdracht(quiz,opdracht,score);
-		//qo.equals(qo);
-		if(qo != null){
-			quizOpdracht.remove(qo);
+	protected void verwijderQuizOpdracht(QuizOpdracht quizOpdracht){
+		quizOpdrachten.remove(quizOpdracht);
+	}
+
+	public ArrayList <Opdracht> getOpdrachten(){
+		ArrayList <Opdracht> opdrachten = new ArrayList <Opdracht>();
+		for (QuizOpdracht quizOpdracht :quizOpdrachten){
+			opdrachten.add(quizOpdracht.getOpdracht());
 		}
+		return opdrachten;
 	}
 	
-	private static QuizOpdracht zoekQuizOpdracht(Quiz quiz, Opdracht opdracht, int score)
-	{
-		for(QuizOpdracht lijst : quizOpdracht){
-			if(lijst.getMaxScore() == score &&
-			   lijst.getOpdracht().equals(opdracht) &&
-			   lijst.getQuiz().equals(quiz)){
-				return lijst;
-			}
-		}
-		throw new IllegalArgumentException("quizOpdracht kan niet verwijderd worden, geen gegevens gevonden");
+	public QuizOpdracht getOpdracht(int volgnr){
+		return quizOpdrachten.get(volgnr-1);
 	}
+
+	
 	
 	@Override
 	public String toString(){
@@ -223,44 +226,20 @@ public class Quiz  implements Serializable{
 
 	public static void main(String[] args) throws Exception {
 		try {
-			Quiz quiz = new Quiz("rekenen",1,true,false);
-			Quiz quiz2 = new Quiz("nederlands",5,true,false);
-			QuizCatalogus catalogus = new QuizCatalogus();
-			catalogus.voegQuizToe(quiz);
-			catalogus.voegQuizToe(quiz2);
-			catalogus.wegschrijvenNaarFile();
-			catalogus.lezenFile();
-			System.out.println(catalogus.toString());
+			Quiz quiz = new Quiz("Hoofdsteden Europa");
+			
+			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
+			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
+			
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
+			System.out.println(quiz.getOpdrachten());
+			QuizOpdracht quizOpdracht = quiz.getOpdracht(1);
+			quizOpdracht.ontKoppelOpdrachtVanQuiz();
+			System.out.println(quiz.getOpdrachten());
+
 			
 			
-			List<String> hints = new ArrayList();
-			hints.add("dag");
-			Time time = new Time(120*1000);
-			Datum datum = new Datum();
-			Opdracht opdracht1 = new Opdracht("welke dag", "maandag",hints, 2, 
-				time, OpdrachtCategorie.algemeneKennis, Leraar.Carla);
-			
-			Quiz quiz3 = new Quiz("rekenen",1,true,false);
-			Quiz quiz4 = new Quiz("rekenen",6,false,false);
-			catalogus.voegQuizToe(quiz3);
-			catalogus.voegQuizToe(quiz4);
-			voegQuizOpdrachtToe(quiz,opdracht1,4);
-			voegQuizOpdrachtToe(quiz2,opdracht1,6);
-			voegQuizOpdrachtToe(quiz3,opdracht1,8);
-			voegQuizOpdrachtToe(quiz4,opdracht1,1);
-			catalogus.wegschrijvenNaarFile();
-			catalogus.lezenFile();
-			System.out.println(catalogus);
-			
-			for(QuizOpdracht lijst : quizOpdracht){
-				System.out.println(lijst.getQuiz().toString() + "met als max score " + lijst.getMaxScore());
-			}
-			
-			verwijderQuizOpdracht(quiz3,opdracht1,9);
-			System.out.println("");
-			for(QuizOpdracht lijst : quizOpdracht){
-				System.out.println(lijst.getQuiz().toString() + "met als max score " + lijst.getMaxScore());
-			}
 		} 
 		catch (IllegalArgumentException ex) {
 			System.out.println(ex.getMessage());

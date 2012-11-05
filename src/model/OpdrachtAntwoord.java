@@ -70,6 +70,5 @@ public class OpdrachtAntwoord {
 		return "LaatsteAntwoord=" + laatsteAntwoord
 				+ ", aantalPogingen=" + aantalPogingen + ", antwoordTijd="
 				+ antwoordTijd + ", quizOpdracht=" + quizOpdracht;
-	}
-	
+		}	
 }

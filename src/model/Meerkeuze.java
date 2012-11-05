@@ -16,16 +16,16 @@ import utils.gregorian.Datum;
  */
 
 public class Meerkeuze extends Opdracht implements Valideerbaar{
-	private Map<Integer, String> antwoord;
+	private Map<Integer, String> keuzes;
 
-	public void setAntwoord(Map<Integer, String> antwoord) {
-		this.antwoord = antwoord;
+	public void setKeuzes(Map<Integer, String> keuzes) {
+		keuzes = keuzes;
 	}
 
-	public Meerkeuze(String vraag, Map<Integer, String> antwoord, List<String> hints, int maxAantalPogingen,
+	public Meerkeuze(String vraag, Map<Integer, String> keuzes, List<String> hints, int maxAantalPogingen,
 			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
-		setAntwoord(antwoord);
+		setKeuzes(keuzes);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +33,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar{
 	public boolean isValide(String ant) {
 		int temp = Integer.parseInt(ant);
 		boolean uitkomst = false;
-		for (int i : antwoord.keySet()){
+		for (int i : keuzes.keySet()){
 			if(temp == i){
 				uitkomst = true;
 				break;

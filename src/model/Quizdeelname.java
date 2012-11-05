@@ -8,7 +8,7 @@ public class Quizdeelname {
 	private Leerling leerling;
 	private OpdrachtAntwoord opdrachtAntwoord;
 	private Quiz quiz;
-	private utils.gregorian.Datum datum;
+	private Datum datum;
 	
 	/**
 	 * Constructor

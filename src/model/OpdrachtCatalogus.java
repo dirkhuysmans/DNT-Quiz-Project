@@ -104,9 +104,7 @@ public class OpdrachtCatalogus implements Iterable{
 	}
 
 	public Opdracht getOpdracht(int k) {
-		return null;
-		
-		
+		return null;		
 	}
 	
 }

@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class LeerlingContainer {
@@ -17,8 +19,10 @@ public class LeerlingContainer {
 	 * @author Dirk Huysmans
 	 */
 	
-	private Set<Leerling> leerlingContainer = new HashSet<Leerling>();
+	private Map<Integer, Leerling> leerlingContainer = new HashMap<Integer, Leerling>();
+	static int i=1;
 	private ObjectOutputStream obj = null;
+	
 	/**
 	 * Voegt een leerling toe, indien deze nog niet in de lijst opgenomen is
 	 * @throws Exception 
@@ -26,29 +30,30 @@ public class LeerlingContainer {
 	
 	public void voegLeerlingToe(Leerling leerling) throws Exception{
 		try{
-			if(leerlingContainer.contains(leerling)){
+			if(leerlingContainer.containsValue(leerling)){
 				throw new Exception("Deze leerling bestaat al in de lijst.");
 			}
 			else{
-				leerlingContainer.add(leerling);
+				leerlingContainer.put(i, leerling);
+				wegschrijvenNaarFile();
+				i++;
 			}
 		}
 		catch (Exception e)
 		{
-			throw new Exception(e.getMessage());
-		
-		}
-		
+			throw new Exception(e.getMessage());		
+		}		
 	}
 	
 	
 	/**
 	 * Verwijder een leerling
 	 */
-	public void verwijderLeerling(Leerling leerling) throws Exception{
+	public void verwijderLeerling(int bijhorendNummer) throws Exception{
 		try{
-			if(leerlingContainer.contains(leerling)){
-				leerlingContainer.remove(leerling);
+			if(leerlingContainer.containsKey(bijhorendNummer)){
+				leerlingContainer.remove(bijhorendNummer);
+				wegschrijvenNaarFile();
 			}
 			else{
 				throw new Exception("Leerling werd niet in de lijst gevonden en kan dan ook niet verwijderd worden.");
@@ -56,18 +61,18 @@ public class LeerlingContainer {
 		}
 		catch (Exception e){
 			throw new Exception(e.getMessage());
-		}
-		
-		
+		}		
 	}
 	
 	/**
 	 * Wijzig  naam leerling
 	 */
-	public void wijzigNaamLeerling(Leerling leerling, String nieuweNaam) throws Exception{
+	public void wijzigNaamLeerling(int bijhorendNummer, String nieuweNaam) throws Exception{
 		try{
-			if(leerlingContainer.contains(leerling)){
+			if(leerlingContainer.containsKey(bijhorendNummer)){
+				Leerling leerling = leerlingContainer.get(bijhorendNummer);
 				leerling.setLeerlingNaam(nieuweNaam);
+				wegschrijvenNaarFile();
 			}
 			else{
 				throw new Exception("Leerling niet gevonden in de lijst. Naam kan bijgevolg niet aangepast worden.");
@@ -81,10 +86,12 @@ public class LeerlingContainer {
 	/**
 	 * Wijzig leerjaar van leerling
 	 */
-	public void wijzigKlasVanLeerling(Leerling leerling, int nieuwLeerjaar) throws Exception{
+	public void wijzigKlasVanLeerling(int bijhorendNummer, int nieuwLeerjaar) throws Exception{
 		try{
-			if(leerlingContainer.contains(leerling)){
+			if(leerlingContainer.containsKey(bijhorendNummer)){
+				Leerling leerling = leerlingContainer.get(bijhorendNummer);
 				leerling.setLeerjaar(nieuwLeerjaar);
+				wegschrijvenNaarFile();
 			}
 			else{
 				throw new Exception("Leerling niet gevonden in de lijst. Leerjaar voor deze leerling kan bijgevolg niet aangepast worden.");
@@ -98,13 +105,12 @@ public class LeerlingContainer {
 	@Override
 	public String toString() {
 		String LijstLeerlingen ="";
-		for (Leerling leerling : leerlingContainer) {
+		for (Leerling leerling : leerlingContainer.values()) {
 			LijstLeerlingen += leerling + "/n";
 		}
 		if(LijstLeerlingen==""){
 			LijstLeerlingen = "De lijst met leerlingen is leeg.";
-		}
-				
+		}				
 		return LijstLeerlingen;
 	}
 	
@@ -126,11 +132,13 @@ public class LeerlingContainer {
 
 	public void lezenFile() {
 		ObjectInputStream input = null;
+		int j=1;
 		try {
 			input = new ObjectInputStream(new FileInputStream("Leerlingen.ser"));
-			Set<Leerling> leerlingen = (Set<Leerling>) input.readObject();
-			for (Leerling leerling : leerlingen) {
-				leerlingContainer.add(leerling);
+			Map<Integer, Leerling> leerlingen = (Map<Integer, Leerling>) input.readObject();
+			for (Leerling leerling : leerlingen.values()) {
+				leerlingContainer.put(j, leerling);
+				j++;
 			}
 		} catch (EOFException eofx) {
 			System.out.println("End of file was reached " + eofx.getMessage());
@@ -147,6 +155,5 @@ public class LeerlingContainer {
 				e.printStackTrace();
 			}
 		}
-	}
-	
+	}	
 }

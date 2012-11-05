@@ -14,13 +14,22 @@ import model.enumKlassen.OpdrachtCategorie;
  */
 
 public class Reproductie extends Opdracht{
-	public Reproductie(String vraag, List<String> hints, int maxAantalPogingen,
-			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
+	
+	Set<String> trefwoorden = new HashSet<String>();
+	int minAantalJuisteTrefwoorden = 0;
+	
+	
+	public Reproductie(String vraag, Set<String> trefwoorden, int minAantalTrefWoorden, 
+			List<String> hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		// TODO Auto-generated constructor stub
 	}
-	Set<String> trefwoorden = new HashSet<String>();
-	int minAantalJuisteTrefwoorden = 0;
-	int aantalJuisteTrefwoorden = 0;
+	
+	public int aantalJuisteTrefWoorden(String tekst){
+		int trefwoordn = 0;
+		
+		return trefwoordn;
+	}
+	
 
 }

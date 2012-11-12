@@ -30,6 +30,7 @@ public class Quiz  implements Serializable{
 	private List<QuizOpdracht> quizOpdrachten = new ArrayList();
 	private String auteur;
 	private int score=0;
+	private Opdracht opdracht;
 	//
 	// Constructor
 	//
@@ -37,12 +38,25 @@ public class Quiz  implements Serializable{
 		this.onderwerp = onderwerp;
 		quizOpdrachten = new ArrayList<QuizOpdracht>();
 	}
-
-	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest){
+	/**
+	 * @param onderwerp				onderwerp van de quiz
+	 * @param leerJaar				formuleren voor welk leeljaar de quiz bestemd is (min 1 max 6)
+	 * @param isUniekeDeelname		true indien quiz meerdere malen mag opgelost worden, false indien quiz 1 maal mag opgeloste worden
+	 * @param isTest				true indien geregistreerd als test (leerling kan maar 1 keer deelnemen)
+	 * @param opdracht				opdracht is een object van het type Opdracht
+	 * @param quizStatus			de status waarin de quiz zich bevindt
+	 */
+	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, 
+			    Opdracht opdracht, QuizStatussen quizStatus){
 		this.onderwerp = onderwerp;
 		this.leerJaar = controleLeerjaar(leerJaar);
-		this.isUniekeDeelname= isUniekeDeelname;
 		this.isTest = isTest;
+		this.isUniekeDeelname= isUniekeDeelname;
+		if(isTest){ // indien quiz in testfase 
+			isUniekeDeelname = false;
+		}
+		this.opdracht = opdracht;
+		this.quizStatus = quizStatus;
 	}
 	
 	//
@@ -83,7 +97,7 @@ public class Quiz  implements Serializable{
 		this.onderwerp = onderwerp;
 	}
 	public void setLeerJaar(int leerJaar) {
-		this.leerJaar = leerJaar;
+		this.leerJaar = controleLeerjaar(leerJaar);
 	}
 	public void setTest(boolean isTest) {
 		this.isTest = isTest;
@@ -109,10 +123,14 @@ public class Quiz  implements Serializable{
 	/**
 	 * methode om het leerJaar op een geldige waarde te controleren <br>
 	 * waarde min 1 en max 6
-	 * @param leerJaar
-	 * @return leerjaar
+	 * 
+	 * @param leerJaar		het te controleren leerjaar
+	 * 
+	 * @return leerjaar		geeft de waarde van het leerjaar terug indien correct
+	 * 
+	 * @author Noella
 	 */
-	private int controleLeerjaar(int leerJaar) {
+	public int controleLeerjaar(int leerJaar) {
 		if (leerJaar > 0 && leerJaar < 7) {
 			return leerJaar;
 		}
@@ -121,38 +139,80 @@ public class Quiz  implements Serializable{
 	} 
 	/**
 	 * voeg een quizOpdracht toe
-	 * @param quiz
-	 * @param opdracht
-	 * @param score
+	 * 
+	 * @param quizOpdracht		quizOpdracht is een object van het type QuizOpdracht
+	 * 
+	 * @author Noella
 	 */
 	protected void voegQuizOpdrachtToe(QuizOpdracht quizOpdracht){
 		quizOpdrachten.add(quizOpdracht);
 	}
 
 	/**
-	 * verwijder een quizOpdracht
-	 * @param quiz
-	 * @param opdracht
-	 * @param score
+	 * verwijderen van een quizOpdracht
+	 * 
+	 * @param quizOpdracht		quizOpdracht is een object van het type QuizOpdracht
+	 * 
+	 * @author Noella
 	 */
 	protected void verwijderQuizOpdracht(QuizOpdracht quizOpdracht){
 		quizOpdrachten.remove(quizOpdracht);
 	}
-
+	/**
+	 * maakt een lijst van alle bestaande opdrachten
+	 * 
+	 * @return lijst met bestaande opdrachten
+	 */
 	public ArrayList <Opdracht> getOpdrachten(){
 		ArrayList <Opdracht> opdrachten = new ArrayList <Opdracht>();
-		for (QuizOpdracht quizOpdracht :quizOpdrachten){
+		for (QuizOpdracht quizOpdracht : quizOpdrachten){
 			opdrachten.add(quizOpdracht.getOpdracht());
 		}
 		return opdrachten;
 	}
-	
+	/**
+	 * zoekt een bepaalde opdracht in een lijst
+	 * 
+	 * @param volgnr om een opdracht op die plaats in de lijst te halen
+	 * @return een bepaalde opdracht
+	 * 
+	 * @author Noella
+	 */
 	public QuizOpdracht getOpdracht(int volgnr){
 		return quizOpdrachten.get(volgnr-1);
 	}
-
-	
-	
+	/**
+	 * wijzigen van een quiz/test indien quizStatus = 'INCONSTRUCTIE'
+	 * 
+	 * @param quizStatus	status waarin de quiz zich bevindt
+	 * @param quiz			de te wijzigen quiz
+	 * 
+	 * @author Noella
+	 * 
+	 */
+	public void wijzigQuiz(QuizStatussen quizStatus,Quiz quiz){
+		if(quizStatus.equals(quizStatus.INCONSTRUCTIE)){
+			System.out.println("wijzig quiz");
+			
+		}
+	}
+	/**
+	 * verwijderen van een quiz
+	 * 
+	 * @param quizStatus	quizStatus is een object van het type QuizStatussen
+	 * @param quiz			quiz is een object van het type Quiz
+	 * 
+	 * @author Noella
+	 */
+	public void verwijderQuiz(QuizStatussen quizStatus,Quiz quiz){
+		if(quizStatus.equals(quizStatus.INCONSTRUCTIE)){
+			System.out.println("wijzig quiz");
+			
+		}
+	}
+	/*
+	 * override van de String-methode
+	 */
 	@Override
 	public String toString(){
 		String aangemaakteQuiz = "";
@@ -226,6 +286,24 @@ public class Quiz  implements Serializable{
 
 	public static void main(String[] args) throws Exception {
 		try {
+			List<String> hints = new ArrayList();
+			hints.add("Eerste letter is 'B'");
+			hints.add("Laatste letter is 'L'");
+			
+			Time time = new Time(120000); // in milliseconden
+			
+			OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.algemeneKennis;
+			Leraar leraar = Leraar.MYRIAM;
+			QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
+			Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
+					"Brussel",hints,2,time,opdrachtCategorie,leraar);
+			
+			Quiz quiz = new Quiz("Hoofdsteden", 2, true,true,opdracht,quizStatus);
+			
+			System.out.println(quiz.toString() + " " + opdracht.toString());
+			
+			quiz.wijzigQuiz(quizStatus, quiz);
+			/*
 			Quiz quiz = new Quiz("Hoofdsteden Europa");
 			
 			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
@@ -237,7 +315,7 @@ public class Quiz  implements Serializable{
 			QuizOpdracht quizOpdracht = quiz.getOpdracht(1);
 			quizOpdracht.ontKoppelOpdrachtVanQuiz();
 			System.out.println(quiz.getOpdrachten());
-
+*/
 			
 			
 		} 

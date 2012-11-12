@@ -16,6 +16,7 @@ import java.util.Set;
  * Deze klasse bevat een catalogus van alle bestaande quizen<br>
  * 
  * @author Noella Michiels
+ * @version oktober 2012
  * 
  */
 public class QuizCatalogus {
@@ -34,8 +35,7 @@ public class QuizCatalogus {
 	/**
 	 * verwijder een quiz toe
 	 * 
-	 * @param quiz
-	 *            quiz is een object van het type Quiz
+	 * @param quiz		quiz is een object van het type Quiz
 	 */
 	public void verwijderQuiz(Quiz quiz) {
 		quizCatalogus.remove(quiz);

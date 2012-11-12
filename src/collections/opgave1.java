@@ -31,12 +31,12 @@ public class opgave1 {
 		Set<Leerling> vijfdeLeerjaar = new HashSet<Leerling>();
 		Set<Leerling> zesdeLeerjaar = new HashSet<Leerling>();
 		QuizCatalogus catalogus = new QuizCatalogus();
-		Quiz quiz1 = new Quiz("rekenen", 4, true, false);
-		Quiz quiz2 = new Quiz("schrijven", 1, true, false);
-		Quiz quiz3 = new Quiz("geschiedenis", 5, false, false);
-		catalogus.voegQuizToe(quiz1);
-		catalogus.voegQuizToe(quiz2);
-		catalogus.voegQuizToe(quiz3);
+		//Quiz quiz1 = new Quiz("rekenen", 4, true, false);
+		//Quiz quiz2 = new Quiz("schrijven", 1, true, false);
+		//Quiz quiz3 = new Quiz("geschiedenis", 5, false, false);
+		//catalogus.voegQuizToe(quiz1);
+		//catalogus.voegQuizToe(quiz2);
+		//catalogus.voegQuizToe(quiz3);
 		
 		LeerlingContainer container = new LeerlingContainer();
 		try {
@@ -70,9 +70,9 @@ public class opgave1 {
 		}
 		System.out.println(container);
 		
-		quizDeelname.put(quiz1.getOnderwerp(), vierdeLeerjaar.toString());
-		quizDeelname.put(quiz2.getOnderwerp(), eersteLeerjaar.toString());
-		quizDeelname.put(quiz3.getOnderwerp(), vijfdeLeerjaar.toString());
+		//quizDeelname.put(quiz1.getOnderwerp(), vierdeLeerjaar.toString());
+		//quizDeelname.put(quiz2.getOnderwerp(), eersteLeerjaar.toString());
+		//quizDeelname.put(quiz3.getOnderwerp(), vijfdeLeerjaar.toString());
 		System.out.println(catalogus);
 		System.out.println("van welke quiz wil je de deelnemers zien?");
 		int temp = sc.nextInt();

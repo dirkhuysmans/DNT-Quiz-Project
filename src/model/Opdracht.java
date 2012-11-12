@@ -27,6 +27,7 @@ public class Opdracht  implements Serializable{
 	private int poging=0;
 	private int maxAantalPogingen = 1;
 	private Time maxAntwoordTijd = null;
+	private int antwoordTijd = 0;
 	private OpdrachtCategorie categorie;
 	private Leraar auteur;
 	protected Datum opmaakDatum;
@@ -54,7 +55,17 @@ public class Opdracht  implements Serializable{
 		setAuteur(auteur);
 		setOpmaakDatum(new Datum());		
 	}
-	
+	public Opdracht (String vraag, String antwoord, List<String> hints, int maxAantalPogingen, 
+			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
+		setVraag(vraag);
+		setAntwoord(antwoord);
+		setHints(hints);
+		setMaxAantalPogingen(maxAantalPogingen);
+		setMaxAntwoordTijd(maxAntwoordTijd);
+		setCategorie(categorie);
+		setAuteur(auteur);
+		setOpmaakDatum(new Datum());		
+	}
 	public Opdracht (String vraag, List<String> hints, int maxAantalPogingen, 
 			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
 		setVraag(vraag);
@@ -109,11 +120,15 @@ public class Opdracht  implements Serializable{
 	public Time getMaxAntwoordTijd() {
 		return maxAntwoordTijd;
 	}
-
+	public int getAntwoordTijd() {
+		return antwoordTijd;
+	}
 	public void setMaxAntwoordTijd(Time maxAntwoordTijd) {
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
-
+	public void setMaxAntwoordTijd(int antwoordTijd) {
+		this.antwoordTijd = antwoordTijd;
+	}
 	public OpdrachtCategorie getCategorie() {
 		return categorie;
 	}

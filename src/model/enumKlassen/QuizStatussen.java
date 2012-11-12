@@ -2,11 +2,11 @@ package model.enumKlassen;
 
 /**
  * Deze enum bevat de mogelijke statussen van een quiz <br>
- * 0 = in construcite <br>
- * 1 = afgewerkt <br>
- * 2 = opgengesteld <br>
- * 3 = laatse kans <br>
- * 4 = afgesloten <br>
+ * 1 = in construcite <br>
+ * 2 = afgewerkt <br>
+ * 3 = opgengesteld <br>
+ * 4 = laatse kans <br>
+ * 5 = afgesloten <br>
  * 
  * @author Michiels Noella
  * @version oktober 2012

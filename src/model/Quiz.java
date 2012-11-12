@@ -34,6 +34,10 @@ public class Quiz  implements Serializable{
 	//
 	// Constructor
 	//
+	/**
+	 * 
+	 * @param onderwerp		onderwerp van de quiz
+	 */
 	public Quiz (String onderwerp){
 		this.onderwerp = onderwerp;
 		quizOpdrachten = new ArrayList<QuizOpdracht>();
@@ -47,7 +51,7 @@ public class Quiz  implements Serializable{
 	 * @param quizStatus			de status waarin de quiz zich bevindt
 	 */
 	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, 
-			    Opdracht opdracht, QuizStatussen quizStatus){
+			    QuizStatussen quizStatus){
 		this.onderwerp = onderwerp;
 		this.leerJaar = controleLeerjaar(leerJaar);
 		this.isTest = isTest;
@@ -55,7 +59,6 @@ public class Quiz  implements Serializable{
 		if(isTest){ // indien quiz in testfase 
 			isUniekeDeelname = false;
 		}
-		this.opdracht = opdracht;
 		this.quizStatus = quizStatus;
 	}
 	
@@ -192,7 +195,7 @@ public class Quiz  implements Serializable{
 	 */
 	public void wijzigQuiz(QuizStatussen quizStatus,Quiz quiz){
 		if(quizStatus.equals(quizStatus.INCONSTRUCTIE)){
-			System.out.println("wijzig quiz");
+			this.setOnderwerp(quiz.getOnderwerp());
 			
 		}
 	}
@@ -295,14 +298,20 @@ public class Quiz  implements Serializable{
 			OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.algemeneKennis;
 			Leraar leraar = Leraar.MYRIAM;
 			QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
-			Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
-					"Brussel",hints,2,time,opdrachtCategorie,leraar);
+			//Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
+			//		"Brussel",hints,2,time,opdrachtCategorie,leraar);
 			
-			Quiz quiz = new Quiz("Hoofdsteden", 2, true,true,opdracht,quizStatus);
+			Quiz quiz = new Quiz("Hoofdsteden", 2, true,true,quizStatus);
+			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
+			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
 			
-			System.out.println(quiz.toString() + " " + opdracht.toString());
-			
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
+			System.out.println(quiz.getOpdrachten());
+			System.out.println(quiz.toString());
+			quiz.setOnderwerp("Belgie");
 			quiz.wijzigQuiz(quizStatus, quiz);
+			System.out.println(quiz.toString());
 			/*
 			Quiz quiz = new Quiz("Hoofdsteden Europa");
 			

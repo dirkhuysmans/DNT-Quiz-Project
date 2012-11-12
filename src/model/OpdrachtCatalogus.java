@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,11 +20,11 @@ import java.util.Set;
  * @author thijs
  *
  */
-public class OpdrachtCatalogus implements Iterable{
+public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	
-	Map<Integer, Opdracht> opdrachtenCatalogus = new HashMap<Integer, Opdracht>();
-	private ObjectOutputStream obj = null;
-	static int i = 1;
+	private List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
+	private final String OPDRACHTFILE = "Opdrachten.txt";
+	private List<String> catalogus = new ArrayList<String>();
 	
 	/**
 	 * 
@@ -32,23 +33,20 @@ public class OpdrachtCatalogus implements Iterable{
 	 * toevoegen en verwijderen van opdracht aan catalogus
 	 */
 	public void voegOpdrachtToe(Opdracht opdracht){
-		lezenFile();
-		opdrachtenCatalogus.put(i, opdracht);
-		i++;
-		wegschrijvenNaarFile();
+		opdrachtenCatalogus.add(opdracht);
+		schrijven(OPDRACHTFILE, toString());
 	}
 	
 	public void verwijderOpdracht (int i){
-		lezenFile();
+		lezen(OPDRACHTFILE);
 		opdrachtenCatalogus.remove(i);
-		wegschrijvenNaarFile();
+		schrijven(OPDRACHTFILE, toString());
 	}
 	
 	@Override
 	public String toString(){
-		lezenFile();
 		String catalogus = "";
-		for(Opdracht opdracht : opdrachtenCatalogus.values()){
+		for(Opdracht opdracht : opdrachtenCatalogus){
 			catalogus = opdracht +"/n";
 		}
 		return catalogus;
@@ -56,11 +54,12 @@ public class OpdrachtCatalogus implements Iterable{
 
 	@Override
 	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return opdrachtenCatalogus.iterator();
 	}
 	
-	public void wegschrijvenNaarFile() {
+	/*
+	 * public void wegschrijvenNaarFile() {
+	 
 		try {
 			obj = new ObjectOutputStream(new FileOutputStream("Opdrachten.ser"));
 			obj.writeObject(opdrachtenCatalogus);
@@ -83,7 +82,7 @@ public class OpdrachtCatalogus implements Iterable{
 			Map<Integer, Opdracht> opdrachten = (Map<Integer, Opdracht>) input.readObject();
 			int i = 1;
 			for (Opdracht opdracht : opdrachten.values()) {
-				opdrachtenCatalogus.put(i, opdracht);
+				opdrachtenCatalogus.add(opdracht);
 				i++;
 			}
 		} catch (EOFException eofx) {
@@ -101,10 +100,15 @@ public class OpdrachtCatalogus implements Iterable{
 				e.printStackTrace();
 			}
 		}
+	}*/
+
+	public Opdracht getOpdracht(int k) throws IndexOutOfBoundsException{
+		return opdrachtenCatalogus.get(k-1);		
 	}
 
-	public Opdracht getOpdracht(int k) {
-		return null;		
+	@Override
+	public void toevoegenLijn(String lijn) {
+		catalogus.add(lijn);		
 	}
 	
 }

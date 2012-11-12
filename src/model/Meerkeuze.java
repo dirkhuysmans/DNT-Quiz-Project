@@ -46,8 +46,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar{
 
 	@Override
 	public String getValideerTekst() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Kies één van de getallen die in de opgave staan";
 	}
 
 }

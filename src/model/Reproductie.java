@@ -27,7 +27,12 @@ public class Reproductie extends Opdracht{
 	
 	public int aantalJuisteTrefWoorden(String tekst){
 		int trefwoordn = 0;
-		
+		String [] woordPerWoord = tekst.split(" ");
+		for (String woord : woordPerWoord){
+			if (trefwoorden.contains(woord)){
+				trefwoordn += 1;
+			}
+		}
 		return trefwoordn;
 	}
 	

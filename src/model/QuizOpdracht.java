@@ -65,12 +65,12 @@ public class QuizOpdracht {
 	public static void koppelOpdrachtAanQuiz(Quiz quiz, Opdracht opdracht, int maxScore){
 		QuizOpdracht quizOpdracht = new QuizOpdracht(quiz,opdracht,maxScore);
 		quiz.voegQuizOpdrachtToe(quizOpdracht);
-		opdracht.voegQuizToe(quizOpdracht);
+		opdracht.voegQuizOpdrachtToe(quizOpdracht);
 	}
 	/**
 	 * 	
 	 */
 	public void ontKoppelOpdrachtVanQuiz(){
 		quiz.verwijderQuizOpdracht(this);
-		opdracht.verwijderQuiz(this);		}	
+		opdracht.verwijderQuizOpdracht(this);		}	
 	}

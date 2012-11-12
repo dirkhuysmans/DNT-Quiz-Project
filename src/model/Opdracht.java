@@ -180,11 +180,11 @@ public class Opdracht  implements Serializable{
 		return (categorie + ": " + vraag + "\n\t antwoord:");
 	}
 	
-	public void verwijderQuiz(QuizOpdracht qo){
+	public void verwijderQuizOpdracht(QuizOpdracht qo){
 		quizOpdrachten.remove(qo);
 	}
 	
-	public void voegQuizToe(QuizOpdracht qo){
+	public void voegQuizOpdrachtToe(QuizOpdracht qo){
 		quizOpdrachten.add(qo);
 	}
 	

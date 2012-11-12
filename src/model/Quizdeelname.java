@@ -8,7 +8,7 @@ public class Quizdeelname {
 	private Leerling leerling;
 	private OpdrachtAntwoord opdrachtAntwoord;
 	private Quiz quiz;
-	private Datum datum;
+	private Datum datumDeelname;
 	
 	/**
 	 * Constructor
@@ -23,7 +23,7 @@ public class Quizdeelname {
 		this.leerling = leerling;
 		this.opdrachtAntwoord = opdrachtAntwoord;
 		this.quiz = quiz;
-		this.datum = datum;
+		this.datumDeelname = datum;
 	}
 
 	/**
@@ -39,8 +39,8 @@ public class Quizdeelname {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
-	public void setDatum(utils.gregorian.Datum datum) {
-		this.datum = datum;
+	public void setdatumDeelname(utils.gregorian.Datum datum) {
+		this.datumDeelname = datum;
 	}
 	
 	/**
@@ -56,13 +56,13 @@ public class Quizdeelname {
 		return quiz;
 	}
 	public utils.gregorian.Datum getDatum() {
-		return datum;
+		return datumDeelname;
 	}
 	
 	@Override
 	public String toString() {
 		return "Quizdeelname [leerling=" + leerling + ", opdrachtAntwoord="
-				+ opdrachtAntwoord + ", quiz=" + quiz + ", datum=" + datum
+				+ opdrachtAntwoord + ", quiz=" + quiz + ", datum=" + datumDeelname
 				+ "]";
 	}
 }

@@ -33,19 +33,19 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 
 	@Override
 	public boolean isValide(String antw) {
-		StringTokenizer binnenkomend = new StringTokenizer(antw, " ; ");
-		StringTokenizer origineel = new StringTokenizer(antwoord, " ; ");
+		StringTokenizer binnenkomend = new StringTokenizer(antw, ";");
+		StringTokenizer origineel = new StringTokenizer(antwoord, ";");
 		if (binnenkomend.countTokens() == origineel.countTokens()){
 			return true;
 		}else{
+			getValideerTekst();
 			return false;
 		}
 	}
 
 	@Override
 	public String getValideerTekst() {
-		// TODO Auto-generated method stub
-		return null;
+		return ("Typ je antwoorden achter elkaar gescheiden door ;");
 	}
 
 }

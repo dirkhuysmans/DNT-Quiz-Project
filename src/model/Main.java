@@ -75,7 +75,7 @@ public class Main {
 					OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
 					System.out.println(opdrachtCatalogus);
 					int k = sc.nextInt();
-					Opdracht op = opdrachtCatalogus.opdrachtenCatalogus.get(k);
+					Opdracht op = opdrachtCatalogus.getOpdracht(k);
 					if (!op.getQuizOpdrachten().isEmpty()) {
 						System.out
 								.println("Je kan deze opdracht niet wijzigen omdat ze al gelinkt is aan een quiz");

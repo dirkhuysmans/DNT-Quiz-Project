@@ -51,10 +51,10 @@ public class QuizTest {
 		Leraar leraar = Leraar.MYRIAM;
 		QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
 		
-		Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
-				"Brussel",hints,2,120,opdrachtCategorie,leraar);
+		//Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
+		//		"Brussel",hints,2,120,opdrachtCategorie,leraar);
 		
-		Quiz quiz = new Quiz("rekenen",3,true,true,opdracht,quizStatus);
+		Quiz quiz = new Quiz("rekenen",3,true,true,quizStatus);
 		assertEquals("eerste parameter onderwerp","rekenen",quiz.getOnderwerp());
 		assertEquals("tweede parameter leerjaar",3,quiz.getLeerJaar());
 		assertEquals("derde parameter unieke deelname",true,quiz.isUniekeDeelname());

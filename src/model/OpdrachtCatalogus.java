@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -109,6 +110,22 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	@Override
 	public void toevoegenLijn(String lijn) {
 		catalogus.add(lijn);		
+	}
+	
+	
+	public static void main(String[] args) {
+		OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
+		boolean stop = false;
+		Opdracht opdracht = null;
+		while(!stop){
+			
+		}
+		System.out.println(catalogus);
+		System.out.println("Kies degene die weg moet: ");
+		Scanner sc = new Scanner (System.in);
+		int i = sc.nextInt();
+		catalogus.verwijderOpdracht(i);
+		System.out.println(catalogus);
 	}
 	
 }

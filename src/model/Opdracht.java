@@ -132,6 +132,11 @@ public class Opdracht  implements Serializable{
 	public OpdrachtCategorie getCategorie() {
 		return categorie;
 	}
+	
+	public void voegToeAanCatalogus(){
+		OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
+		catalogus.voegOpdrachtToe(this);
+	}
 
 	public void setCategorie(OpdrachtCategorie categorie) {
 		this.categorie = categorie;

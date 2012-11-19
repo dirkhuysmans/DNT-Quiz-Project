@@ -1,47 +1,74 @@
+
 package model;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Map;
 
-public abstract class FileContainer {
-	
+public class FileContainer {
 
-	public void lezen(String bestand){
-		try{
-			File file = new File(bestand);
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String lijn = null;
-			while (!(lijn = reader.readLine()).equals("EINDE")){
-				toevoegenLijn(lijn);
-			}
-			reader.close();
-		}
-		catch (Exception ex){
-			
-		}
+	public void toevoegenLijn(String lijn) {
+		// TODO Auto-generated method stub
+		
 	}
 	
-	public abstract void toevoegenLijn(String lijn);
-
-	public void schrijven(String bestand, String catalogus){
-		try{
-			File file = new File(bestand);
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(catalogus);
-			writer.close();
-		}
-		catch (Exception ex){
+	public void schrijven(String bestand, String info){
+		BufferedWriter output = null;
+		try {
+			output = new BufferedWriter(new FileWriter(new File(bestand)));
 			
+			output.write(info);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				output.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		}
+	
+	
+	public String lezen (String bestand){
+		BufferedReader input = null;
+		String catalogus="";
+		try {
+			input = new BufferedReader(new FileReader(new File(bestand)));
+			String lijn="";
+			try {
+				while((lijn = input.readLine()) != null){
+					catalogus += lijn + "\n";
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				input.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return catalogus;		
+	}
+
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

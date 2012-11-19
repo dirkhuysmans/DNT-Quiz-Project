@@ -20,7 +20,7 @@ import java.util.Set;
  * 
  */
 public class QuizCatalogus {
-	private Set<Quiz> quizCatalogus = new HashSet<Quiz>();
+	private List<Quiz> lijstQuizCatalogus = new ArrayList();
 
 	/**
 	 * voeg een quiz toe
@@ -29,7 +29,7 @@ public class QuizCatalogus {
 	 *            quiz is een object van het type Quiz
 	 */
 	public void voegQuizToe(Quiz quiz) {
-		quizCatalogus.add(quiz);
+		lijstQuizCatalogus.add(quiz);
 	}
 
 	/**
@@ -38,13 +38,13 @@ public class QuizCatalogus {
 	 * @param quiz		quiz is een object van het type Quiz
 	 */
 	public void verwijderQuiz(Quiz quiz) {
-		quizCatalogus.remove(quiz);
+		lijstQuizCatalogus.remove(quiz);
 	}
 
 	@Override
 	public String toString() {
 		String catalogus = "";
-		for (Quiz quiz : quizCatalogus) {
+		for (Quiz quiz : lijstQuizCatalogus) {
 			catalogus += quiz + "\n";
 		}
 		return catalogus;
@@ -58,7 +58,7 @@ public class QuizCatalogus {
 			// obj = new AppendableObjectOutputStream(new
 			// FileOutputStream("Quizzen.txt"));
 			obj = new ObjectOutputStream(new FileOutputStream("Quizzen.ser"));
-			obj.writeObject(quizCatalogus);
+			obj.writeObject(lijstQuizCatalogus);
 		} catch (IOException ex) {
 			System.out.println("Error om naar de quiz-file te schrijven");
 		} finally {
@@ -77,7 +77,7 @@ public class QuizCatalogus {
 			input = new ObjectInputStream(new FileInputStream("Quizzen.ser"));
 			Set<Quiz> quizzen = (Set<Quiz>) input.readObject();
 			for (Quiz quiz : quizzen) {
-				quizCatalogus.add(quiz);
+				lijstQuizCatalogus.add(quiz);
 			}
 		} catch (EOFException eofx) {
 			System.out.println("End of file was reached " + eofx.getMessage());

@@ -37,22 +37,11 @@ public class QuizTest {
 		assertEquals("onderwerp rekenen wordt verwacht","rekenen", quiz.getOnderwerp());
 	}
 	/**
-	 * Test constructor met parameter (String onderwerp, int leerjaar, boolean isUniekeDeelname, boolean isTest)
+	 * Test constructor met parameter (String onderwerp, int leerjaar, boolean isUniekeDeelname, boolean isTest,QuizStatussen quizStatus)
 	 */
 	@Test
 	public void testQuizStringIntBooleanBoolean() {
-		List<String> hints = new ArrayList();
-		hints.add("Eerste letter is 'B'");
-		hints.add("Laatste letter is 'L'");
-		
-		//Time time = new Time(5,15,120);
-		
-		OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.algemeneKennis;
-		Leraar leraar = Leraar.MYRIAM;
 		QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
-		
-		//Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
-		//		"Brussel",hints,2,120,opdrachtCategorie,leraar);
 		
 		Quiz quiz = new Quiz("rekenen",3,true,true,quizStatus);
 		assertEquals("eerste parameter onderwerp","rekenen",quiz.getOnderwerp());
@@ -101,26 +90,6 @@ public class QuizTest {
 	public void setUniekeDeelnameFalse() {
 		quiz.setUniekeDeelname(false);
 		assertFalse(false);
-	}
-	/**
-	 * testen methode setQuizStatus
-	 */
-	@Ignore
-	public void setQuizStatus(QuizStatussen quizStatus) {
-		
-	}
-	// public void setLeraar(Leraar leraar) {
-	@Ignore
-	public void setLeraar(Leraar leraar) {
-		//this.leraar = leraar;
-	}@Ignore
-	public void setQuizOpdracht(List<QuizOpdracht> quizOpdracht) {
-		//this.quizOpdrachten = quizOpdracht;
-	}
-	@Test
-	public void testSetAuteurInputString(){
-		quiz.setAuteur("Peter");
-		assertEquals("auteur","Peter", quiz.getAuteur());
 	}
 	/**
 	 * test controle leerjaar

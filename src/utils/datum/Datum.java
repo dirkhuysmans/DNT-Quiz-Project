@@ -103,7 +103,7 @@ public class Datum implements Comparable<Datum> {
 			throw new RuntimeException("datum kan niet null zijn");
 		} else {
 			return String.format("%04d/%02d/%02d", datum.getJaar(),
-					datum.getMaand(), dag);
+					datum.getMaand()+1, dag);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class Datum implements Comparable<Datum> {
 	 */
 	public String getDatumInEuropeesFormaat(Datum datum) {
 		return String.format("%02d/%02d/%04d", datum.getDag(),
-				datum.getMaand(), datum.getJaar());
+				datum.getMaand()+1, datum.getJaar());
 	}
 
 	//

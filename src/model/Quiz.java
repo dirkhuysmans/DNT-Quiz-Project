@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.sun.org.apache.xpath.internal.operations.Equals;
 
-import utils.gregorian.Datum;
+import utils.datum.Datum;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 import model.enumKlassen.QuizStatussen;
@@ -26,11 +26,9 @@ public class Quiz  implements Serializable{
 	private boolean isTest;
 	private boolean isUniekeDeelname;
 	private QuizStatussen quizStatus;
-	private Leraar leraar;
+	private Leraar auteur;
+	private Datum datumRegistratie;
 	private List<QuizOpdracht> quizOpdrachten = new ArrayList();
-	private String auteur;
-	private int score=0;
-	private Opdracht opdracht;
 	//
 	// Constructor
 	//
@@ -60,6 +58,10 @@ public class Quiz  implements Serializable{
 			isUniekeDeelname = false;
 		}
 		this.quizStatus = quizStatus;
+		Datum datumRegistratie = new Datum();
+		this.datumRegistratie= datumRegistratie;
+		Leraar auteur = Leraar.MYRIAM;
+		this.auteur = auteur;
 	}
 	
 	//
@@ -85,13 +87,13 @@ public class Quiz  implements Serializable{
 		return quizStatus;
 	}
 	public Leraar getLeraar() {
-		return leraar;
+		return auteur;
+	}
+	public Datum getDatum(){
+		return datumRegistratie;
 	}
 	public List<QuizOpdracht> getQuizOpdracht() {
 		return quizOpdrachten;
-	}
-	public String getAuteur() {
-		return auteur;
 	}
 	//
 	// Setters
@@ -111,14 +113,14 @@ public class Quiz  implements Serializable{
 	public void setQuizStatus(QuizStatussen quizStatus) {
 		this.quizStatus = quizStatus;
 	}
-	public void setLeraar(Leraar leraar) {
-		this.leraar = leraar;
+	public void setLeraar(Leraar auteur) {
+		this.auteur = auteur;
+	}
+	public void setDatum(Datum datumRegistratie){
+		this.datumRegistratie = datumRegistratie;
 	}
 	public void setQuizOpdracht(List<QuizOpdracht> quizOpdracht) {
 		this.quizOpdrachten = quizOpdracht;
-	}
-	public void setAuteur(String auteur) {
-		this.auteur = auteur;
 	}
 	//
 	// Methodes
@@ -184,44 +186,18 @@ public class Quiz  implements Serializable{
 	public QuizOpdracht getOpdracht(int volgnr){
 		return quizOpdrachten.get(volgnr-1);
 	}
-	/**
-	 * wijzigen van een quiz/test indien quizStatus = 'INCONSTRUCTIE'
-	 * 
-	 * @param quizStatus	status waarin de quiz zich bevindt
-	 * @param quiz			de te wijzigen quiz
-	 * 
-	 * @author Noella
-	 * 
-	 */
-	public void wijzigQuiz(QuizStatussen quizStatus,Quiz quiz){
-		if(quizStatus.equals(quizStatus.INCONSTRUCTIE)){
-			this.setOnderwerp(quiz.getOnderwerp());
-			
-		}
-	}
-	/**
-	 * verwijderen van een quiz
-	 * 
-	 * @param quizStatus	quizStatus is een object van het type QuizStatussen
-	 * @param quiz			quiz is een object van het type Quiz
-	 * 
-	 * @author Noella
-	 */
-	public void verwijderQuiz(QuizStatussen quizStatus,Quiz quiz){
-		if(quizStatus.equals(quizStatus.INCONSTRUCTIE)){
-			System.out.println("wijzig quiz");
-			
-		}
-	}
+	
 	/*
 	 * override van de String-methode
 	 */
 	@Override
 	public String toString(){
 		String aangemaakteQuiz = "";
-		aangemaakteQuiz += "Quiz : " + onderwerp + " voor het " + leerJaar + " e leerjaar ";
-		aangemaakteQuiz += isUniekeDeelname ? "met unieke deelname" : "zonder unieke deelname";
-		
+		aangemaakteQuiz += "Quiz : " + onderwerp + "\n" +
+				           "bedoeld voor het " + leerJaar + 
+				           " e leerjaar, aangemaakt op " +
+				           datumRegistratie.getDatumInEuropeesFormaat(datumRegistratie) +
+				           " door " + auteur ;
 		return aangemaakteQuiz;
 	}
 	
@@ -235,7 +211,7 @@ public class Quiz  implements Serializable{
 		result = prime * result + (isTest ? 1231 : 1237);
 		result = prime * result + (isUniekeDeelname ? 1231 : 1237);
 		result = prime * result + leerJaar;
-		result = prime * result + ((leraar == null) ? 0 : leraar.hashCode());
+		result = prime * result + ((auteur == null) ? 0 : auteur.hashCode());
 		result = prime * result
 				+ ((onderwerp == null) ? 0 : onderwerp.hashCode());
 		result = prime * result
@@ -271,7 +247,7 @@ public class Quiz  implements Serializable{
 		if (leerJaar != other.leerJaar) {
 			return false;
 		}
-		if (leraar != other.leraar) {
+		if (auteur != other.auteur) {
 			return false;
 		}
 		if (onderwerp == null) {
@@ -287,52 +263,5 @@ public class Quiz  implements Serializable{
 		return true;
 	}
 
-	public static void main(String[] args) throws Exception {
-		try {
-			List<String> hints = new ArrayList();
-			hints.add("Eerste letter is 'B'");
-			hints.add("Laatste letter is 'L'");
-			
-			Time time = new Time(120000); // in milliseconden
-			
-			OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.algemeneKennis;
-			Leraar leraar = Leraar.MYRIAM;
-			QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
-			//Opdracht opdracht = new Opdracht("Wat is de hoofdstad van ons land?",
-			//		"Brussel",hints,2,time,opdrachtCategorie,leraar);
-			
-			Quiz quiz = new Quiz("Hoofdsteden", 2, true,true,quizStatus);
-			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
-			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
-			System.out.println(quiz.getOpdrachten());
-			System.out.println(quiz.toString());
-			quiz.setOnderwerp("Belgie");
-			quiz.wijzigQuiz(quizStatus, quiz);
-			System.out.println(quiz.toString());
-			/*
-			Quiz quiz = new Quiz("Hoofdsteden Europa");
-			
-			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
-			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
-			System.out.println(quiz.getOpdrachten());
-			QuizOpdracht quizOpdracht = quiz.getOpdracht(1);
-			quizOpdracht.ontKoppelOpdrachtVanQuiz();
-			System.out.println(quiz.getOpdrachten());
-*/
-			
-			
-		} 
-		catch (IllegalArgumentException ex) {
-			System.out.println(ex.getMessage());
-		} 
-		catch (RuntimeException ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
+	
 }

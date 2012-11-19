@@ -24,8 +24,8 @@ import java.util.Set;
 public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	
 	private List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
-	private final String OPDRACHTFILE = "Opdrachten.txt";
-	private List<String> catalogus = new ArrayList<String>();
+	private final static String OPDRACHTFILE = "Opdrachten.txt";
+	private List<String> stringCatalogus = new ArrayList<String>();
 	
 	/**
 	 * 
@@ -52,6 +52,10 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		}
 		return catalogus;
 	}
+	
+//	public String lezen(){
+//		(OPDRACHTFILE);
+//	}
 
 	@Override
 	public Iterator iterator() {
@@ -109,13 +113,14 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 
 	@Override
 	public void toevoegenLijn(String lijn) {
-		catalogus.add(lijn);		
+		stringCatalogus.add(lijn);		
 	}
 	
 	
 	public static void main(String[] args) {
 		OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
 		boolean stop = false;
+		lezen(OPDRACHTFILE);
 		Opdracht opdracht = null;
 		while(!stop){
 			

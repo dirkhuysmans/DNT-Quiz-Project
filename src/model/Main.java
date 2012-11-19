@@ -102,7 +102,7 @@ public class Main {
 
 			case 2:
 				QuizCatalogus catalogus = new QuizCatalogus();
-				catalogus.lezenFile();
+//				catalogus.lezenFile();
 				System.out.println(catalogus);
 
 				System.out.println("\n\nOnderwerp: ");
@@ -118,7 +118,7 @@ public class Main {
 				//Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test);
 
 				//catalogus.voegQuizToe(quiz);
-				catalogus.wegschrijvenNaarFile();
+//				catalogus.wegschrijvenNaarFile();
 				break;
 			}
 		} while (keuze != 7);

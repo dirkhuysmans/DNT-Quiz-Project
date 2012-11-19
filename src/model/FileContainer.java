@@ -1,3 +1,4 @@
+
 package model;
 
 import java.io.BufferedOutputStream;
@@ -38,7 +39,7 @@ public class FileContainer {
 		}
 	
 	
-	public String lezen (String bestand){
+	public static String lezen (String bestand){
 		BufferedReader input = null;
 		String catalogus="";
 		try {

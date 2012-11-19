@@ -19,8 +19,9 @@ import java.util.Set;
  * @version oktober 2012
  * 
  */
-public class QuizCatalogus {
-	private List<Quiz> lijstQuizCatalogus = new ArrayList();
+public class QuizCatalogus extends FileContainer{
+	private List<Quiz> lijstQuizCatalogus = new ArrayList();	
+	private final static String OPDRACHTFILE = "Opdrachten.txt";
 
 	/**
 	 * voeg een quiz toe
@@ -51,7 +52,7 @@ public class QuizCatalogus {
 	}
 
 	// private AppendableObjectOutputStream obj = null;
-	private ObjectOutputStream obj = null;
+	/*private ObjectOutputStream obj = null;
 
 	public void wegschrijvenNaarFile() {
 		try {
@@ -94,5 +95,5 @@ public class QuizCatalogus {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 }

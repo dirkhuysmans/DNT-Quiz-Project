@@ -61,6 +61,7 @@ public class Quiz  implements Serializable{
 		Datum datumRegistratie = new Datum();
 		this.datumRegistratie= datumRegistratie;
 		Leraar auteur = Leraar.MYRIAM;
+		
 		this.auteur = auteur;
 	}
 	
@@ -192,12 +193,27 @@ public class Quiz  implements Serializable{
 	 */
 	@Override
 	public String toString(){
+		String tekst = "";
+		if(isTest){
+			tekst = ", deze quiz is een test ";
+		}
+		else{
+			tekst = ", deze quiz is geen test ";
+		}
+		if(isUniekeDeelname){
+			tekst += "en heeft een uniek deelname,";
+		}
+		else{
+			tekst += "en heeft geen unieke deelname,";
+		}
+		tekst += " de status van de quiz is ";
 		String aangemaakteQuiz = "";
 		aangemaakteQuiz += "Quiz : " + onderwerp + "\n" +
 				           "bedoeld voor het " + leerJaar + 
 				           " e leerjaar, aangemaakt op " +
 				           datumRegistratie.getDatumInEuropeesFormaat(datumRegistratie) +
-				           " door " + auteur ;
+				           " door " + auteur  +
+				           tekst + quizStatus;
 		return aangemaakteQuiz;
 	}
 	
@@ -262,6 +278,4 @@ public class Quiz  implements Serializable{
 		}
 		return true;
 	}
-
-	
 }

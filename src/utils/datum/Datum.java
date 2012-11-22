@@ -13,7 +13,7 @@ import utils.MaandEnum;
  * Deze klasse behandeld een datum
  * 
  * @author Noella
- * @
+ * 
  * @version september 2012
  * 
  */
@@ -33,7 +33,7 @@ public class Datum implements Comparable<Datum> {
 		dag = today.getDate();
 		//maand = today.getMonth() + 1; // + 1 want maand ligt in java tussen 0 en
 										// 11
-		maand = today.getMonth();
+		maand = today.getMonth()+1;
 		jaar = today.getYear() + 1900;
 	}
 
@@ -103,7 +103,7 @@ public class Datum implements Comparable<Datum> {
 			throw new RuntimeException("datum kan niet null zijn");
 		} else {
 			return String.format("%04d/%02d/%02d", datum.getJaar(),
-					datum.getMaand()+1, dag);
+					datum.getMaand(), dag);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class Datum implements Comparable<Datum> {
 	 */
 	public String getDatumInEuropeesFormaat(Datum datum) {
 		return String.format("%02d/%02d/%04d", datum.getDag(),
-				datum.getMaand()+1, datum.getJaar());
+				datum.getMaand(), datum.getJaar());
 	}
 
 	//

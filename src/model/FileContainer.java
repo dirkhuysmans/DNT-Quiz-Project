@@ -44,7 +44,18 @@ public abstract class FileContainer {
 			throw new Exception(e.getMessage());
 		}
 	}
-	
+
+	public void toevoegenLijn(String lijn) throws Exception {
+		// TODO Auto-generated method stub
+		String[] velden = lijn.split(",");
+		try {
+			maakObjectVanLijn(velden);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.getMessage());
+		}
+	}
 	
 	public String getDirectory(){
 		return "bestanden";
@@ -53,8 +64,6 @@ public abstract class FileContainer {
 	public abstract String getFile();
 	
 	public abstract void wegschrijven() throws IOException, Exception;
-	
-	public abstract void toevoegenLijn(String lijn) throws Exception;
 
 	public abstract void maakObjectVanLijn(String[] velden) throws Exception;
 

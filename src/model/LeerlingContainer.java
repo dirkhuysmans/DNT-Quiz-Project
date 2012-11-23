@@ -14,7 +14,7 @@ import java.util.Map;
 import model.Leerling;
 import model.FileContainer;
 
-public class LeerlingContainer extends FileContainer{
+public class LeerlingContainer extends FileContainer implements PersisteerbaarAlsTekst{
 
 	/**
 	 * @author Dirk Huysmans
@@ -189,7 +189,7 @@ public class LeerlingContainer extends FileContainer{
 		
 	}
 
-	@Override
+/*	@Override
 	public void toevoegenLijn(String lijn) throws Exception {
 		// TODO Auto-generated method stub
 		String[] velden = lijn.split(",");
@@ -201,7 +201,7 @@ public class LeerlingContainer extends FileContainer{
 			throw new Exception(e.getMessage());
 		}
 	}
-
+*/
 	@Override
 	public void maakObjectVanLijn(String[] velden) throws Exception {
 		// TODO Auto-generated method stub

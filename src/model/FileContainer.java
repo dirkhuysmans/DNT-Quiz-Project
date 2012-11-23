@@ -1,7 +1,12 @@
 
 package model;
 
-import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+/*import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,14 +21,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.enumKlassen.QuizStatussen;
-
+*/
 
 
 public abstract class FileContainer {
-
+	
+	/**
+	 * @author Dirk Huysmans
+	 * @throws Exception
+	 */
 	public void lezen() throws Exception{
 		try{
-			File bestand = new File(getFile());
+			File bestand = new File(getDirectory(),getFile());
 			BufferedReader lezer = new BufferedReader(new FileReader(bestand));
 			String lijn = null;
 			while(!(lijn=lezer.readLine()).equals("EINDE")){
@@ -36,15 +45,18 @@ public abstract class FileContainer {
 		}
 	}
 	
+	
 	public String getDirectory(){
-		return "Bestanden";
+		return "bestanden";
 	}
 	
 	public abstract String getFile();
 	
-	public abstract void wegschrijven() throws IOException;
+	public abstract void wegschrijven() throws IOException, Exception;
 	
-	public abstract void toevoegenLijn(String lijn);
+	public abstract void toevoegenLijn(String lijn) throws Exception;
+
+	public abstract void maakObjectVanLijn(String[] velden) throws Exception;
 
 	
 	

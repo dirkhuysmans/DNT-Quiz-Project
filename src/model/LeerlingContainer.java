@@ -1,19 +1,20 @@
 package model;
 
+import java.io.BufferedWriter;
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import model.Leerling;
+import model.FileContainer;
 
-public class LeerlingContainer {
+public class LeerlingContainer extends FileContainer{
 
 	/**
 	 * @author Dirk Huysmans
@@ -135,6 +136,7 @@ public class LeerlingContainer {
 		int j=1;
 		try {
 			input = new ObjectInputStream(new FileInputStream("Leerlingen.ser"));
+			@SuppressWarnings("unchecked")
 			Map<Integer, Leerling> leerlingen = (Map<Integer, Leerling>) input.readObject();
 			for (Leerling leerling : leerlingen.values()) {
 				leerlingContainer.put(j, leerling);
@@ -152,8 +154,69 @@ public class LeerlingContainer {
 				input.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Er is iets fout gegaan bij het sluiten van het bestand " + e.getMessage());
 			}
 		}
 	}	
-}
+	
+	@Override
+	public String getFile() {
+		return "leerlingen.txt";}
+
+	@Override
+	public void wegschrijven() throws IOException, Exception {
+		try {
+			//aanmaken schrijfbuffer met meegeven bestandsnaam
+			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(getDirectory(),getFile())));
+			for (Leerling lln:leerlingContainer.values()){
+				bw.write(lln.getLeerlingNaam()+","+lln.getLeerjaar()+"\n");
+			}
+			bw.write("EINDE");
+			bw.flush();
+			bw.close();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new IOException(e.getMessage());
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
+		finally {
+			
+		}
+
+		
+	}
+
+	@Override
+	public void toevoegenLijn(String lijn) throws Exception {
+		// TODO Auto-generated method stub
+		String[] velden = lijn.split(",");
+		try {
+			maakObjectVanLijn(velden);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	@Override
+	public void maakObjectVanLijn(String[] velden) throws Exception {
+		// TODO Auto-generated method stub
+		String naam = velden[0];
+		int leerjaar = Integer.parseInt(velden[1]);
+		Leerling leerling = new Leerling(naam,leerjaar);
+		try {
+			this.voegLeerlingToe(leerling);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	}
+
+

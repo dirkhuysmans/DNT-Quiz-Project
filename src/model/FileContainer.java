@@ -19,12 +19,35 @@ import model.enumKlassen.QuizStatussen;
 
 
 
-public class FileContainer {
+public abstract class FileContainer {
 
-	public void toevoegenLijn(String lijn) {
-		// TODO Auto-generated method stub
-		
+	public void lezen() throws Exception{
+		try{
+			File bestand = new File(getFile());
+			BufferedReader lezer = new BufferedReader(new FileReader(bestand));
+			String lijn = null;
+			while(!(lijn=lezer.readLine()).equals("EINDE")){
+				toevoegenLijn(lijn);
+			}
+			lezer.close();
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
 	}
+	
+	public String getDirectory(){
+		return "Bestanden";
+	}
+	
+	public abstract String getFile();
+	
+	public abstract void wegschrijven() throws IOException;
+	
+	public abstract void toevoegenLijn(String lijn);
+
+	
+	
 	/**
 	 * 
 	 * @param bestand	naam van het bestand waarin geschreven wordt
@@ -32,7 +55,8 @@ public class FileContainer {
 	 * 
 	 * @author Noella
 	 */
-	public static void schrijvenQuiz(String bestand,Quiz quiz){
+	
+/*	public static void schrijvenQuiz(String bestand,Quiz quiz){
 		BufferedWriter output = null;
 		try {
 			output = new BufferedWriter(new FileWriter(new File(bestand)));
@@ -73,7 +97,7 @@ public class FileContainer {
 	 * 
 	 * @author Noella
 	 */
-	public static Quiz lezenQuiz (String fileName) throws Exception{
+/*	public static Quiz lezenQuiz (String fileName) throws Exception{
 		Scanner lezer = null;
 		String tekst = "";
 		Quiz quiz = null;
@@ -193,4 +217,5 @@ public class FileContainer {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	*/
 }

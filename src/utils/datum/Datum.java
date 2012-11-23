@@ -85,6 +85,10 @@ public class Datum implements Comparable<Datum> {
 	public int getMaand() {
 		return maand;
 	}
+	
+	public String getNaamMaand(){
+		return MaandEnum.values()[this.maand-1].toString();
+	}
 
 	/**
 	 * @return jaar
@@ -103,7 +107,7 @@ public class Datum implements Comparable<Datum> {
 			throw new RuntimeException("datum kan niet null zijn");
 		} else {
 			return String.format("%04d/%02d/%02d", datum.getJaar(),
-					datum.getMaand(), dag);
+					datum.getMaand(), datum.getDag());
 		}
 	}
 
@@ -294,8 +298,8 @@ public class Datum implements Comparable<Datum> {
 		
 		try {
 			int maanden = 0;
-			
-			maanden = this.verschilInJaren(datum) * 12;
+			//aangepast op 23/11/2012 door Dirk Huysmans
+			/*maanden = this.verschilInJaren(datum) * 12;
 			if(this.kleinerDan(datum)){
 				maanden += datum.maand - this.maand;
 					if((this.maand == datum.maand) && (this.dag>datum.dag)){
@@ -309,6 +313,12 @@ public class Datum implements Comparable<Datum> {
 					maanden--;
 				}
 			}
+			*/
+			
+			int maandenDatum1 = this.jaar * 12 + this.maand;
+			int maandenDatum2 = datum.jaar * 12 + datum.maand;
+			maanden = (maandenDatum1<maandenDatum2)?maandenDatum2-maandenDatum1:maandenDatum1-maandenDatum2;
+			
 			return maanden;	
 		} 
 		catch (Exception e) {
@@ -341,6 +351,7 @@ public class Datum implements Comparable<Datum> {
 	 * @return naam van de maand in Nederlands
 	 * @throws Exception indien maand niet bestaat
 	 */
+	/*aangepast op 23/11/2012 door Dirk Huysmans Functie zie getters
 	public String getNaamMaand() throws Exception{
 		switch (this.maand){
 		case 1:
@@ -371,7 +382,7 @@ public class Datum implements Comparable<Datum> {
 				throw new Exception("De naam van de maand kan niet weergegeven worden. Gelieve de maand in de meegegeven datum na te kijken.");
 		}
 	}
-	
+	*/
 	/**
 	 * 
 	 * @return aantal dagen in maand
@@ -579,6 +590,7 @@ public class Datum implements Comparable<Datum> {
 		System.out.println("Maand van datums2 : " + datums2.getNaamMaand());
 		System.out.println("Het verschil in dagen tussen datums1 en datums2 bedraagt : " + datums1.verschilInDagen(datums2) + " dagen.");
 		System.out.println("datums1 + 365 dagen = " + datums1.veranderDatum1(365));
+		System.out.println("Het verschil in maanden tusse " + datums1 + " en " + datums2 + " bedraagt " + datums1.verschilInMaanden(datums2));
 
 	}
 }

@@ -1,7 +1,11 @@
-package model;
+package controller;
 
 import java.util.Scanner;
 
+import model.Opdracht;
+import model.OpdrachtCatalogus;
+import model.Opsomming;
+import model.QuizCatalogus;
 import model.enumKlassen.OpdrachtCategorie;
 
 public class Main {

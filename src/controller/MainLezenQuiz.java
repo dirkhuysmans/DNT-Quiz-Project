@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import model.FileContainer;
 import model.Quiz;
 /**
@@ -15,13 +17,31 @@ public class MainLezenQuiz extends FileContainer{
 		String fileName = "bestanden\\quiz.txt";
 		Quiz quiz = null;
 		try {
-			quiz = lezenQuiz(fileName);
+			//quiz = lezenQuiz(fileName);
 			
-			System.out.println(quiz.getOpdrachten());
+			//System.out.println(quiz.getOpdrachten());
 			
-			System.out.println(quiz.toString());
+			//System.out.println(quiz.toString());
 		} catch (Exception e) {
 			throw new Exception("Bestand niet gevonden");
 		}
+	}
+
+	@Override
+	public String getFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void wegschrijven() throws IOException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void maakObjectVanLijn(String[] velden) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }

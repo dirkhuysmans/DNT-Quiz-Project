@@ -51,6 +51,24 @@ public class QuizCatalogus extends FileContainer{
 		return catalogus;
 	}
 
+	@Override
+	public String getFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void wegschrijven() throws IOException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void maakObjectVanLijn(String[] velden) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// private AppendableObjectOutputStream obj = null;
 	/*private ObjectOutputStream obj = null;
 

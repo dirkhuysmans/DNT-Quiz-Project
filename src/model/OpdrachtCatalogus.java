@@ -35,13 +35,13 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	 */
 	public void voegOpdrachtToe(Opdracht opdracht){
 		opdrachtenCatalogus.add(opdracht);
-		schrijven(OPDRACHTFILE, toString());
+		//schrijven(OPDRACHTFILE, toString());
 	}
 	
 	public void verwijderOpdracht (int i){
-		lezen(OPDRACHTFILE);
+		//lezen(OPDRACHTFILE);
 		opdrachtenCatalogus.remove(i);
-		schrijven(OPDRACHTFILE, toString());
+		//schrijven(OPDRACHTFILE, toString());
 	}
 	
 	@Override
@@ -120,7 +120,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	public static void main(String[] args) {
 		OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
 		boolean stop = false;
-		lezen(OPDRACHTFILE);
+		//lezen(OPDRACHTFILE);
 		Opdracht opdracht = null;
 		while(!stop){
 			
@@ -131,6 +131,24 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		int i = sc.nextInt();
 		catalogus.verwijderOpdracht(i);
 		System.out.println(catalogus);
+	}
+
+	@Override
+	public String getFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void wegschrijven() throws IOException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void maakObjectVanLijn(String[] velden) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.Time;
+import java.util.Map;
+import java.util.TreeMap;
 
 import model.FileContainer;
 import model.Opdracht;
@@ -36,7 +39,7 @@ public class QuizController extends FileContainer{
 			
 			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
 			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			Opdracht opdracht3 = new Opdracht("In welke provincie ligt de hoofdstad van België?","Brabant");
+			Opdracht opdracht3 = new Opdracht("In welke provincie ligt de hoofdstad van Belgiï¿½?","Brabant");
 			Opdracht opdracht4 = new Opdracht("In welke provincie ligt Genk?","Limburg");
 			Opdracht opdracht5 = new Opdracht("In welke provincie ligt Antwerpen","Antwerpen");
 			
@@ -46,12 +49,16 @@ public class QuizController extends FileContainer{
 			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht4, 3);
 			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht5, 4);
 			
+			Map<Quiz, String> quizzen = new TreeMap<Quiz, String>(Quiz.QuizComparator());
+			quizzen.put(quiz, quiz.voorTreeMap());
+					
+			
 			System.out.println(quiz.getOpdrachten());
 			
 			System.out.println(quiz.toString());
 			
 			String fileName = "bestanden\\quiz.txt";
-			schrijvenQuiz(fileName, quiz);
+			//schrijvenQuiz(fileName, quiz);
 		} 
 		catch (IllegalArgumentException ex) {
 			System.out.println(ex.getMessage());
@@ -59,5 +66,23 @@ public class QuizController extends FileContainer{
 		catch (RuntimeException ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+
+	@Override
+	public String getFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void wegschrijven() throws IOException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void maakObjectVanLijn(String[] velden) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }

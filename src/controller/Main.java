@@ -32,7 +32,7 @@ public class Main {
 		hoofdStadBrazilie.put(3, "Brasilia");
 		hoofdStadBrazilie.put(4, "Curitiba");
 		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?", hoofdStadBrazilie, null, 1,
-				null, OpdrachtCategorie categorie, Leraar auteur)
+				null, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 				
 				
 		

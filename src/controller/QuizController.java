@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.Map;
 import java.util.TreeMap;
 
+import model.EenvoudigeOpdracht;
 import model.FileContainer;
 import model.Opdracht;
 import model.Quiz;
@@ -37,11 +38,11 @@ public class QuizController extends FileContainer{
 			
 			quizCatalogus.voegQuizToe(quiz);
 			
-			Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
-			Opdracht opdracht2 = new Opdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			Opdracht opdracht3 = new Opdracht("In welke provincie ligt de hoofdstad van Belgi�?","Brabant");
-			Opdracht opdracht4 = new Opdracht("In welke provincie ligt Genk?","Limburg");
-			Opdracht opdracht5 = new Opdracht("In welke provincie ligt Antwerpen","Antwerpen");
+			Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
+			Opdracht opdracht2 = new EenvoudigeOpdracht("Wat is de hoofdstad van Spanje?","Madrid");
+			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van Belgi�?","Brabant");
+			Opdracht opdracht4 = new EenvoudigeOpdracht("In welke provincie ligt Genk?","Limburg");
+			Opdracht opdracht5 = new EenvoudigeOpdracht("In welke provincie ligt Antwerpen","Antwerpen");
 			
 			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
 			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);

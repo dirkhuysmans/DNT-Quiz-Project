@@ -1,11 +1,17 @@
 package controller;
 
+import java.sql.Time;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Opsomming;
 import model.QuizCatalogus;
+import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 
 public class Main {
@@ -20,6 +26,16 @@ public class Main {
 		int keuze = 0;
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
+		Map <Integer, String>hoofdStadBrazilie = new HashMap<Integer, String>();
+		hoofdStadBrazilie.put(1, "Sao Paulo");
+		hoofdStadBrazilie.put(2, "Rio de Janeiro");
+		hoofdStadBrazilie.put(3, "Brasilia");
+		hoofdStadBrazilie.put(4, "Curitiba");
+		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?", hoofdStadBrazilie, null, 1,
+				null, OpdrachtCategorie categorie, Leraar auteur)
+				
+				
+		
 		System.out.println("1.Registreren of 2.Inloggen");
 		keuze = sc.nextInt();
 		if (keuze == 1) {

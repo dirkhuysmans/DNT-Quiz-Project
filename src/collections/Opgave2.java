@@ -8,11 +8,11 @@ public class Opgave2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Opdracht opdracht1 = new Opdracht("Wat is de hoofdstad van Franrijk?","Parijs");
-		Opdracht opdracht2 = new Opdracht("Wat is de hoodstad van Spanje?","Madrid");
-		Opdracht opdracht3 = new Opdracht("Wat is de hoofdstad van Italië?","Rome");
-		Opdracht opdracht4 = new Opdracht("Wat is de hoodstad van Portugal?","Lissabon");
-		Opdracht opdracht5 = new Opdracht("Hoeveel provincies telt België?","Tien");
+		Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
+		Opdracht opdracht2 = new EenvoudigeOpdracht("Wat is de hoodstad van Spanje?","Madrid");
+		Opdracht opdracht3 = new EenvoudigeOpdracht("Wat is de hoofdstad van Italiï¿½?","Rome");
+		Opdracht opdracht4 = new EenvoudigeOpdracht("Wat is de hoodstad van Portugal?","Lissabon");
+		Opdracht opdracht5 = new EenvoudigeOpdracht("Hoeveel provincies telt Belgiï¿½?","Tien");
 		
 		Quiz quiz1 = new Quiz("Hoofdsteden Europa");
 		Quiz quiz2 = new Quiz("Aardrijkskunde");

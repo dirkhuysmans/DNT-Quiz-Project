@@ -15,7 +15,7 @@ import model.enumKlassen.OpdrachtCategorie;
  *
  */
 
-public class Opdracht  implements Serializable{
+public abstract class Opdracht implements Serializable{
 	private String vraag="";
 	private String antwoord="";
 	

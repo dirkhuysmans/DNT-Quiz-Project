@@ -201,7 +201,7 @@ public abstract class Opdracht implements Serializable{
 	 */
 	@Override
 	public String toString(){
-		return ( vraag + " " + antwoord );
+		return ( vraag );
 	}
 	
 	public String toonOpdracht(){

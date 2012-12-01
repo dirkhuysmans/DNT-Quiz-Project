@@ -48,7 +48,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	public String toString(){
 		String catalogus = "";
 		for(Opdracht opdracht : opdrachtenCatalogus){
-			catalogus = opdracht +"/n";
+			catalogus += opdracht + "\n";
 		}
 		return catalogus;
 	}
@@ -145,20 +145,23 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(getDirectory(),getFile())));
 		String	stringOpdracht="";
 		for (Opdracht opdracht:opdrachtenCatalogus){
-		stringOpdracht = opdracht.getClass().getName() +"," + opdrachtenCatalogus.indexOf(opdracht) + "," + opdracht.getVraag() + "," + opdracht.getAntwoord() + "," + opdracht.getMaxAantalPogingen() + "," +opdracht.getMaxAntwoordTijd() +"," + opdracht.getCategorie() +"," + opdracht.getAuteur() + "," + opdracht.getOpmaakDatum() +",";
+		stringOpdracht = opdracht.getClass().getName() +"," + opdrachtenCatalogus.indexOf(opdracht) + "," + opdracht.getVraag() + "," + opdracht.getAntwoord() + "," + opdracht.getMaxAantalPogingen() + "," +opdracht.getMaxAntwoordTijd() +"," + opdracht.getCategorie() +"," + opdracht.getAuteur() + "," + opdracht.opmaakDatum.getDag()+"/"+opdracht.opmaakDatum.getMaand()+"/"+opdracht.opmaakDatum.getJaar() +",";
 		int aantal=0;
 		String bijkomend="";
+		
 		for (String hint:opdracht.getHints()){
+		if(hint!=null){
 			aantal++;
 			if (bijkomend==""){
 				bijkomend=hint;
 			}
 				else{	
-					bijkomend+=hint;
+					bijkomend+= "," + hint;
 			}
-			
+		}	
 		}
-		stringOpdracht += aantal +","+ bijkomend;
+		
+		stringOpdracht += "," + aantal +","+ bijkomend;
 		aantal=0;
 		bijkomend="";
 		if(opdracht instanceof Meerkeuze){
@@ -166,44 +169,48 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 			for (String keuze:meerkeuze.keuzes.values()){
 				aantal++;
 				if (bijkomend==""){
-					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+					//bijkomend=meerkeuze.keuzes.get(keuze) +"," + keuze;
+					bijkomend=  keuze;
 				}
 					else{	
-						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+						//bijkomend += "," + meerkeuze.keuzes.get(keuze) +"," + keuze;
+						bijkomend += "," + keuze;
 				}
 				
 			}
-			stringOpdracht +=aantal + "," + bijkomend;
+			stringOpdracht += "," + aantal + "," + bijkomend;
 		}
 		else if(opdracht instanceof Opsomming){
 			Opsomming opsomming = (Opsomming) opdracht;
 			for (String keuze:opsomming.opsommingLijst.values()){
 				aantal++;
 				if (bijkomend==""){
-					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+					//bijkomend=opsomming.opsommingLijst.get(keuze) +"," + keuze;
+					bijkomend= keuze;
 				}
 					else{	
-						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+						//bijkomend += ","+ opsomming.opsommingLijst.get(keuze) +"," + keuze;
+						bijkomend += "," + keuze;
 				}
 				
 			}
-			stringOpdracht +=aantal + "," + bijkomend;
-			stringOpdracht += opsomming.getInJuisteVolgorde();
+			stringOpdracht += "," + aantal + "," + bijkomend;
+			stringOpdracht += "," + opsomming.getInJuisteVolgorde();
 		}
 		else if(opdracht instanceof Reproductie){
 			Reproductie reproductie = (Reproductie) opdracht;
 			for (String keuze:reproductie.trefwoorden){
 				aantal++;
 				if (bijkomend==""){
-					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+					bijkomend= keuze;
 				}
 					else{	
-						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+						bijkomend += "," + keuze;
 				}
 				
 			}
-			bijkomend += reproductie.minAantalJuisteTrefwoorden;
-			stringOpdracht +=aantal + "," + bijkomend;
+			stringOpdracht += "," + aantal + "," + bijkomend;
+			stringOpdracht += ","+ reproductie.minAantalJuisteTrefwoorden;
 		}
 		
 		
@@ -240,7 +247,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 			hints.add(velden[veldNummer]);
 			veldNummer++;
 		}
-		aantal = Integer.parseInt(velden[veldNummer])*2;
+		//aantal = Integer.parseInt(velden[veldNummer])*2;
+		aantal = Integer.parseInt(velden[veldNummer]);
 		veldNummer++;
 		
 		
@@ -251,18 +259,18 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 			
 		case "Meerkeuze":
 			Map<Integer, String> meerkeuze= null;
-			for (int i=1; i<aantal; i=i+2) {
-				meerkeuze.put(Integer.parseInt(velden[veldNummer]), velden[veldNummer+1]);
-				veldNummer=veldNummer+2;
+			for (int i=1; i<aantal; i++) {
+				meerkeuze.put(i, velden[veldNummer+1]);
+				veldNummer++;
 			}	
 			Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
 			voegOpdrachtToe(mk);
 			break;
 		case "Opsomming":
 			Map<Integer, String> opsomming = null;
-			for (int i=1; i<aantal; i=i+2) {
-				opsomming.put(Integer.parseInt(velden[veldNummer]), velden[veldNummer+1]);
-				veldNummer=veldNummer+2;
+			for (int i=1; i<aantal; i++) {
+				opsomming.put(i, velden[veldNummer]);
+				veldNummer++;
 			}	
 			boolean inJuisteVolgorde = Boolean.parseBoolean(velden[veldNummer]);
 			Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);

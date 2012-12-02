@@ -31,6 +31,10 @@ public class QuizCatalogus extends FileContainer{
 	private List<Quiz> lijstQuizCatalogus = new ArrayList();	
 	//private final static String OPDRACHTFILE = "Opdrachten.txt";
 
+	public List<Quiz> getLijstQuizCatalogus(){
+		return lijstQuizCatalogus;
+	}
+	
 	/**
 	 * voeg een quiz toe
 				System.out.println(this.lijstQuizCatalogus.get(i).getOnderwerp());
@@ -77,14 +81,23 @@ public class QuizCatalogus extends FileContainer{
 		return "quiz.txt";
 	}
 
+	public String getFileQuizOpdracht(){
+		return "quizopdracht.txt";
+	}
+	
+	
 	@Override
 	public void wegschrijven() throws IOException, Exception {
 		BufferedWriter bufferedWriter = null;
+		BufferedWriter bw = null;
+		
 		try {
 			//aanmaken schrijfbuffer met meegeven bestandsnaam
 			bufferedWriter = new BufferedWriter(new FileWriter(new File(getDirectory(),getFile())));
+			bw = new BufferedWriter(new FileWriter(new File(getDirectory(),getFileQuizOpdracht())));
 			
 			for (Quiz  quiz : lijstQuizCatalogus){
+				/*
 				String opdrachten = "";
 				Class klasse = quiz.getOpdrachten().get(0).getClass();
 				String kl = klasse+"";
@@ -99,18 +112,22 @@ public class QuizCatalogus extends FileContainer{
 					 }
 					opdrachten += "STOP/";
 				}
-				bufferedWriter.write(quiz.getOnderwerp() + "," + 
+				*/
+				bufferedWriter.write(lijstQuizCatalogus.indexOf(quiz) + "," + quiz.getOnderwerp() + "," + 
 			                         quiz.getLeerJaar() + "," +
 			                         quiz.isTest() + "," +
 			                         quiz.isUniekeDeelname() + "," +
 			                         quiz.getQuizStatus() + "," +
-			                         quiz.getDatum() + "," +
-			                         quiz.getLeraar() + "," + 
-			                         quiz.getOpdrachten().get(0).getClass() + "," + 
-									 opdrachten + "," +  "\n");
+			                         quiz.getDatum().getDatumInEuropeesFormaat(quiz.getDatum()) + "," +
+			                         quiz.getLeraar() + "\n");
+			                         //quiz.getOpdrachten().get(0).getClass() + "," +  
+									 //opdrachten + "," +  "\n");
 									 //quiz.getOpdrachten() +  "\n");
+				for (QuizOpdracht qo : quiz.getQuizOpdracht()) {
+					bw.write(lijstQuizCatalogus.indexOf(quiz) + "," + qo.getOpdracht() + "," + qo.getMaxScore() +"\n");
+				}
 			}
-			bufferedWriter.write("EINDE");
+
 			
 		}
 		catch (IOException e) {
@@ -120,26 +137,33 @@ public class QuizCatalogus extends FileContainer{
 			throw new Exception(e.getMessage());
 		}
 		finally {
+			bufferedWriter.write("EINDE");
 			bufferedWriter.flush();
 			bufferedWriter.close();
+			bw.write("EINDE");
+			bw.flush();
+			bw.close();
 		}
 		
 	}
 
 	@Override
 	public void maakObjectVanLijn(String[] velden) throws Exception {
-		String onderwerp = velden[0];
-		int leerJaar = Integer.parseInt(velden[1]);
-		boolean isTest = velden[2].equals("true")?true:false;
-		boolean isUniekeDeelname  = velden[3].equals("true")?true:false;
-		String quizStatus = velden[4];
-		String datum = velden[5];
-		String leraar = velden[6];
+		int quizId = Integer.parseInt(velden[0]);
+		String onderwerp = velden[1];
+		int leerJaar = Integer.parseInt(velden[2]);
+		boolean isTest = velden[3].equals("true")?true:false;
+		boolean isUniekeDeelname  = velden[4].equals("true")?true:false;
+		String quizStatus = velden[5];
+		Datum datum = new Datum(velden[6]);
+		//String datum = velden[6];
 		
+		String leraar = velden[7];
 		QuizStatussen quizStatusEnum = QuizStatussen.valueOf(quizStatus);
 		Leraar auteurEnum = Leraar.valueOf(leraar);
-		Quiz quiz = new Quiz(onderwerp, leerJaar,isUniekeDeelname,isTest, quizStatusEnum);
-		
+		Quiz quiz = new Quiz(onderwerp, leerJaar, isUniekeDeelname,isTest, quizStatusEnum, datum, auteurEnum);
+		this.lijstQuizCatalogus.add(quizId, quiz);
+/*		
 		String test = velden[7];
 		if(test.contains("EenvoudigeOpdracht")){
 			boolean testStop = false;
@@ -159,6 +183,7 @@ public class QuizCatalogus extends FileContainer{
 				
 			}
 		}
+*/
 	}
 
 }

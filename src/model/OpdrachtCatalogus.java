@@ -23,7 +23,7 @@ import model.enumKlassen.OpdrachtCategorie;
  */
 public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	
-	private List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
+	public static List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
 	//private final static String OPDRACHTFILE = "Opdrachten.txt";
 	private List<String> stringCatalogus = new ArrayList<String>();
 	

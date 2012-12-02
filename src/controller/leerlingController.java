@@ -14,10 +14,10 @@ public class leerlingController {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		try{
-		Leerling leerling = new Leerling("leerling1",1);
+		Leerling leerling = new Leerling("leerling10",1);
 		LeerlingContainer lc = new LeerlingContainer();
 		lc.voegLeerlingToe(leerling);
-		leerling = new Leerling("leerling2",2);
+		leerling = new Leerling("leerling20",2);
 		lc.voegLeerlingToe(leerling);
 		
 		/*lc.getLeerlingContainer();

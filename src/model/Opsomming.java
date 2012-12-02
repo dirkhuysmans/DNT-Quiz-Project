@@ -1,13 +1,11 @@
 package model;
 
-import java.sql.Time;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
-import utils.gregorian.Datum;
 
 /**
  * 
@@ -16,21 +14,34 @@ import utils.gregorian.Datum;
  */
 
 public class Opsomming extends Opdracht implements Valideerbaar{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private String antwoord;
+	public Map<Integer, String> opsommingLijst;
 
-	public Opsomming(String vraag, String antwoord, List<String> hints,
-			int maxAantalPogingen, Time maxAntwoordTijd,
+	public Opsomming(String vraag, String antwoord, Map<Integer, String> opsomming, List<String> hints,
+			int maxAantalPogingen, int maxAntwoordTijd,
 			OpdrachtCategorie categorie, Leraar auteur) {
-		super(vraag, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
+		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
 				auteur);
+		
 		setAntwoord(antwoord);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setAntwoord(String antwoord) {
+	public void setOpsomming(Map<Integer, String> opsomming){
+		opsommingLijst = opsomming;
+	}
+	
+/*	public void setAntwoord(String antwoord) {
 		this.antwoord = antwoord;
 	}
-
+*/
 	@Override
 	public boolean isValide(String antw) {
 		StringTokenizer binnenkomend = new StringTokenizer(antw, ";");

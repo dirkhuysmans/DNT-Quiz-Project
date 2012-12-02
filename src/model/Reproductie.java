@@ -15,25 +15,29 @@ import model.enumKlassen.OpdrachtCategorie;
 
 public class Reproductie extends Opdracht{
 	
-	Set<String> trefwoorden = new HashSet<String>();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Set<String> trefwoorden = new HashSet<String>();
 	int minAantalJuisteTrefwoorden = 0;
 	
 	
-	public Reproductie(String vraag, Set<String> trefwoorden, int minAantalTrefWoorden, 
+	public Reproductie(String vraag, String antwoord, Set<String> trefwoorden, int minAantalTrefWoorden, 
 			List<String> hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
-		super(vraag, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
+		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public int aantalJuisteTrefWoorden(String tekst){
-		int trefwoordn = 0;
+		int aantalTrefwoorden = 0;
 		String [] woordPerWoord = tekst.split(" ");
 		for (String woord : woordPerWoord){
 			if (trefwoorden.contains(woord)){
-				trefwoordn += 1;
+				aantalTrefwoorden ++;
 			}
 		}
-		return trefwoordn;
+		return aantalTrefwoorden;
 	}
 	
 

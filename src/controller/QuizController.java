@@ -40,7 +40,7 @@ public class QuizController extends FileContainer{
 			
 			Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
 			Opdracht opdracht2 = new EenvoudigeOpdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van Belgi�?","Brabant");
+			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van België?","Brabant");
 			Opdracht opdracht4 = new EenvoudigeOpdracht("In welke provincie ligt Genk?","Limburg");
 			Opdracht opdracht5 = new EenvoudigeOpdracht("In welke provincie ligt Antwerpen","Antwerpen");
 			

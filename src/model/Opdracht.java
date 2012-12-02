@@ -16,6 +16,10 @@ import model.enumKlassen.OpdrachtCategorie;
  */
 
 public abstract class Opdracht implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String vraag="";
 	private String antwoord="";
 	
@@ -24,7 +28,7 @@ public abstract class Opdracht implements Serializable{
 	}
 
 	private List<String> hints= new ArrayList<String>();
-	private int poging=0;
+	//private int poging=0;
 	private int maxAantalPogingen = 1;
 	private Time maxAntwoordTijd = null;
 	private int antwoordTijd = 0;

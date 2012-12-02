@@ -1,20 +1,14 @@
 package model;
 
 
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * 
@@ -24,7 +18,7 @@ import java.util.Set;
 public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	
 	private List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
-	private final static String OPDRACHTFILE = "Opdrachten.txt";
+	//private final static String OPDRACHTFILE = "Opdrachten.txt";
 	private List<String> stringCatalogus = new ArrayList<String>();
 	
 	/**
@@ -136,13 +130,84 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	@Override
 	public String getFile() {
 		// TODO Auto-generated method stub
-		return null;
+		return "opdrachten.txt";
 	}
 
 	@Override
 	public void wegschrijven() throws IOException, Exception {
 		// TODO Auto-generated method stub
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(getDirectory(),getFile())));
+		String	stringOpdracht="";
+		for (Opdracht opdracht:opdrachtenCatalogus){
+		stringOpdracht = opdracht.getClass().getName() +"," + opdrachtenCatalogus.indexOf(opdracht) + "," + opdracht.getVraag() + "," + opdracht.getAntwoord() + "," + opdracht.getMaxAantalPogingen() + "," +opdracht.getMaxAntwoordTijd() +"," + opdracht.getCategorie() +"," + opdracht.getAuteur() + "," + opdracht.getOpmaakDatum() +",";
+		int aantal=0;
+		String bijkomend="";
+		for (String hint:opdracht.getHints()){
+			aantal++;
+			if (bijkomend==""){
+				bijkomend=hint;
+			}
+				else{	
+					bijkomend+=hint;
+			}
+			
+		}
+		stringOpdracht += aantal +","+ bijkomend;
+		aantal=0;
+		bijkomend="";
+		if(opdracht instanceof Meerkeuze){
+			Meerkeuze meerkeuze = (Meerkeuze) opdracht;
+			for (String keuze:meerkeuze.keuzes.values()){
+				aantal++;
+				if (bijkomend==""){
+					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+					else{	
+						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+				
+			}
+			stringOpdracht +=aantal + "," + bijkomend;
+		}
+		else if(opdracht instanceof Opsomming){
+			Opsomming opsomming = (Opsomming) opdracht;
+			for (String keuze:opsomming.opsommingLijst.values()){
+				aantal++;
+				if (bijkomend==""){
+					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+					else{	
+						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+				
+			}
+			stringOpdracht +=aantal + "," + bijkomend;
+		}
+		else if(opdracht instanceof Reproductie){
+			Reproductie reproductie = (Reproductie) opdracht;
+			for (String keuze:reproductie.trefwoorden){
+				aantal++;
+				if (bijkomend==""){
+					bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+					else{	
+						bijkomend=keuze.indexOf(keuze) +"," + keuze;
+				}
+				
+			}
+			stringOpdracht +=aantal + "," + bijkomend;
+		}
 		
+		
+		
+		
+			bw.write(stringOpdracht+"\n");
+			
+		}
+		bw.write("EINDE");
+		bw.flush();
+		bw.close();
+
 	}
 
 	@Override

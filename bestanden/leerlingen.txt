@@ -1,3 +1,3 @@
-leerling1,1
-leerling2,2
+leerling10,1
+leerling20,2
 EINDE

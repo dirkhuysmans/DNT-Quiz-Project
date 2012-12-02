@@ -1,8 +1,6 @@
 package controller;
 
-import java.sql.Time;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -10,9 +8,11 @@ import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Opsomming;
+import model.Quiz;
 import model.QuizCatalogus;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
+import model.enumKlassen.QuizStatussen;
 
 public class Main {
 
@@ -25,17 +25,15 @@ public class Main {
 		OpdrachtCategorie categorie;
 		int keuze = 0;
 		// TODO Auto-generated method stub
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		Map <Integer, String>hoofdStadBrazilie = new HashMap<Integer, String>();
 		hoofdStadBrazilie.put(1, "Sao Paulo");
 		hoofdStadBrazilie.put(2, "Rio de Janeiro");
 		hoofdStadBrazilie.put(3, "Brasilia");
 		hoofdStadBrazilie.put(4, "Curitiba");
-		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?", hoofdStadBrazilie, null, 1,
-				null, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
-				
-				
-		
+		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdStadBrazilie, null, 1,
+				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		System.out.println("1.Registreren of 2.Inloggen");
 		keuze = sc.nextInt();
 		if (keuze == 1) {
@@ -86,8 +84,8 @@ public class Main {
 					String antwoord = sc.nextLine();
 					System.out.print("Aantal pogingen: ");
 					int pogingen = sc.nextInt();
-					Opdracht opdracht = new Opsomming(vraag, antwoord, null,
-							pogingen, null, categorie, null);
+					Opdracht opdracht = new Opsomming(vraag, antwoord,null, null,
+							pogingen, 0, categorie, null);
 					break;
 				case 2:
 					System.out
@@ -113,8 +111,8 @@ public class Main {
 						antwoord = sc.nextLine();
 						System.out.print("Aantal pogingen: ");
 						pogingen = sc.nextInt();
-						op = new Opsomming(vraag, antwoord, null,
-								pogingen, null, categorie, null);
+						op = new Opsomming(vraag, antwoord, null, null,
+								pogingen, 0, categorie, null);
 					}
 					break;
 				}
@@ -135,9 +133,9 @@ public class Main {
 				System.out.println("test?(j/n): ");
 				temp = sc.next();
 				boolean test = temp.equals("j");
-				//Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test);
+				Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test, QuizStatussen.INCONSTRUCTIE);
 
-				//catalogus.voegQuizToe(quiz);
+				catalogus.voegQuizToe(quiz);
 //				catalogus.wegschrijvenNaarFile();
 				break;
 			}

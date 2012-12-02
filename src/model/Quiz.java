@@ -41,8 +41,7 @@ public class Quiz implements Serializable {
 	//
 	/**
 	 * 
-	 * @param onderwerp
-	 *            onderwerp van de quiz
+	 * @param onderwerp		onderwerp van de quiz
 	 */
 	public Quiz(String onderwerp) {
 		this.onderwerp = onderwerp;
@@ -50,24 +49,16 @@ public class Quiz implements Serializable {
 	}
 
 	/**
-	 * @param onderwerp
-	 *            onderwerp van de quiz
-	 * @param leerJaar
-	 *            formuleren voor welk leeljaar de quiz bestemd is (min 1 max 6)
-	 * @param isUniekeDeelname
-	 *            true indien quiz meerdere malen mag opgelost worden, false
-	 *            indien quiz 1 maal mag opgeloste worden
-	 * @param isTest
-	 *            true indien geregistreerd als test (leerling kan maar 1 keer
-	 *            deelnemen)
-	 * @param opdracht
-	 *            opdracht is een object van het type Opdracht
-	 * @param quizStatus
-	 *            de status waarin de quiz zich bevindt
+	 * @param onderwerp				onderwerp van de quiz
+	 * @param leerJaar				formuleren voor welk leeljaar de quiz bestemd is (min 1 max 6)
+	 * @param isUniekeDeelname		true indien quiz meerdere malen mag opgelost worden,false indien quiz 1 maal mag opgelost worden
+	 * @param isTest				true indien geregistreerd als test (leerling kan maar 1 keer deelnemen)
+	 * @param opdracht				opdracht is een object van het type Opdracht
+	 * @param quizStatus			de status waarin de quiz zich bevindt
 	 */
-	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,
-			boolean isTest, QuizStatussen quizStatus) {
-		this.onderwerp = onderwerp;
+	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus) {
+		
+		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.leerJaar = controleLeerjaar(leerJaar);
 		this.isTest = isTest;
 		this.isUniekeDeelname = isUniekeDeelname;
@@ -77,9 +68,10 @@ public class Quiz implements Serializable {
 		this.quizStatus = quizStatus;
 		Datum datumRegistratie = new Datum();
 		this.datumRegistratie = datumRegistratie;
+		//Leraar auteur = getLeraar();
 		Leraar auteur = Leraar.MYRIAM;
-
 		this.auteur = auteur;
+		
 	}
 
 	//
@@ -106,6 +98,7 @@ public class Quiz implements Serializable {
 	}
 
 	public Leraar getLeraar() {
+		
 		return auteur;
 	}
 
@@ -174,29 +167,64 @@ public class Quiz implements Serializable {
 				"leerJaar moet tussen 01 en 6 liggen");
 
 	}
-
 	/**
-	 * voeg een quizOpdracht toe
+	 * Deze methode controleert of een veld (String) ingevuld is
 	 * 
-	 * @param quizOpdracht
-	 *            quizOpdracht is een object van het type QuizOpdracht
+	 * @param veldTeControleren		het te controleren veld moet ingevuld zijn
+	 * @return						de ingevulde waarde
 	 * 
 	 * @author Noella
 	 */
-	protected void voegQuizOpdrachtToe(QuizOpdracht quizOpdracht) {
-		quizOpdrachten.add(quizOpdracht);
+	public String controleInhoudVeld(String veldTeControleren){
+		if(veldTeControleren!= null && !veldTeControleren.equals("")){
+			return veldTeControleren;
+		} else {
+			throw new IllegalArgumentException("Onderwerp moet ingevuld worden !!!!!");
+		}
+	}
+	/**
+	 * voeg een quizOpdracht toe
+	 * 
+	 * @param quizOpdracht		quizOpdracht is een object van het type QuizOpdracht
+	 * 
+	 * @author Noella
+	 * @throws Exception 
+	 */
+	protected void voegQuizOpdrachtToe(QuizOpdracht quizOpdracht) throws Exception {
+		try{
+			for(int i = 0; i < this.quizOpdrachten.size(); i ++){
+				if(this.quizOpdrachten.get(i).getOpdracht().getVraag().contentEquals(quizOpdracht.getOpdracht().getVraag())){
+					throw new Exception("Deze Opdracht bestaat reeds.");
+				}
+			}
+			quizOpdrachten.add(quizOpdracht);
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
 	}
 
 	/**
 	 * verwijderen van een quizOpdracht
 	 * 
-	 * @param quizOpdracht
-	 *            quizOpdracht is een object van het type QuizOpdracht
+	 * @param quizOpdracht			quizOpdracht is een object van het type QuizOpdracht
 	 * 
 	 * @author Noella
 	 */
-	protected void verwijderQuizOpdracht(QuizOpdracht quizOpdracht) {
-		quizOpdrachten.remove(quizOpdracht);
+	protected void verwijderQuizOpdracht(QuizOpdracht quizOpdracht) throws Exception{
+		try{
+			for(int i = 0; i < this.quizOpdrachten.size(); i ++){
+				if(!this.quizOpdrachten.get(i).getOpdracht().getVraag().contentEquals(quizOpdracht.getOpdracht().getVraag())){
+					throw new Exception("Deze Opdracht bestaat niet.");
+				}
+			}
+			quizOpdrachten.remove(quizOpdracht);
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
+		
+		
 	}
 
 	/**

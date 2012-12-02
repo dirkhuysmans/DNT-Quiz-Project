@@ -84,8 +84,8 @@ public class Main {
 					String antwoord = sc.nextLine();
 					System.out.print("Aantal pogingen: ");
 					int pogingen = sc.nextInt();
-					Opdracht opdracht = new Opsomming(vraag, antwoord,null, null,
-							pogingen, 0, categorie, null);
+					//Opdracht opdracht = new Opsomming(vraag, antwoord,null, null,
+					//		pogingen, 0, categorie, null);
 					break;
 				case 2:
 					System.out
@@ -111,8 +111,8 @@ public class Main {
 						antwoord = sc.nextLine();
 						System.out.print("Aantal pogingen: ");
 						pogingen = sc.nextInt();
-						op = new Opsomming(vraag, antwoord, null, null,
-								pogingen, 0, categorie, null);
+						//op = new Opsomming(vraag, antwoord, null, null,
+						//		pogingen, 0, categorie, null);
 					}
 					break;
 				}
@@ -135,7 +135,7 @@ public class Main {
 				boolean test = temp.equals("j");
 				Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test, QuizStatussen.INCONSTRUCTIE);
 
-				catalogus.voegQuizToe(quiz);
+				//catalogus.voegQuizToe(quiz);
 //				catalogus.wegschrijvenNaarFile();
 				break;
 			}

@@ -16,13 +16,22 @@ public class Opgave2 {
 		
 		Quiz quiz1 = new Quiz("Hoofdsteden Europa");
 		Quiz quiz2 = new Quiz("Aardrijkskunde");
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht1, 2);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht2, 2);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht3, 2);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht4, 2);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht1, 4);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht3, 3);
-		QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht5, 3);
+		try{
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht1, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht2, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht3, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz1, opdracht4, 2);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht1, 4);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht3, 3);
+			QuizOpdracht.koppelOpdrachtAanQuiz(quiz2, opdracht5, 3);
+		}
+		catch(Exception e){
+			try {
+				throw new Exception(e.getMessage());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}		
+		}
 		
 		ArrayList <Opdracht> opdrachtenQuiz1 = quiz1.getOpdrachten();
 		ArrayList <Opdracht> opdrachtenQuiz2 = quiz2.getOpdrachten();

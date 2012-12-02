@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import model.EenvoudigeOpdracht;
 import model.FileContainer;
+import model.LeerlingContainer;
 import model.Opdracht;
 import model.Quiz;
 import model.QuizCatalogus;
@@ -40,26 +41,36 @@ public class QuizController extends FileContainer{
 			
 			Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
 			Opdracht opdracht2 = new EenvoudigeOpdracht("Wat is de hoofdstad van Spanje?","Madrid");
-			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van België?","Brabant");
+			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van Belgie?","Brabant");
 			Opdracht opdracht4 = new EenvoudigeOpdracht("In welke provincie ligt Genk?","Limburg");
 			Opdracht opdracht5 = new EenvoudigeOpdracht("In welke provincie ligt Antwerpen","Antwerpen");
+			try{
+				QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
+				QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
+				QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht3, 5);
+				QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht4, 3);
+				QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht5, 4);
+				
+				Map<Quiz, String> quizzen = new TreeMap<Quiz, String>(Quiz.QuizComparator());
+				quizzen.put(quiz, quiz.voorTreeMap());
+						
+				
+				
+				System.out.println(quiz.toString());
+				
+				String fileName = "bestanden\\quiz.txt";
+				//schrijvenQuiz(fileName, quiz);
+				quizCatalogus.wegschrijven();
+				quizCatalogus=null;
+				quizCatalogus = new QuizCatalogus();
+				quizCatalogus.lezen();
+				System.out.print(quizCatalogus.toString());
+			}
+			catch(Exception e){
+				e.printStackTrace();		
+			}
 			
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht1, 2);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht2, 2);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht3, 5);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht4, 3);
-			QuizOpdracht.koppelOpdrachtAanQuiz(quiz, opdracht5, 4);
 			
-			Map<Quiz, String> quizzen = new TreeMap<Quiz, String>(Quiz.QuizComparator());
-			quizzen.put(quiz, quiz.voorTreeMap());
-					
-			
-			System.out.println(quiz.getOpdrachten());
-			
-			System.out.println(quiz.toString());
-			
-			String fileName = "bestanden\\quiz.txt";
-			//schrijvenQuiz(fileName, quiz);
 		} 
 		catch (IllegalArgumentException ex) {
 			System.out.println(ex.getMessage());

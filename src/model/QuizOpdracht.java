@@ -61,16 +61,29 @@ public class QuizOpdracht {
 	 * @param quiz			quiz is een object van het type Quiz
 	 * @param opdracht		opdracht is een object van het type Opdracht
 	 * @param maxScore		maximum score die kan behaald worden
+	 * @throws Exception 
 	 */
-	public static void koppelOpdrachtAanQuiz(Quiz quiz, Opdracht opdracht, int maxScore){
+	public static void koppelOpdrachtAanQuiz(Quiz quiz, Opdracht opdracht, int maxScore) throws Exception{
 		QuizOpdracht quizOpdracht = new QuizOpdracht(quiz,opdracht,maxScore);
-		quiz.voegQuizOpdrachtToe(quizOpdracht);
-		opdracht.voegQuizOpdrachtToe(quizOpdracht);
+		try{
+			quiz.voegQuizOpdrachtToe(quizOpdracht);
+
+			opdracht.voegQuizOpdrachtToe(quizOpdracht);	
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
 	}
 	/**
 	 * 	
 	 */
-	public void ontKoppelOpdrachtVanQuiz(){
-		quiz.verwijderQuizOpdracht(this);
-		opdracht.verwijderQuizOpdracht(this);		}	
+	public void ontKoppelOpdrachtVanQuiz() throws Exception{
+		try{
+			quiz.verwijderQuizOpdracht(this);
+			opdracht.verwijderQuizOpdracht(this);
+		}
+		catch (Exception e){
+			throw new Exception(e.getMessage());
+		}
 	}
+}

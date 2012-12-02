@@ -29,6 +29,12 @@ public class Meerkeuze extends Opdracht implements Valideerbaar{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Meerkeuze(String vraag, String antwoord, Map<Integer, String> keuzes, List<String> hints, int maxAantalPogingen,
+			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, String opmaakdatum) {
+		super(vraag,antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakdatum);
+		setKeuzes(keuzes);
+		// TODO Auto-generated constructor stub
+	}	
 
 	@Override
 	public boolean isValide(String ant) {

@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import model.enumKlassen.Leraar;
+import model.enumKlassen.OpdrachtCategorie;
+
 /**
  * 
  * @author thijs
@@ -34,7 +37,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		opdrachtenCatalogus.add(opdracht);
 		//schrijven(OPDRACHTFILE, toString());
 	}
-	
+		
 	public void verwijderOpdracht (int i){
 		//lezen(OPDRACHTFILE);
 		opdrachtenCatalogus.remove(i);
@@ -224,9 +227,11 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		String vraag = velden[2];
 		String antwoord = velden[3];
 		int maxAantalPogingen= Integer.parseInt(velden[4]);
-		int maxAntwoordtijd= Integer.parseInt(velden[5]);
-		String categorie = velden[6];
-		String auteur = velden[7];
+		int maxAntwoordTijd= Integer.parseInt(velden[5]);
+		String cat = velden[6];
+		OpdrachtCategorie categorie = OpdrachtCategorie.valueOf(cat); 
+		String aut = velden[7];
+		Leraar auteur = Leraar.valueOf(aut);
 		String opmaakDatum = velden[8];
 		int aantal = Integer.parseInt(velden[9]);
 		int veldNummer = 11;
@@ -250,8 +255,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				meerkeuze.put(Integer.parseInt(velden[veldNummer]), velden[veldNummer+1]);
 				veldNummer=veldNummer+2;
 			}	
-			
-		
+			Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+			voegOpdrachtToe(mk);
 			break;
 		case "Opsomming":
 			Map<Integer, String> opsomming = null;
@@ -260,6 +265,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				veldNummer=veldNummer+2;
 			}	
 			boolean inJuisteVolgorde = Boolean.parseBoolean(velden[veldNummer]);
+			Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+			voegOpdrachtToe(os);
 			break;
 			
 		case "Reproductie":
@@ -269,7 +276,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				veldNummer++;
 			}	
 			int aantalJuistTrefwoorden = Integer.parseInt(velden[veldNummer]);
-			
+			Reproductie reprod = new Reproductie(vraag, antwoord, trefwoorden, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+			voegOpdrachtToe(reprod);
 			break;
 		
 		}

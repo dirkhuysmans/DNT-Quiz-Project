@@ -23,10 +23,20 @@ public class Reproductie extends Opdracht{
 	int minAantalJuisteTrefwoorden = 0;
 	
 	
-	public Reproductie(String vraag, String antwoord, Set<String> trefwoorden, int minAantalTrefWoorden, 
-			List<String> hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
+	public Reproductie(String vraag, String antwoord, Set<String> trefwoord, int minAantalTrefWoorden, 
+			List<String> hints, int maxAantalPogingen, int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		// TODO Auto-generated constructor stub
+		trefwoorden = trefwoord;
+		minAantalJuisteTrefwoorden = minAantalTrefWoorden;
+	}
+
+	public Reproductie(String vraag, String antwoord, Set<String> trefwoord, int minAantalTrefWoorden, 
+			List<String> hints, int maxAantalPogingen, int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, String opmaakdatum) {
+		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakdatum);
+		// TODO Auto-generated constructor stub
+		trefwoorden = trefwoord;
+		minAantalJuisteTrefwoorden = minAantalTrefWoorden;
 	}
 	
 	public int aantalJuisteTrefWoorden(String tekst){

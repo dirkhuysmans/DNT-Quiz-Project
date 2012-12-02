@@ -36,6 +36,17 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 		// TODO Auto-generated constructor stub
 	}
 
+	public Opsomming(String vraag, String antwoord, Map<Integer, String> opsomming, boolean juisteVolgorde, List<String> hints,
+			int maxAantalPogingen, int maxAntwoordTijd,
+			OpdrachtCategorie categorie, Leraar auteur, String opmaakDatum) {
+		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
+				auteur, opmaakDatum);
+		opsommingLijst = opsomming;
+		inJuisteVolgorde = juisteVolgorde;
+		setAntwoord(antwoord);
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setOpsomming(Map<Integer, String> opsomming){
 		opsommingLijst = opsomming;
 	}

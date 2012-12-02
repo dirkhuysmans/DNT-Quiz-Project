@@ -80,6 +80,20 @@ public abstract class Opdracht implements Serializable{
 		setAuteur(auteur);
 		setOpmaakDatum(new Datum());		
 	}
+//constructor voor inlezen txt bestand
+	public Opdracht (String vraag, String antwoord, List<String> hints, int maxAantalPogingen, 
+			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, String opmaakDatum){
+		setVraag(vraag);
+		setAntwoord(antwoord);
+		setHints(hints);
+		setMaxAantalPogingen(maxAantalPogingen);
+		setMaxAntwoordTijd(maxAntwoordTijd);
+		setCategorie(categorie);
+		setAuteur(auteur);
+		setOpmaakDatum(opmaakDatum);		
+	}
+
+	
 	public Opdracht(String vraag, String antwoord){
 		this.vraag = vraag;
 		this.antwoord = antwoord;
@@ -161,6 +175,10 @@ public abstract class Opdracht implements Serializable{
 
 	public void setOpmaakDatum(Datum opmaakDatum) {
 		this.opmaakDatum = opmaakDatum;
+	}
+
+	public void setOpmaakDatum(String opmaakDatum) {
+		this.opmaakDatum = new Datum(opmaakDatum);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package persistenty;
 
-public class Test {
+public class SqlDao {
 
 	/**
 	 * @param args

@@ -112,6 +112,7 @@ public abstract class Opdracht implements Serializable{
 	public void setHints(List<String> hints) {
 		this.hints = hints;
 	}
+	
 
 	public int getMaxAantalPogingen() {
 		return maxAantalPogingen;

@@ -21,21 +21,35 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	/**
 	 * 
 	 */
-	private String antwoord;
+	//private String antwoord;
 	public Map<Integer, String> opsommingLijst;
+	private boolean inJuisteVolgorde;
 
-	public Opsomming(String vraag, String antwoord, Map<Integer, String> opsomming, List<String> hints,
+	public Opsomming(String vraag, String antwoord, Map<Integer, String> opsomming, boolean juisteVolgorde, List<String> hints,
 			int maxAantalPogingen, int maxAntwoordTijd,
 			OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
 				auteur);
-		
+		opsommingLijst = opsomming;
+		inJuisteVolgorde = juisteVolgorde;
 		setAntwoord(antwoord);
 		// TODO Auto-generated constructor stub
 	}
 
 	public void setOpsomming(Map<Integer, String> opsomming){
 		opsommingLijst = opsomming;
+	}
+	
+	public Map<Integer, String>  getOpsomming(){
+		return opsommingLijst;
+	}
+	
+	public void setInJuisteVolgorde(boolean juisteVolgorde){
+		inJuisteVolgorde = juisteVolgorde;
+	}
+	
+	public boolean getInJuisteVolgorde(){
+		return inJuisteVolgorde;
 	}
 	
 /*	public void setAntwoord(String antwoord) {
@@ -45,7 +59,7 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	@Override
 	public boolean isValide(String antw) {
 		StringTokenizer binnenkomend = new StringTokenizer(antw, ";");
-		StringTokenizer origineel = new StringTokenizer(antwoord, ";");
+		StringTokenizer origineel = new StringTokenizer(this.getAntwoord(), ";");
 		if (binnenkomend.countTokens() == origineel.countTokens()){
 			return true;
 		}else{

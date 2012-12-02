@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * 
@@ -182,6 +185,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				
 			}
 			stringOpdracht +=aantal + "," + bijkomend;
+			stringOpdracht += opsomming.getInJuisteVolgorde();
 		}
 		else if(opdracht instanceof Reproductie){
 			Reproductie reproductie = (Reproductie) opdracht;
@@ -195,6 +199,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				}
 				
 			}
+			bijkomend += reproductie.minAantalJuisteTrefwoorden;
 			stringOpdracht +=aantal + "," + bijkomend;
 		}
 		
@@ -210,9 +215,64 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void maakObjectVanLijn(String[] velden) throws Exception {
 		// TODO Auto-generated method stub
+		String type = velden[0];
+		int index = Integer.parseInt(velden[1]);
+		String vraag = velden[2];
+		String antwoord = velden[3];
+		int maxAantalPogingen= Integer.parseInt(velden[4]);
+		int maxAntwoordtijd= Integer.parseInt(velden[5]);
+		String categorie = velden[6];
+		String auteur = velden[7];
+		String opmaakDatum = velden[8];
+		int aantal = Integer.parseInt(velden[9]);
+		int veldNummer = 11;
+		List <String> hints = new ArrayList<String>();
+		for (int i=1; i<aantal; i++) {
+			hints.add(velden[veldNummer]);
+			veldNummer++;
+		}
+		aantal = Integer.parseInt(velden[veldNummer])*2;
+		veldNummer++;
+		
+		
+		switch (type){
+		case "Opdracht":
+			
+			break;
+			
+		case "Meerkeuze":
+			Map<Integer, String> meerkeuze= null;
+			for (int i=1; i<aantal; i=i+2) {
+				meerkeuze.put(Integer.parseInt(velden[veldNummer]), velden[veldNummer+1]);
+				veldNummer=veldNummer+2;
+			}	
+			
+		
+			break;
+		case "Opsomming":
+			Map<Integer, String> opsomming = null;
+			for (int i=1; i<aantal; i=i+2) {
+				opsomming.put(Integer.parseInt(velden[veldNummer]), velden[veldNummer+1]);
+				veldNummer=veldNummer+2;
+			}	
+			boolean inJuisteVolgorde = Boolean.parseBoolean(velden[veldNummer]);
+			break;
+			
+		case "Reproductie":
+			Set<String> trefwoorden = new HashSet<String>();
+			for (int i=1; i<aantal; i++) {
+				trefwoorden.add(velden[veldNummer]);
+				veldNummer++;
+			}	
+			int aantalJuistTrefwoorden = Integer.parseInt(velden[veldNummer]);
+			
+			break;
+		
+		}
 		
 	}
 	

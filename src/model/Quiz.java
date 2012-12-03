@@ -73,6 +73,19 @@ public class Quiz implements Serializable {
 		this.auteur = auteur;
 		
 	}
+	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datum ,Leraar auteur){
+		this.onderwerp = controleInhoudVeld(onderwerp);
+		this.leerJaar = controleLeerjaar(leerJaar);
+		this.isTest = isTest;
+		this.isUniekeDeelname = isUniekeDeelname;
+		if (isTest) { // indien quiz in testfase
+			isUniekeDeelname = true;
+		}
+		this.quizStatus = quizStatus;
+		this.datumRegistratie = datumRegistratie;
+		this.auteur = auteur;
+		
+	}
 
 	//
 	// Getters

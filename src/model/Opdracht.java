@@ -5,7 +5,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.gregorian.Datum;
+//import utils.gregorian.Datum;
+import utils.datum.Datum;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 
@@ -30,7 +31,8 @@ public abstract class Opdracht implements Serializable{
 	private List<String> hints= new ArrayList<String>();
 	//private int poging=0;
 	private int maxAantalPogingen = 1;
-	private Time maxAntwoordTijd = null;
+	//private Time maxAntwoordTijd = null;
+	private int maxAntwoordTijd=0;
 	private int antwoordTijd = 0;
 	private OpdrachtCategorie categorie;
 	private Leraar auteur;
@@ -57,7 +59,9 @@ public abstract class Opdracht implements Serializable{
 		setMaxAntwoordTijd(maxAntwoordTijd);
 		setCategorie(categorie);
 		setAuteur(auteur);
-		setOpmaakDatum(new Datum());		
+		Datum opmaakDatum = new Datum();
+		this.opmaakDatum = opmaakDatum;
+//		setOpmaakDatum(new Datum());		
 	}
 	public Opdracht (String vraag, String antwoord, List<String> hints, int maxAantalPogingen, 
 			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
@@ -68,7 +72,9 @@ public abstract class Opdracht implements Serializable{
 		setMaxAntwoordTijd(maxAntwoordTijd);
 		setCategorie(categorie);
 		setAuteur(auteur);
-		setOpmaakDatum(new Datum());		
+		Datum opmaakDatum = new Datum();
+		this.opmaakDatum = opmaakDatum;
+//		setOpmaakDatum(new Datum());		
 	}
 	public Opdracht (String vraag, List<String> hints, int maxAantalPogingen, 
 			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
@@ -78,7 +84,9 @@ public abstract class Opdracht implements Serializable{
 		setMaxAntwoordTijd(maxAntwoordTijd);
 		setCategorie(categorie);
 		setAuteur(auteur);
-		setOpmaakDatum(new Datum());		
+		Datum opmaakDatum = new Datum();
+		this.opmaakDatum = opmaakDatum;
+//	setOpmaakDatum(new Datum());		
 	}
 //constructor voor inlezen txt bestand
 	public Opdracht (String vraag, String antwoord, List<String> hints, int maxAantalPogingen, 
@@ -90,7 +98,10 @@ public abstract class Opdracht implements Serializable{
 		setMaxAntwoordTijd(maxAntwoordTijd);
 		setCategorie(categorie);
 		setAuteur(auteur);
-		setOpmaakDatum(opmaakDatum);		
+		Datum opmaakdatum = new Datum(opmaakDatum);
+		this.opmaakDatum = opmaakdatum;
+
+//		setOpmaakDatum(opmaakDatum);		
 	}
 
 	
@@ -136,9 +147,14 @@ public abstract class Opdracht implements Serializable{
 		this.maxAantalPogingen = maxAantalPogingen;
 	}
 
-	public Time getMaxAntwoordTijd() {
+/*	public Time getMaxAntwoordTijd() {
 		return maxAntwoordTijd;
 	}
+*/
+	public int getMaxAntwoordTijd() {
+		return maxAntwoordTijd;
+	}
+	
 	public int getAntwoordTijd() {
 		return antwoordTijd;
 	}

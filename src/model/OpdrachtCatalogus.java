@@ -57,6 +57,10 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 //		(OPDRACHTFILE);
 //	}
 
+	public  List<Opdracht> getOpdrachtenCatalogus(){
+		return opdrachtenCatalogus;
+	}
+	
 	@Override
 	public Iterator iterator() {
 		return opdrachtenCatalogus.iterator();
@@ -110,6 +114,9 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	public Opdracht getOpdracht(int k) throws IndexOutOfBoundsException{
 		return opdrachtenCatalogus.get(k-1);		
 	}
+	public int getOpdrachtKey(Opdracht opdracht){
+		return opdrachtenCatalogus.indexOf(opdracht);
+	}
 
 	@Override
 	public void toevoegenLijn(String lijn) {
@@ -145,7 +152,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(getDirectory(),getFile())));
 		String	stringOpdracht="";
 		for (Opdracht opdracht:opdrachtenCatalogus){
-		stringOpdracht = opdracht.getClass().getName() +"," + opdrachtenCatalogus.indexOf(opdracht) + "," + opdracht.getVraag() + "," + opdracht.getAntwoord() + "," + opdracht.getMaxAantalPogingen() + "," +opdracht.getMaxAntwoordTijd() +"," + opdracht.getCategorie() +"," + opdracht.getAuteur() + "," + opdracht.opmaakDatum.getDag()+"/"+opdracht.opmaakDatum.getMaand()+"/"+opdracht.opmaakDatum.getJaar() +",";
+		stringOpdracht = opdracht.getClass().getName() +"," + getOpdrachtKey(opdracht) + "," + opdracht.getVraag() + "," + opdracht.getAntwoord() + "," + opdracht.getMaxAantalPogingen() + "," +opdracht.getMaxAntwoordTijd() +"," + opdracht.getCategorie() +"," + opdracht.getAuteur() + "," + opdracht.opmaakDatum.getDatumInEuropeesFormaat(opdracht.opmaakDatum) +",";
 		int aantal=0;
 		String bijkomend="";
 		
@@ -230,7 +237,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 	public void maakObjectVanLijn(String[] velden) throws Exception {
 		// TODO Auto-generated method stub
 		String type = velden[0];
-		int index = Integer.parseInt(velden[1]);
+		int opdrachtId = Integer.parseInt(velden[1]);
 		String vraag = velden[2];
 		String antwoord = velden[3];
 		int maxAantalPogingen= Integer.parseInt(velden[4]);
@@ -264,7 +271,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 				veldNummer++;
 			}	
 			Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-			voegOpdrachtToe(mk);
+			this.opdrachtenCatalogus.add(opdrachtId,mk);
 			break;
 		case "Opsomming":
 			Map<Integer, String> opsomming = null;
@@ -274,7 +281,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 			}	
 			boolean inJuisteVolgorde = Boolean.parseBoolean(velden[veldNummer]);
 			Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-			voegOpdrachtToe(os);
+			this.opdrachtenCatalogus.add(opdrachtId, os);
 			break;
 			
 		case "Reproductie":
@@ -285,9 +292,12 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 			}	
 			int aantalJuistTrefwoorden = Integer.parseInt(velden[veldNummer]);
 			Reproductie reprod = new Reproductie(vraag, antwoord, trefwoorden, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-			voegOpdrachtToe(reprod);
+			this.opdrachtenCatalogus.add(opdrachtId,reprod);
 			break;
 		
+		default:
+			break;
+			
 		}
 		
 	}

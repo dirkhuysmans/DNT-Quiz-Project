@@ -1,5 +1,2 @@
-Hoofdsteden/Provincies;2;22 november 2012;MYRIAM;AFGEWERKT;true;true;Wat is de hoofdstad van Franrijk?;Parijs;2
-Hoofdsteden/Provincies;2;22 november 2012;MYRIAM;AFGEWERKT;true;true;Wat is de hoofdstad van Spanje?;Madrid;2
-Hoofdsteden/Provincies;2;22 november 2012;MYRIAM;AFGEWERKT;true;true;In welke provincie ligt de hoofdstad van België?;Brabant;5
-Hoofdsteden/Provincies;2;22 november 2012;MYRIAM;AFGEWERKT;true;true;In welke provincie ligt Genk?;Limburg;3
-Hoofdsteden/Provincies;2;22 november 2012;MYRIAM;AFGEWERKT;true;true;In welke provincie ligt Antwerpen;Antwerpen;4
+0,Hoofdsteden/Provincies,2,true,true,AFGEWERKT,03/12/2012,MYRIAM
+EINDE

@@ -30,6 +30,7 @@ public class OpstartController {
 			        break;
 			case 2:	quiz = new QuizFrame(this,toevoegenQuizController);
 	        		quiz.setVisible(true);
+	        		quiz.MAXIMIZED_BOTH;
 				    break;
 			case 3: //openen lessenroosterOverzicht frame
 				    break;

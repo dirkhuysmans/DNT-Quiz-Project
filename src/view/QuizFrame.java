@@ -1,43 +1,53 @@
 package view;
-
 import java.awt.Container;
 import java.awt.event.*;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import javax.swing.ListModel;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import controller.*;
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
 import model.Opdracht;
 import model.OpdrachtCatalogus;
+import model.Quiz;
+import model.QuizCatalogus;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.QuizStatussen;
 import model.enumKlassen.OpdrachtCategorie;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
-public class QuizFrame extends JFrame {
+public class QuizFrame extends JFrame{
 	private OpstartController opstartController;
 	private ToevoegenQuizController toevoegenQuizController;
 	private JTextField txtOnderwerp;
-
+	private List<Quiz> lijstQuizCatalogus = new ArrayList();
+	private JTextField maxScore;
+	private JTextField totScore;
+	
+	
+	
 	public QuizFrame(OpstartController opstartController,
-			ToevoegenQuizController toevoegenQuizController) {
-
+			ToevoegenQuizController toevoegenQuizController,
+			QuizCatalogus quizCatalogus,
+			OpdrachtCatalogus opdrachtCatalogus) {
 		super("Beheren van quizzen/testen(leraar)");
 		this.opstartController = opstartController;
 		this.toevoegenQuizController = toevoegenQuizController;
 		Container container = getContentPane();
 		container.setBackground(Color.WHITE);
 		container.setLayout(null);
+		
 		//
 		//
 		//
@@ -64,7 +74,7 @@ public class QuizFrame extends JFrame {
 		lblVan.setBounds(118, 49, 39, 15);
 		getContentPane().add(lblVan);
 		//
-		// combobox leerjaren van
+		// combobox leerjaren van 
 		// waarden van 1 tot en met 6
 		//
 		JComboBox cmbLeerjaarVan = new JComboBox();
@@ -130,7 +140,7 @@ public class QuizFrame extends JFrame {
 		//
 		final JComboBox cmbAuteur = new JComboBox(Leraar.values());
 		cmbAuteur.setBounds(188, 165, 140, 24);
-		getContentPane().add(cmbAuteur);
+		getContentPane().add(cmbAuteur);	
 		//
 		// tekst label "Status : "
 		//
@@ -146,30 +156,34 @@ public class QuizFrame extends JFrame {
 		//
 		// tekst button "Registreer quiz"
 		//
-		JButton btnRegistreerQuiz = new JButton("Registreer Quiz");
+		JButton btnRegistreerQuiz= new JButton("Registreer Quiz");
 		btnRegistreerQuiz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+			public void actionPerformed(ActionEvent e){
+				
 				String onderwerp = txtOnderwerp.getText();
 				int leerJaar = 5;
 				boolean isUniekeDeelname = true;
 				boolean isTest = true;
-				Leraar auteur = (Leraar) cmbAuteur.getSelectedItem();
-				QuizStatussen quizStatus = (QuizStatussen) cmbStatus
-						.getSelectedItem();
-				try {
-					QuizFrame.this.toevoegenQuizController.maakQuiz(onderwerp,
-							leerJaar, isUniekeDeelname, isTest, quizStatus,
-							auteur);
-				} catch (IllegalArgumentException iaex) {
-					IO.toonStringMetVenster(iaex);
-					// e.printStackTrace();
-				} catch (Exception ex) {
-					IO.toonStringMetVenster(ex + "");
-					// ex.printStackTrace();
+				Leraar auteur = (Leraar)cmbAuteur.getSelectedItem();
+				QuizStatussen quizStatus = (QuizStatussen)cmbStatus.getSelectedItem();
+				try{
+					QuizFrame.this.toevoegenQuizController.maakQuiz(onderwerp, leerJaar, isUniekeDeelname, isTest, 
+							quizStatus, auteur);
 				}
-				setVisible(false);
-				toonMenu();
+				catch(IllegalArgumentException iaex){
+					IO.toonStringMetVenster(iaex);
+					//e.printStackTrace();		
+				}
+				catch (Exception ex){
+					IO.toonStringMetVenster(ex+"");
+					//ex.printStackTrace();
+				}
+				setVisible(false);             
+				try {
+					toonMenu();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnRegistreerQuiz.setBounds(319, 44, 174, 25);
@@ -180,60 +194,150 @@ public class QuizFrame extends JFrame {
 		JButton btnAnnuleer = new JButton("Annuleer");
 		btnAnnuleer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				toonMenu();
-
+				setVisible(false); 
+				try {
+					toonMenu();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				 
 			}
 		});
 		btnAnnuleer.setBounds(319, 74, 117, 25);
 		getContentPane().add(btnAnnuleer);
 		//
-		// combobox alle types (enum OpdrachtCategorie)
+		// combobox alle types 
 		//
-		JComboBox cmbType = new JComboBox(OpdrachtCategorie.values());
+		JComboBox cmbType = new JComboBox();
 		cmbType.setBounds(34, 235, 154, 24);
+		cmbType.addItem("");
+		cmbType.addItem("Meerkeuze");
+		cmbType.addItem("Opsomming");
+		cmbType.addItem("Reproductie");
+		cmbType.addItem("EenvoudigeOpdracht");
 		getContentPane().add(cmbType);
 		//
 		// combobox alle opdrachten
 		//
-		List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
-
-		String catalogus = "";
-
-		System.out.println(catalogus.toString());
-		String[] types = { "Eenvoudige opdracht", "Meerkeuze", "Opsomming",
-				"Reproductie" };
-		JComboBox typeOpdrachten = new JComboBox(types);
-		typeOpdrachten.setBounds(198, 235, 154, 24);
-		getContentPane().add(typeOpdrachten);
-		typeOpdrachten.setVisible(true);
+	
 		
 		
-		List<Opdracht> opdrachten = OpdrachtCatalogus.opdrachtenCatalogus;
-		String [] 
-		//opdrachtCatalogus.get
-		// ListModel model = new ListModel();
-
-		JList opdrachtenLijst = new JList(opdrachten);
-		for (Opdracht opdracht : opdrachten) {
-			Component opdrachtAlsComponent = (Component) opdracht;
-			opdrachtenLijst.
+		
+		JComboBox cmbAlleOpdrachten = new JComboBox();
+		cmbAlleOpdrachten.setBounds(198, 235, 357, 24);
+		cmbAlleOpdrachten.addItem("");
+		for(int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i ++){
+			cmbAlleOpdrachten.addItem(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
 		}
-		/*
-		 * JComboBox cmbAlleOpdrachten = new JComboBox(types);
-		 * cmbAlleOpdrachten.setBounds(198, 235, 154, 24);
-		 * getContentPane().add(cmbAlleOpdrachten);
-		 * cmbAlleOpdrachten.setVisible(true);
-		 */
+		getContentPane().add(cmbAlleOpdrachten);
+		//
+		// combobox alle tcategorieën (enum OpdrachtCategorie)
+		//
+		JComboBox cmbCategorie = new JComboBox();
+		cmbCategorie.setBounds(567, 235, 154, 24);
+		cmbCategorie.addItem("");
+		cmbCategorie.addItem(OpdrachtCategorie.algemeneKennis );
+		cmbCategorie.addItem(OpdrachtCategorie.FranseTaal );
+		cmbCategorie.addItem(OpdrachtCategorie.NederlandseTaal );
+		cmbCategorie.addItem(OpdrachtCategorie.rekenen );
+		getContentPane().add(cmbCategorie);
+		
+		DefaultListModel model = new DefaultListModel();
+		final JList jListOpdracht = new JList(model);
+		jListOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListOpdracht.setBackground(Color.LIGHT_GRAY);
+		jListOpdracht.setBounds(43, 340, 450, 83);;
+		for(int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i ++){
+			model.addElement(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
+		}
+		
+	    
 
+		
+		
+		getContentPane().add(jListOpdracht);
+		//
+		// button om naar rechts te doen
+		//
+		JButton btnToTheRight = new JButton(">");
+		btnToTheRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = jListOpdracht.getSelectedValue().toString();
+				System.out.println(selected);
+				//JList jListGekozenOpdracht = new JList();
+				//jListGekozenOpdracht.setListData( (Object[]) jListOpdracht.getSelectedValue()); 
+			}
+		});
+		btnToTheRight.setBounds(502, 361, 60, 25);
+		getContentPane().add(btnToTheRight);
+		//
+		// button om naar links te doen
+		//
+		JButton btnToTheLeft = new JButton("<");
+		btnToTheLeft.setBounds(505, 398, 57, 25);
+		getContentPane().add(btnToTheLeft);
+		//
+		// label met tekst "Vraag"
+		//
+		JLabel lblVraag = new JLabel("Vraag");
+		lblVraag.setBounds(606, 322, 70, 24);
+		getContentPane().add(lblVraag);
+		//
+		// label met tekst "MaxScore
+		//
+		JLabel lblMaxscore = new JLabel("MaxScore");
+		lblMaxscore.setBounds(831, 322, 102, 24);
+		getContentPane().add(lblMaxscore);
+		// 
+		// label met tekst MaxScore input
+		//
+		JLabel lblMaxscoreInput = new JLabel("MaxScore");
+		lblMaxscoreInput.setBounds(606, 271, 70, 15);
+		getContentPane().add(lblMaxscoreInput);
+		//
+		// tekstveld met berekening maxScore
+		//
+		maxScore = new JTextField();
+		maxScore.setBounds(730, 269, 114, 19);
+		getContentPane().add(maxScore);
+		maxScore.setColumns(10);
+		//
+		// label met teks "TotScore"
+		//
+		JLabel lblTotscore = new JLabel("TotScore");
+		lblTotscore.setBounds(606, 298, 70, 15);
+		getContentPane().add(lblTotscore);
+		//
+		// tekstveld met totaal score
+		//
+		totScore = new JTextField();
+		totScore.setBounds(730, 296, 114, 19);
+		getContentPane().add(totScore);
+		totScore.setColumns(10);
+		
+		JList jListGekozenOpdracht = new JList();
+		jListGekozenOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
+		jListGekozenOpdracht.setBounds(616, 348, 317, 77);
+		getContentPane().add(jListGekozenOpdracht);
+		
+
+		
+
+	
 	}
 
-	private void toonMenu() {
+
+
+
+
+	private void toonMenu() throws Exception{
 		opstartController.execute();
 	}
-
-	public static void main(String[] args) {
-		// PlanningFrame pl = new PlanningFrame(new OpstartController());
-		// pl.setVisible(true);
+	
+	
+	public static void main (String [] args){
+		//PlanningFrame pl = new PlanningFrame(new OpstartController());
+		//pl.setVisible(true);
 	}
 }

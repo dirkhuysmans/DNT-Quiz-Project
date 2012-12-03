@@ -262,7 +262,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		switch (type){
 		case "EenvoudigeOpdracht":
 			EenvoudigeOpdracht eenvoudigeOpdracht = new EenvoudigeOpdracht(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-			this.opdrachtenCatalogus.add(opdrachtId, opdracht);
+			this.opdrachtenCatalogus.add(opdrachtId, eenvoudigeOpdracht);
 			break;
 			
 		case "Meerkeuze":

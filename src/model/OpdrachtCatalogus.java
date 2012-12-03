@@ -260,14 +260,15 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		
 		
 		switch (type){
-		case "Opdracht":
-			
+		case "EenvoudigeOpdracht":
+			EenvoudigeOpdracht eenvoudigeOpdracht = new EenvoudigeOpdracht(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+			this.opdrachtenCatalogus.add(opdrachtId, opdracht);
 			break;
 			
 		case "Meerkeuze":
 			Map<Integer, String> meerkeuze= null;
 			for (int i=1; i<aantal; i++) {
-				meerkeuze.put(i, velden[veldNummer+1]);
+				meerkeuze.put(i, velden[veldNummer+i]);
 				veldNummer++;
 			}	
 			Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
@@ -276,7 +277,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		case "Opsomming":
 			Map<Integer, String> opsomming = null;
 			for (int i=1; i<aantal; i++) {
-				opsomming.put(i, velden[veldNummer]);
+				opsomming.put(i, velden[veldNummer]+i);
 				veldNummer++;
 			}	
 			boolean inJuisteVolgorde = Boolean.parseBoolean(velden[veldNummer]);
@@ -287,7 +288,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable{
 		case "Reproductie":
 			Set<String> trefwoorden = new HashSet<String>();
 			for (int i=1; i<aantal; i++) {
-				trefwoorden.add(velden[veldNummer]);
+				trefwoorden.add(velden[veldNummer]+i);
 				veldNummer++;
 			}	
 			int aantalJuistTrefwoorden = Integer.parseInt(velden[veldNummer]);

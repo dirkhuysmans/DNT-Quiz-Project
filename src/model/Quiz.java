@@ -28,7 +28,7 @@ public class Quiz implements Serializable {
 	// Attributen
 	//
 	private String onderwerp;
-	private int leerJaar;
+	private int minLeerjaar, maxLeerjaar;
 	private boolean isTest;
 	private boolean isUniekeDeelname;
 	private QuizStatussen quizStatus;
@@ -56,10 +56,11 @@ public class Quiz implements Serializable {
 	 * @param opdracht				opdracht is een object van het type Opdracht
 	 * @param quizStatus			de status waarin de quiz zich bevindt
 	 */
-	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus) {
+	public Quiz(String onderwerp, int minLeerjaar,int maxLeerjaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus) {
 		
 		this.onderwerp = controleInhoudVeld(onderwerp);
-		this.leerJaar = controleLeerjaar(leerJaar);
+		this.minLeerjaar = controleLeerjaar(minLeerjaar);
+		this.maxLeerjaar = controleLeerjaar(maxLeerjaar);
 		this.isTest = isTest;
 		this.isUniekeDeelname = isUniekeDeelname;
 		if (isTest) { // indien quiz in testfase

@@ -18,10 +18,10 @@ public class ToevoegenQuizController{
 		this.daoFacade = daoFacade;
 	}
 	
-	public void maakQuiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,
+	public void maakQuiz(String onderwerp, int minLeerJaar, int maxLeerjaar, boolean isUniekeDeelname,
 			             boolean isTest, QuizStatussen quizStatus, Leraar auteur) throws IllegalArgumentException, Exception{
 		try{
-			Quiz quiz = new Quiz(onderwerp,leerJaar,isUniekeDeelname,isTest,quizStatus);
+			Quiz quiz = new Quiz(onderwerp,minLeerJaar, maxLeerjaar, isUniekeDeelname,isTest,quizStatus);
 			daoFacade.createQuiz(quiz);
 		}
 		catch(IllegalArgumentException iaex){

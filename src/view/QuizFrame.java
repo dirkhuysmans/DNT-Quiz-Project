@@ -1,11 +1,15 @@
 package view;
+
 import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.Window;
 import java.awt.event.*;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -27,27 +31,24 @@ import model.enumKlassen.OpdrachtCategorie;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
-public class QuizFrame extends JFrame{
+public class QuizFrame extends JFrame {
 	private OpstartController opstartController;
 	private ToevoegenQuizController toevoegenQuizController;
 	private JTextField txtOnderwerp;
 	private List<Quiz> lijstQuizCatalogus = new ArrayList();
 	private JTextField maxScore;
 	private JTextField totScore;
-	
-	
-	
+
 	public QuizFrame(OpstartController opstartController,
-			ToevoegenQuizController toevoegenQuizController,
-			QuizCatalogus quizCatalogus,
-			OpdrachtCatalogus opdrachtCatalogus) {
+			final ToevoegenQuizController toevoegenQuizController,
+			QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
 		super("Beheren van quizzen/testen(leraar)");
 		this.opstartController = opstartController;
 		this.toevoegenQuizController = toevoegenQuizController;
 		Container container = getContentPane();
 		container.setBackground(Color.WHITE);
 		container.setLayout(null);
-		
+
 		//
 		//
 		//
@@ -74,10 +75,10 @@ public class QuizFrame extends JFrame{
 		lblVan.setBounds(118, 49, 39, 15);
 		getContentPane().add(lblVan);
 		//
-		// combobox leerjaren van 
+		// combobox leerjaren van
 		// waarden van 1 tot en met 6
 		//
-		JComboBox cmbLeerjaarVan = new JComboBox();
+		final JComboBox cmbLeerjaarVan = new JComboBox();
 		cmbLeerjaarVan.addItem(1);
 		cmbLeerjaarVan.addItem(2);
 		cmbLeerjaarVan.addItem(3);
@@ -96,7 +97,7 @@ public class QuizFrame extends JFrame{
 		// combobox leerjaren tot
 		// waarden van 1 tot en met 6
 		//
-		JComboBox cmbLeerjaarTot = new JComboBox();
+		final JComboBox cmbLeerjaarTot = new JComboBox();
 		cmbLeerjaarTot.setBounds(188, 80, 50, 24);
 		cmbLeerjaarTot.addItem(1);
 		cmbLeerjaarTot.addItem(2);
@@ -114,9 +115,9 @@ public class QuizFrame extends JFrame{
 		//
 		// checkbox isTest : wordt aangevinkt indien de quiz een test is
 		//
-		JCheckBox chckbxIsTest = new JCheckBox();
-		chckbxIsTest.setBounds(185, 103, 27, 23);
-		getContentPane().add(chckbxIsTest);
+		final JCheckBox boxIsTest = new JCheckBox();
+		boxIsTest.setBounds(185, 103, 27, 23);
+		getContentPane().add(boxIsTest);
 		//
 		// tekst label "Unieke deelname ?"
 		//
@@ -126,9 +127,9 @@ public class QuizFrame extends JFrame{
 		//
 		// checkbox isUniekeDeelname
 		//
-		JCheckBox chckbxIsUniekeDeelname = new JCheckBox();
-		chckbxIsUniekeDeelname.setBounds(188, 134, 27, 23);
-		getContentPane().add(chckbxIsUniekeDeelname);
+		final JCheckBox boxUniekeDeelname = new JCheckBox();
+		boxUniekeDeelname.setBounds(188, 134, 27, 23);
+		getContentPane().add(boxUniekeDeelname);
 		//
 		// tekst label "Auteur : "
 		//
@@ -140,7 +141,7 @@ public class QuizFrame extends JFrame{
 		//
 		final JComboBox cmbAuteur = new JComboBox(Leraar.values());
 		cmbAuteur.setBounds(188, 165, 140, 24);
-		getContentPane().add(cmbAuteur);	
+		getContentPane().add(cmbAuteur);
 		//
 		// tekst label "Status : "
 		//
@@ -156,33 +157,42 @@ public class QuizFrame extends JFrame{
 		//
 		// tekst button "Registreer quiz"
 		//
-		JButton btnRegistreerQuiz= new JButton("Registreer Quiz");
+		JButton btnRegistreerQuiz = new JButton("Registreer Quiz");
 		btnRegistreerQuiz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				
+			public void actionPerformed(ActionEvent e) {
+
 				String onderwerp = txtOnderwerp.getText();
-				int leerJaar = 5;
-				boolean isUniekeDeelname = true;
-				boolean isTest = true;
-				Leraar auteur = (Leraar)cmbAuteur.getSelectedItem();
-				QuizStatussen quizStatus = (QuizStatussen)cmbStatus.getSelectedItem();
-				try{
-					QuizFrame.this.toevoegenQuizController.maakQuiz(onderwerp, leerJaar, isUniekeDeelname, isTest, 
-							quizStatus, auteur);
-				}
-				catch(IllegalArgumentException iaex){
-					IO.toonStringMetVenster(iaex);
-					//e.printStackTrace();		
-				}
-				catch (Exception ex){
-					IO.toonStringMetVenster(ex+"");
-					//ex.printStackTrace();
-				}
-				setVisible(false);             
-				try {
-					toonMenu();
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				int minLeerjaar = Integer.parseInt((String) cmbLeerjaarVan
+						.getSelectedItem());
+				int maxLeerjaar = Integer.parseInt((String) cmbLeerjaarTot
+						.getSelectedItem());
+
+				boolean isUniekeDeelname = boxUniekeDeelname.isSelected();
+				boolean isTest = boxIsTest.isSelected();
+				Leraar auteur = (Leraar) cmbAuteur.getSelectedItem();
+				QuizStatussen quizStatus = (QuizStatussen) cmbStatus
+						.getSelectedItem();
+				if (maxLeerjaar < minLeerjaar) {
+					JOptionPane.showMessageDialog(null, "Het maximum leerjaar kan niet" +
+							" minder zijn dan het minimum leerjaar");
+				} else {
+					try {
+						toevoegenQuizController.maakQuiz(onderwerp,
+								minLeerjaar, maxLeerjaar, isUniekeDeelname,
+								isTest, quizStatus, auteur);
+					} catch (IllegalArgumentException iaex) {
+						IO.toonStringMetVenster(iaex);
+						// e.printStackTrace();
+					} catch (Exception ex) {
+						IO.toonStringMetVenster(ex + "");
+						// ex.printStackTrace();
+					}
+					setVisible(false);
+					try {
+						toonMenu();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -194,19 +204,19 @@ public class QuizFrame extends JFrame{
 		JButton btnAnnuleer = new JButton("Annuleer");
 		btnAnnuleer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false); 
+				setVisible(false);
 				try {
 					toonMenu();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				 
+
 			}
 		});
 		btnAnnuleer.setBounds(319, 74, 117, 25);
 		getContentPane().add(btnAnnuleer);
 		//
-		// combobox alle types 
+		// combobox alle types
 		//
 		JComboBox cmbType = new JComboBox();
 		cmbType.setBounds(34, 235, 154, 24);
@@ -214,20 +224,18 @@ public class QuizFrame extends JFrame{
 		cmbType.addItem("Meerkeuze");
 		cmbType.addItem("Opsomming");
 		cmbType.addItem("Reproductie");
-		cmbType.addItem("EenvoudigeOpdracht");
+		cmbType.addItem("Eenvoudige Opdracht");
 		getContentPane().add(cmbType);
 		//
 		// combobox alle opdrachten
 		//
-	
-		
-		
-		
+
 		JComboBox cmbAlleOpdrachten = new JComboBox();
 		cmbAlleOpdrachten.setBounds(198, 235, 357, 24);
 		cmbAlleOpdrachten.addItem("");
-		for(int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i ++){
-			cmbAlleOpdrachten.addItem(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
+		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
+			cmbAlleOpdrachten.addItem(opdrachtCatalogus
+					.getOpdrachtenCatalogus().get(i));
 		}
 		getContentPane().add(cmbAlleOpdrachten);
 		//
@@ -236,26 +244,25 @@ public class QuizFrame extends JFrame{
 		JComboBox cmbCategorie = new JComboBox();
 		cmbCategorie.setBounds(567, 235, 154, 24);
 		cmbCategorie.addItem("");
-		cmbCategorie.addItem(OpdrachtCategorie.algemeneKennis );
-		cmbCategorie.addItem(OpdrachtCategorie.FranseTaal );
-		cmbCategorie.addItem(OpdrachtCategorie.NederlandseTaal );
-		cmbCategorie.addItem(OpdrachtCategorie.rekenen );
+		cmbCategorie.addItem(OpdrachtCategorie.algemeneKennis);
+		cmbCategorie.addItem(OpdrachtCategorie.FranseTaal);
+		cmbCategorie.addItem(OpdrachtCategorie.NederlandseTaal);
+		cmbCategorie.addItem(OpdrachtCategorie.rekenen);
 		getContentPane().add(cmbCategorie);
-		
+
 		DefaultListModel model = new DefaultListModel();
 		final JList jListOpdracht = new JList(model);
 		jListOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListOpdracht.setBackground(Color.LIGHT_GRAY);
-		jListOpdracht.setBounds(43, 340, 450, 83);;
-		for(int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i ++){
+		jListOpdracht.setBounds(43, 340, 450, 83);
+		;
+		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
 			model.addElement(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
 		}
-		
-	    
 
-		
-		
 		getContentPane().add(jListOpdracht);
+		
+		final ArrayList<String> selectedOpdrachten = new ArrayList<String>();
 		//
 		// button om naar rechts te doen
 		//
@@ -263,17 +270,23 @@ public class QuizFrame extends JFrame{
 		btnToTheRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String selected = jListOpdracht.getSelectedValue().toString();
-				System.out.println(selected);
-				//JList jListGekozenOpdracht = new JList();
-				//jListGekozenOpdracht.setListData( (Object[]) jListOpdracht.getSelectedValue()); 
+				selectedOpdrachten.add(selected);				
 			}
 		});
 		btnToTheRight.setBounds(502, 361, 60, 25);
 		getContentPane().add(btnToTheRight);
+		
 		//
 		// button om naar links te doen
 		//
+		
 		JButton btnToTheLeft = new JButton("<");
+		btnToTheLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = jListGekozenOpdracht.getSelectedValue();
+				selectedOpdrachten.add(selected);				
+			}
+		});
 		btnToTheLeft.setBounds(505, 398, 57, 25);
 		getContentPane().add(btnToTheLeft);
 		//
@@ -288,7 +301,7 @@ public class QuizFrame extends JFrame{
 		JLabel lblMaxscore = new JLabel("MaxScore");
 		lblMaxscore.setBounds(831, 322, 102, 24);
 		getContentPane().add(lblMaxscore);
-		// 
+		//
 		// label met tekst MaxScore input
 		//
 		JLabel lblMaxscoreInput = new JLabel("MaxScore");
@@ -314,30 +327,23 @@ public class QuizFrame extends JFrame{
 		totScore.setBounds(730, 296, 114, 19);
 		getContentPane().add(totScore);
 		totScore.setColumns(10);
-		
-		JList jListGekozenOpdracht = new JList();
-		jListGekozenOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		final JList jListGekozenOpdracht = new JList();
+		jListGekozenOpdracht
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
 		jListGekozenOpdracht.setBounds(616, 348, 317, 77);
+		
 		getContentPane().add(jListGekozenOpdracht);
 		
-
-		
-
-	
 	}
 
-
-
-
-
-	private void toonMenu() throws Exception{
+	private void toonMenu() throws Exception {		
 		opstartController.execute();
 	}
-	
-	
-	public static void main (String [] args){
-		//PlanningFrame pl = new PlanningFrame(new OpstartController());
-		//pl.setVisible(true);
+
+	public static void main(String[] args) {
+		// PlanningFrame pl = new PlanningFrame(new OpstartController());
+		// pl.setVisible(true);
 	}
 }

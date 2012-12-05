@@ -13,6 +13,8 @@ public class Opgave2 {
 		Opdracht opdracht3 = new EenvoudigeOpdracht("Wat is de hoofdstad van Itali�?","Rome");
 		Opdracht opdracht4 = new EenvoudigeOpdracht("Wat is de hoodstad van Portugal?","Lissabon");
 		Opdracht opdracht5 = new EenvoudigeOpdracht("Hoeveel provincies telt Belgi�?","Tien");
+		Opdracht o = new EenvoudigeOpdracht("vraag", "antwoord");
+		
 		
 		Quiz quiz1 = new Quiz("Hoofdsteden Europa");
 		Quiz quiz2 = new Quiz("Aardrijkskunde");

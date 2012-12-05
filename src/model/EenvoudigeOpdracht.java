@@ -7,6 +7,11 @@ import model.enumKlassen.OpdrachtCategorie;
 
 public class EenvoudigeOpdracht extends Opdracht{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public EenvoudigeOpdracht(String vraag, String antwoord) {
 		super(vraag, antwoord);
 		

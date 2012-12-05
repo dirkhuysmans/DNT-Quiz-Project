@@ -42,7 +42,7 @@ public class QuizController extends FileContainer{
 			
 			QuizStatussen quizStatus = QuizStatussen.AFGEWERKT;
 			
-			Quiz quiz = new Quiz("Hoofdsteden/Provincies", 2, true,true,quizStatus);
+			Quiz quiz = new Quiz("Hoofdsteden/Provincies", 2, 4,  true,true,quizStatus);
 			
 			quizCatalogus.voegQuizToe(quiz);
 /*			

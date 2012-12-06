@@ -48,6 +48,7 @@ public class QuizFrame extends JFrame {
 		Container container = getContentPane();
 		container.setBackground(Color.WHITE);
 		container.setLayout(null);
+		container.setSize(50, 50);
 
 		//
 		//
@@ -250,51 +251,56 @@ public class QuizFrame extends JFrame {
 		cmbCategorie.addItem(OpdrachtCategorie.rekenen);
 		getContentPane().add(cmbCategorie);
 
-		DefaultListModel model = new DefaultListModel();
+		final DefaultListModel model = new DefaultListModel();				
+		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
+			model.addElement(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
+		}
+		final DefaultListModel gekozenOpdrachtModel = new DefaultListModel();
+		
 		final JList jListOpdracht = new JList(model);
 		jListOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListOpdracht.setBackground(Color.LIGHT_GRAY);
 		jListOpdracht.setBounds(43, 340, 450, 83);
-		;
-		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
-			model.addElement(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
-		}
-
 		getContentPane().add(jListOpdracht);
-		
-		final ArrayList<String> selectedOpdrachten = new ArrayList<String>();
-		//
-		// button om naar rechts te doen
-		//
-		JButton btnToTheRight = new JButton(">");
-		btnToTheRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String selected = jListOpdracht.getSelectedValue().toString();
-				selectedOpdrachten.add(selected);				
-			}
-		});
-		btnToTheRight.setBounds(502, 361, 60, 25);
-		getContentPane().add(btnToTheRight);
-		
-		final DefaultListModel gekozenOpdrachtModel = new DefaultListModel();
+				
 		final JList jListGekozenOpdracht = new JList();
 		jListGekozenOpdracht
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
 		jListGekozenOpdracht.setBounds(616, 348, 317, 77);
 		getContentPane().add(jListGekozenOpdracht);
-		
-		
+				
+		//
+		// button om naar rechts te doen
+		//
+		JButton btnToTheRight = new JButton(">");
+		btnToTheRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				model.removeElement(jListOpdracht.getSelectedValue());
+				jListOpdracht.clearSelection();
+				jListOpdracht.setModel(model);
+				System.out.println(jListOpdracht.getSelectedValue());
+				gekozenOpdrachtModel.addElement(jListOpdracht.getSelectedValue());
+				jListGekozenOpdracht.clearSelection();
+				jListGekozenOpdracht.setModel(gekozenOpdrachtModel);
+			}
+		});
+		btnToTheRight.setBounds(502, 361, 60, 25);
+		getContentPane().add(btnToTheRight);
+				
 		//
 		// button om naar links te doen
 		//
 		
 		JButton btnToTheLeft = new JButton("<");
 		btnToTheLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				
+			public void actionPerformed(ActionEvent e) {						
+				model.addElement(jListGekozenOpdracht.getSelectedValue());
+				jListOpdracht.clearSelection();
+				jListOpdracht.setModel(model);				
 				gekozenOpdrachtModel.removeElement(jListGekozenOpdracht.getSelectedValue());
-			
+				jListGekozenOpdracht.clearSelection();
+				jListGekozenOpdracht.setModel(gekozenOpdrachtModel);
 			}
 		});
 		btnToTheLeft.setBounds(505, 398, 57, 25);

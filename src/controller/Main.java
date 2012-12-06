@@ -125,15 +125,17 @@ public class Main {
 
 				System.out.println("\n\nOnderwerp: ");
 				String onderwerp = sc.nextLine();
-				System.out.println("leerjaar: ");
-				int leerjaar = sc.nextInt();
+				System.out.println("Minimum leerjaar: ");
+				int minLeerjaar = sc.nextInt();
+				System.out.println("Maximum leerjaar: ");
+				int maxLeerjaar = sc.nextInt();
 				System.out.println("unieke deelname?(j/n): ");
 				String temp = sc.next();
 				boolean uniek = temp.equals("j");
 				System.out.println("test?(j/n): ");
 				temp = sc.next();
 				boolean test = temp.equals("j");
-				Quiz quiz = new Quiz(onderwerp, leerjaar, uniek, test, QuizStatussen.INCONSTRUCTIE);
+				Quiz quiz = new Quiz(onderwerp, maxLeerjaar, maxLeerjaar, uniek, test, QuizStatussen.INCONSTRUCTIE);
 
 				//catalogus.voegQuizToe(quiz);
 //				catalogus.wegschrijvenNaarFile();

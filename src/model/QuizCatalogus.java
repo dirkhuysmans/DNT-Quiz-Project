@@ -114,7 +114,7 @@ public class QuizCatalogus extends FileContainer{
 				}
 				*/
 				bufferedWriter.write(lijstQuizCatalogus.indexOf(quiz) + "," + quiz.getOnderwerp() + "," + 
-			                         quiz.getLeerJaar() + "," +
+			                         quiz.getMinLeerjaar() + "," +
 			                         quiz.isTest() + "," +
 			                         quiz.isUniekeDeelname() + "," +
 			                         quiz.getQuizStatus() + "," +

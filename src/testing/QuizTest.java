@@ -43,9 +43,9 @@ public class QuizTest {
 	public void testQuizStringIntBooleanBoolean() {
 		QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
 		
-		Quiz quiz = new Quiz("rekenen",3,true,true,quizStatus);
+		Quiz quiz = new Quiz("rekenen",3,5, true,true,quizStatus);
 		assertEquals("eerste parameter onderwerp","rekenen",quiz.getOnderwerp());
-		assertEquals("tweede parameter leerjaar",3,quiz.getLeerJaar());
+		assertEquals("tweede parameter leerjaar",3,quiz.getMinLeerjaar());
 		assertEquals("derde parameter unieke deelname",true,quiz.isUniekeDeelname());
 		assertEquals("vierde parameter isTest",true,quiz.isTest());
 	}
@@ -62,8 +62,8 @@ public class QuizTest {
 	 */
 	@Test
 	public void testSetLeerJaar(){
-		quiz.setLeerJaar(3);
-		assertEquals("test setLeerJaar",3, quiz.getLeerJaar());
+		quiz.setMinLeerjaar(3);
+		assertEquals("test setLeerJaar",3, quiz.getMinLeerjaar());
 	}
 	/**
 	 * Test methode setTest(boolean isTest)
@@ -106,11 +106,11 @@ public class QuizTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void testControleLeerjaarLeerJaarKleinerDanEen(){
 		//quiz.setLeerJaar(0);
-		assertEquals("Leerjaar kleiner dan één",0,quiz.controleLeerjaar(0));
+		assertEquals("Leerjaar kleiner dan ï¿½ï¿½n",0,quiz.controleLeerjaar(0));
 	}
 	@Test (expected = IllegalArgumentException.class)
 	public void testControleLeerJaarNegatief(){
-		quiz.setLeerJaar(-5);
+		quiz.setMinLeerjaar(-5);
 		assertEquals("negatief leerjaar",4,quiz.controleLeerjaar(-5));
 	}
 }

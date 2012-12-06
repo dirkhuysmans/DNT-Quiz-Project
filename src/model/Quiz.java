@@ -74,9 +74,9 @@ public class Quiz implements Serializable {
 		this.auteur = auteur;
 		
 	}
-	public Quiz(String onderwerp, int leerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datum ,Leraar auteur){
+	public Quiz(String onderwerp, int minLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datum ,Leraar auteur){
 		this.onderwerp = controleInhoudVeld(onderwerp);
-		this.leerJaar = controleLeerjaar(leerJaar);
+		this.minLeerjaar = controleLeerjaar(minLeerJaar);
 		this.isTest = isTest;
 		this.isUniekeDeelname = isUniekeDeelname;
 		if (isTest) { // indien quiz in testfase
@@ -95,8 +95,8 @@ public class Quiz implements Serializable {
 		return onderwerp;
 	}
 
-	public int getLeerJaar() {
-		return leerJaar;
+	public int getMinLeerjaar() {
+		return minLeerjaar;
 	}
 
 	public boolean isTest() {
@@ -131,8 +131,8 @@ public class Quiz implements Serializable {
 		this.onderwerp = onderwerp;
 	}
 
-	public void setLeerJaar(int leerJaar) {
-		this.leerJaar = controleLeerjaar(leerJaar);
+	public void setMinLeerjaar(int leerJaar) {
+		this.minLeerjaar = controleLeerjaar(leerJaar);
 	}
 
 	public void setTest(boolean isTest) {
@@ -327,7 +327,7 @@ public class Quiz implements Serializable {
 		tekst += " de status van de quiz is ";
 		String aangemaakteQuiz = "";
 		aangemaakteQuiz += "Quiz : " + onderwerp + "\n" + "bedoeld voor het "
-				+ leerJaar + " e leerjaar, aangemaakt op "
+				+ minLeerjaar + " e leerjaar, aangemaakt op "
 				+ datumRegistratie.getDatumInEuropeesFormaat(datumRegistratie)
 				+ " door " + auteur + tekst + quizStatus;
 		return aangemaakteQuiz;
@@ -340,7 +340,7 @@ public class Quiz implements Serializable {
 		result = prime * result + ((auteur == null) ? 0 : auteur.hashCode());
 		result = prime * result + (isTest ? 1231 : 1237);
 		result = prime * result + (isUniekeDeelname ? 1231 : 1237);
-		result = prime * result + leerJaar;
+		result = prime * result + minLeerjaar;
 		result = prime * result + ((auteur == null) ? 0 : auteur.hashCode());
 		result = prime * result
 				+ ((onderwerp == null) ? 0 : onderwerp.hashCode());
@@ -374,7 +374,10 @@ public class Quiz implements Serializable {
 		if (isUniekeDeelname != other.isUniekeDeelname) {
 			return false;
 		}
-		if (leerJaar != other.leerJaar) {
+		if (minLeerjaar != other.minLeerjaar) {
+			return false;
+		}
+		if (maxLeerjaar != other.maxLeerjaar) {
 			return false;
 		}
 		if (auteur != other.auteur) {

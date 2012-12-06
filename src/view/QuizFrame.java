@@ -276,15 +276,25 @@ public class QuizFrame extends JFrame {
 		btnToTheRight.setBounds(502, 361, 60, 25);
 		getContentPane().add(btnToTheRight);
 		
+		final DefaultListModel gekozenOpdrachtModel = new DefaultListModel();
+		final JList jListGekozenOpdracht = new JList();
+		jListGekozenOpdracht
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
+		jListGekozenOpdracht.setBounds(616, 348, 317, 77);
+		getContentPane().add(jListGekozenOpdracht);
+		
+		
 		//
 		// button om naar links te doen
 		//
 		
 		JButton btnToTheLeft = new JButton("<");
 		btnToTheLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String selected = jListGekozenOpdracht.getSelectedValue();
-				selectedOpdrachten.add(selected);				
+			public void actionPerformed(ActionEvent e) {				
+				
+				gekozenOpdrachtModel.removeElement(jListGekozenOpdracht.getSelectedValue());
+			
 			}
 		});
 		btnToTheLeft.setBounds(505, 398, 57, 25);
@@ -326,16 +336,7 @@ public class QuizFrame extends JFrame {
 		totScore = new JTextField();
 		totScore.setBounds(730, 296, 114, 19);
 		getContentPane().add(totScore);
-		totScore.setColumns(10);
-
-		final JList jListGekozenOpdracht = new JList();
-		jListGekozenOpdracht
-				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
-		jListGekozenOpdracht.setBounds(616, 348, 317, 77);
-		
-		getContentPane().add(jListGekozenOpdracht);
-		
+		totScore.setColumns(10);		
 	}
 
 	private void toonMenu() throws Exception {		

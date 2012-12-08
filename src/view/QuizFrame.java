@@ -275,14 +275,14 @@ public class QuizFrame extends JFrame {
 		//
 		JButton btnToTheRight = new JButton(">");
 		btnToTheRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				model.removeElement(jListOpdracht.getSelectedValue());
-				jListOpdracht.clearSelection();
-				jListOpdracht.setModel(model);
+			public void actionPerformed(ActionEvent e) {				
 				System.out.println(jListOpdracht.getSelectedValue());
 				gekozenOpdrachtModel.addElement(jListOpdracht.getSelectedValue());
 				jListGekozenOpdracht.clearSelection();
 				jListGekozenOpdracht.setModel(gekozenOpdrachtModel);
+				model.removeElement(jListOpdracht.getSelectedValue());
+				jListOpdracht.clearSelection();
+				jListOpdracht.setModel(model);
 			}
 		});
 		btnToTheRight.setBounds(502, 361, 60, 25);

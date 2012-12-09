@@ -24,34 +24,43 @@ public class Datum {
 	 * 
 	 */
 	public int getDag() {
-		return GregorianCalendar.DAY_OF_MONTH;
+		return this.dag;
 	}
 
 	public int getMaand() {
-		return GregorianCalendar.MONTH;
+		return this.maand;
 	}
 
 	public int getJaar() {
-		return GregorianCalendar.YEAR;
+		return this.jaar;
 	}
 
 	/**
 	 * default constructor zonder parameters
 	 */
 	public Datum() {
-		kalender = new GregorianCalendar(getDag(), getMaand(), getJaar());
+		//GregorianCalendar kalender = new GregorianCalendar(getDag(), getMaand(), getJaar());
+		kalender = new GregorianCalendar();
+		this.dag =kalender.get(GregorianCalendar.DAY_OF_MONTH);
+		this.maand= kalender.get(GregorianCalendar.MONTH)+1;
+		this.jaar = kalender.get(GregorianCalendar.YEAR);
 	}
 
 	/**
 	 * @param datum
 	 */
 	public Datum(Datum datum) {
-		kalender = new GregorianCalendar(datum.getDag(), datum.getMaand(),
-				datum.getJaar());
+		GregorianCalendar kalender = new GregorianCalendar(datum.getDag(), datum.getMaand(),datum.getJaar());
+				this.dag = datum.dag;
+				this.maand = datum.maand;
+				this.jaar = datum.jaar;
 	}
 
 	public Datum(int dag, int maand, int jaar) {
 		kalender = new GregorianCalendar(dag, maand, jaar);
+		this.dag = dag;
+		this.maand= maand;
+		this.jaar=jaar;
 	}
 
 	/**
@@ -70,20 +79,28 @@ public class Datum {
 			throw new RuntimeException(
 					"Gelieve een correcte datum mee te geven onder de vorm dd/mm/jjjj");
 		}
-		kalender = new GregorianCalendar(d, m, j);
+		//kalender = new GregorianCalendar(d, m, j);
+		this.dag = d;
+		this.maand=m;
+		this.jaar=j;
 	}
 
 	@Override
 	public String toString() {
-		return dag + " " + MaandEnum.values()[maand] + " " + jaar;
+		return dag + " " + MaandEnum.values()[maand-1] + " " + jaar;
 	}
 
 	public static void main(String[] args) {
-		GregorianCalendar c = new GregorianCalendar();
-		System.out.println(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH + 1));
+		//GregorianCalendar c = new GregorianCalendar();
+		//System.out.println(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR));
 		try {
 			Datum datum1 = new Datum();
+			System.out.println("datum1 : " + datum1 +  datum1.dag +"/" + datum1.maand +"/" + datum1.jaar);
+			datum1 = new Datum ("12/11/1970");
 			System.out.println("datum1 : " + datum1);
+			datum1 = new Datum(1,10,2012);
+			Datum datum2 = new Datum(datum1);
+			System.out.println("datum2=datum1 : " + datum2 + "=" + datum1);
 		} catch (IllegalArgumentException ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -137,7 +154,7 @@ public class Datum {
 
 	@Override
 	public boolean equals(Object obj) {
-		return kalender.equals(obj);
+		return this.equals(obj);
 	}
 
 	/**

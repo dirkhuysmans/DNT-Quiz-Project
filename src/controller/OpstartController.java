@@ -49,9 +49,11 @@ public class OpstartController {
 		hoofdStadBrazilie.put(2, "Rio de Janeiro");
 		hoofdStadBrazilie.put(3, "Basilia");
 		hoofdStadBrazilie.put(4, "Curitiba");
+		String hoofdSteden ="Sao Paulo; Rio de Janeiro; Basilia; Curitiba";
 		List<String> hints1= new ArrayList<String>();
 		hints1.add("Carnavalstad");
-		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdStadBrazilie,hints1, 1,
+		String hint1="Carnavalstad";
+		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdSteden,hint1, 1,
 				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		
 		OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
@@ -70,7 +72,9 @@ public class OpstartController {
 		List<String> hints2= new ArrayList<String>();
 		hints2.add("Vlaanderen");
 		hints2.add("Wallonie");
-		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provinciesBelgie, false, hints2, 1,
+		String provincies="Vlaams-Brabant;Antwerpen;Limburg;Oost-Vlaanderen;West-Vlaanderen;Waals-Brabant;Luik;Henegouwen;Luxemburg";
+		String hint2="Vlaanderen; Wallonie";
+		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provincies, false, hint2, 1,
 				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		
 		opdrachtCatalogus.voegOpdrachtToe(opdracht2);

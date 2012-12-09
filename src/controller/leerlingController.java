@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import model.Leerling;
 import model.LeerlingContainer;

@@ -7,7 +7,6 @@ import java.util.Scanner;
 import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
-import model.Opsomming;
 import model.Quiz;
 import model.QuizCatalogus;
 import model.enumKlassen.Leraar;
@@ -32,7 +31,8 @@ public class Main {
 		hoofdStadBrazilie.put(2, "Rio de Janeiro");
 		hoofdStadBrazilie.put(3, "Brasilia");
 		hoofdStadBrazilie.put(4, "Curitiba");
-		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdStadBrazilie, null, 1,
+		String strHoofdsteden = "Sao Paulo; Rio de Janeiro; Basilia;Curitiba";
+		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", strHoofdsteden, null, 1,
 				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		System.out.println("1.Registreren of 2.Inloggen");
 		keuze = sc.nextInt();
@@ -135,8 +135,7 @@ public class Main {
 				System.out.println("test?(j/n): ");
 				temp = sc.next();
 				boolean test = temp.equals("j");
-				Quiz quiz = new Quiz(onderwerp, maxLeerjaar, maxLeerjaar, uniek, test, QuizStatussen.INCONSTRUCTIE);
-
+				Quiz quiz = new Quiz(onderwerp, minLeerjaar, maxLeerjaar, uniek, test,  QuizStatussen.INCONSTRUCTIE, Leraar.CARLA);
 				//catalogus.voegQuizToe(quiz);
 //				catalogus.wegschrijvenNaarFile();
 				break;

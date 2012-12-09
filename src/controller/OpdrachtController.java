@@ -1,12 +1,9 @@
 package controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-
 import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
@@ -29,12 +26,19 @@ public class OpdrachtController {
 		hoofdStadBrazilie.put(2, "Rio de Janeiro");
 		hoofdStadBrazilie.put(3, "Basilia");
 		hoofdStadBrazilie.put(4, "Curitiba");
+		String strHoofdsteden = "Sao Paulo; Rio de Janeiro; Basilia;Curitiba";
 		List<String> hints1= new ArrayList<String>();
 		hints1.add("Carnavalstad");
-		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdStadBrazilie,hints1, 1,
+		String hints = "Carnavalstad";
+		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", strHoofdsteden,hints, 1,
 				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		OpdrachtCatalogus oc = new OpdrachtCatalogus();
-		oc.voegOpdrachtToe(opdracht1);
+		try {
+			oc.voegOpdrachtToe(opdracht1);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		Map <Integer, String>provinciesBelgie = new HashMap<Integer, String>();
 		provinciesBelgie.put(1, "Vlaams-Brabant");
 		provinciesBelgie.put(2, "Antwerpen");
@@ -45,12 +49,19 @@ public class OpdrachtController {
 		provinciesBelgie.put(7, "Luik");
 		provinciesBelgie.put(8, "Henegouwen");
 		provinciesBelgie.put(9, "Luxemburg");
+		String provincies="Vlaams-Brabant; Antwerpen; Limburg; Oost-Vlaanderen; West-Vlaanderen; Waals-Brabant; Luik; Henegouwen; Luxemburg";
 		List<String> hints2= new ArrayList<String>();
 		hints2.add("Vlaanderen");
 		hints2.add("Wallonie");
-		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provinciesBelgie, false, hints2, 1,
+		String hint2="Vlaanderen; Wallonie";
+		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België",provincies, provincies, false, hint2, 1,
 				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
-		oc.voegOpdrachtToe(opdracht2);
+		try {
+			oc.voegOpdrachtToe(opdracht2);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			oc.wegschrijven();
 		} catch (Exception e) {

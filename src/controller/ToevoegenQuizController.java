@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.concurrent.ExecutionException;
-
 import model.Quiz;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.QuizStatussen;
@@ -21,7 +19,7 @@ public class ToevoegenQuizController{
 	public void maakQuiz(String onderwerp, int minLeerJaar, int maxLeerjaar, boolean isUniekeDeelname,
 			             boolean isTest, QuizStatussen quizStatus, Leraar auteur) throws IllegalArgumentException, Exception{
 		try{
-			Quiz quiz = new Quiz(onderwerp,minLeerJaar, maxLeerjaar, isUniekeDeelname,isTest,quizStatus);
+			Quiz quiz = new Quiz(onderwerp,minLeerJaar, maxLeerjaar, isUniekeDeelname,isTest,quizStatus, auteur);
 			daoFacade.createQuiz(quiz);
 		}
 		catch(IllegalArgumentException iaex){

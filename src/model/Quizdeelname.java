@@ -1,6 +1,7 @@
 package model;
 
-import utils.gregorian.Datum;
+//import utils.gregorian.Datum;
+import utils.datum.Datum;
 
 
 public class Quizdeelname {

@@ -1,16 +1,12 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
-
 import utils.datum.Datum;
 import model.enumKlassen.Leraar;
-import model.enumKlassen.OpdrachtCategorie;
 import model.enumKlassen.QuizStatussen;
 
 /**
@@ -20,6 +16,11 @@ import model.enumKlassen.QuizStatussen;
  * 
  */
 public class Quiz implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public class QuizComparator {
 
 	}
@@ -34,7 +35,7 @@ public class Quiz implements Serializable {
 	private QuizStatussen quizStatus;
 	private Leraar auteur;
 	private Datum datumRegistratie;
-	private List<QuizOpdracht> quizOpdrachten = new ArrayList();
+	private List<QuizOpdracht> quizOpdrachten = new ArrayList<QuizOpdracht>();
 
 	//
 	// Constructor
@@ -45,7 +46,6 @@ public class Quiz implements Serializable {
 	 */
 	public Quiz(String onderwerp) {
 		this.onderwerp = onderwerp;
-		quizOpdrachten = new ArrayList<QuizOpdracht>();
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class Quiz implements Serializable {
 	 * @param opdracht				opdracht is een object van het type Opdracht
 	 * @param quizStatus			de status waarin de quiz zich bevindt
 	 */
-	public Quiz(String onderwerp, int minLeerjaar,int maxLeerjaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus) {
-		
+	public Quiz(String onderwerp, int minLeerjaar,int maxLeerjaar, boolean isUniekeDeelname,boolean isTest) {
+
 		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.minLeerjaar = controleLeerjaar(minLeerjaar);
 		this.maxLeerjaar = controleLeerjaar(maxLeerjaar);
@@ -66,17 +66,25 @@ public class Quiz implements Serializable {
 		if (isTest) { // indien quiz in testfase
 			isUniekeDeelname = false;
 		}
-		this.quizStatus = quizStatus;
-		Datum datumRegistratie = new Datum();
-		this.datumRegistratie = datumRegistratie;
-		//Leraar auteur = getLeraar();
-		Leraar auteur = Leraar.MYRIAM;
-		this.auteur = auteur;
-		
+		this.quizStatus = QuizStatussen.INCONSTRUCTIE;
+		this.datumRegistratie = new Datum();
+		this.auteur = Leraar.MYRIAM;
 	}
-	public Quiz(String onderwerp, int minLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datum ,Leraar auteur){
+	
+	/**
+	 * 
+	 * @param onderwerp
+	 * @param minLeerJaar
+	 * @param isUniekeDeelname
+	 * @param isTest
+	 * @param quizStatus
+	 * @param datumRegistratie
+	 * @param auteur
+	 */
+	public Quiz(String onderwerp, int minLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datumRegistratie ,Leraar auteur){
 		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.minLeerjaar = controleLeerjaar(minLeerJaar);
+		this.maxLeerjaar = this.minLeerjaar;
 		this.isTest = isTest;
 		this.isUniekeDeelname = isUniekeDeelname;
 		if (isTest) { // indien quiz in testfase
@@ -84,6 +92,56 @@ public class Quiz implements Serializable {
 		}
 		this.quizStatus = quizStatus;
 		this.datumRegistratie = datumRegistratie;
+		this.auteur = auteur;
+		
+	}
+
+	/**
+	 * 
+	 * @param onderwerp
+	 * @param minLeerJaar
+	 * @param maxLeerJaar
+	 * @param isUniekeDeelname
+	 * @param isTest
+	 * @param quizStatus
+	 * @param datumRegistratie
+	 * @param auteur
+	 */
+	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datumRegistratie ,Leraar auteur){
+		this.onderwerp = controleInhoudVeld(onderwerp);
+		this.minLeerjaar = controleLeerjaar(minLeerJaar);
+		this.maxLeerjaar = controleLeerjaar(maxLeerJaar);
+		this.isTest = isTest;
+		this.isUniekeDeelname = isUniekeDeelname;
+		if (isTest) { // indien quiz in testfase
+			isUniekeDeelname = true;
+		}
+		this.quizStatus = quizStatus;
+		this.datumRegistratie = datumRegistratie;
+		this.auteur = auteur;
+		
+	}
+	/**
+	 * 
+	 * @param onderwerp
+	 * @param minLeerJaar
+	 * @param maxLeerJaar
+	 * @param isUniekeDeelname
+	 * @param isTest
+	 * @param quizStatus
+	 * @param auteur
+	 */
+	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus,Leraar auteur){
+		this.onderwerp = controleInhoudVeld(onderwerp);
+		this.minLeerjaar = controleLeerjaar(minLeerJaar);
+		this.maxLeerjaar = controleLeerjaar(maxLeerJaar);
+		this.isTest = isTest;
+		this.isUniekeDeelname = isUniekeDeelname;
+		if (isTest) { // indien quiz in testfase
+			isUniekeDeelname = true;
+		}
+		this.quizStatus = quizStatus;
+		this.datumRegistratie = new Datum();
 		this.auteur = auteur;
 		
 	}
@@ -97,6 +155,10 @@ public class Quiz implements Serializable {
 
 	public int getMinLeerjaar() {
 		return minLeerjaar;
+	}
+	
+	public int getMaxLeerjaar(){
+		return maxLeerjaar;
 	}
 
 	public boolean isTest() {

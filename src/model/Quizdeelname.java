@@ -40,7 +40,7 @@ public class Quizdeelname {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
-	public void setdatumDeelname(utils.gregorian.Datum datum) {
+	public void setdatumDeelname(Datum datum) {
 		this.datumDeelname = datum;
 	}
 	
@@ -56,7 +56,7 @@ public class Quizdeelname {
 	public Quiz getQuiz() {
 		return quiz;
 	}
-	public utils.gregorian.Datum getDatum() {
+	public Datum getDatum() {
 		return datumDeelname;
 	}
 	

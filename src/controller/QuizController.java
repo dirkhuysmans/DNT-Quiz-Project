@@ -34,6 +34,7 @@ public class QuizController extends FileContainer{
 		try {
 			
 			QuizCatalogus quizCatalogus = new QuizCatalogus();
+			OpdrachtCatalogus oc = new OpdrachtCatalogus();
 			
 			Time time = new Time(120000); // in milliseconden
 			
@@ -41,15 +42,19 @@ public class QuizController extends FileContainer{
 			
 			QuizStatussen quizStatus = QuizStatussen.AFGEWERKT;
 			Quiz quiz = new Quiz("Hoofdsteden/Provincies", 2, 4,  true,true, quizStatus, auteur1);
-			
-			quizCatalogus.voegQuizToe(quiz);
+						quizCatalogus.voegQuizToe(quiz);
 			
 			Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
+			oc.voegOpdrachtToe(opdracht1);
 			Opdracht opdracht2 = new EenvoudigeOpdracht("Wat is de hoofdstad van Spanje?","Madrid");
+			oc.voegOpdrachtToe(opdracht2);
 			Opdracht opdracht3 = new EenvoudigeOpdracht("In welke provincie ligt de hoofdstad van Belgie?","Brabant");
+			oc.voegOpdrachtToe(opdracht3);
 			Opdracht opdracht4 = new EenvoudigeOpdracht("In welke provincie ligt Genk?","Limburg");
+			oc.voegOpdrachtToe(opdracht4);
 			Opdracht opdracht5 = new EenvoudigeOpdracht("In welke provincie ligt Antwerpen","Antwerpen");
-
+			oc.voegOpdrachtToe(opdracht5);
+			
 			Map <Integer, String>hoofdStadBrazilie = new HashMap<Integer, String>();
 			hoofdStadBrazilie.put(1, "Sao Paulo");
 			hoofdStadBrazilie.put(2, "Rio de Janeiro");
@@ -61,9 +66,9 @@ public class QuizController extends FileContainer{
 			String strHints="Carnavalstad";
 			Opdracht opdracht6 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", strHoofdsteden, strHints, 1,
 					0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
-			OpdrachtCatalogus oc = new OpdrachtCatalogus();
-			oc.voegOpdrachtToe(opdracht6);
 			
+			oc.voegOpdrachtToe(opdracht6);
+						
 			Map <Integer, String>provinciesBelgie = new HashMap<Integer, String>();
 			provinciesBelgie.put(1, "Vlaams-Brabant");
 			provinciesBelgie.put(2, "Antwerpen");
@@ -82,7 +87,6 @@ public class QuizController extends FileContainer{
 			Opdracht opdracht7 = new Opsomming("Geef 3 Provincies van België","", provincies, false, strHint2, 1,
 					0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 			oc.voegOpdrachtToe(opdracht7);
-			
 			System.out.print(opdracht1.getOpmaakDatum());
 			try {
 				oc.wegschrijven();

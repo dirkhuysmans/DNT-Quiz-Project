@@ -1,3 +1,8 @@
+model.EenvoudigeOpdracht,Wat is de hoofdstad van Franrijk?,Parijs,null,1,0,null,MYRIAM,10/12/2012
+model.EenvoudigeOpdracht,Wat is de hoofdstad van Spanje?,Madrid,null,1,0,null,MYRIAM,10/12/2012
+model.EenvoudigeOpdracht,In welke provincie ligt de hoofdstad van Belgie?,Brabant,null,1,0,null,MYRIAM,10/12/2012
+model.EenvoudigeOpdracht,In welke provincie ligt Genk?,Limburg,null,1,0,null,MYRIAM,10/12/2012
+model.EenvoudigeOpdracht,In welke provincie ligt Antwerpen,Antwerpen,null,1,0,null,MYRIAM,10/12/2012
 model.Meerkeuze,Wat is de hoofdstad van brazilië?,Rio de Janeiro,Carnavalstad,1,0,algemeneKennis,FRANK,10/12/2012,Sao Paulo; Rio de Janeiro; Brasilia; Curitiba
 model.Opsomming,Geef 3 Provincies van België,,Vlaanderen; Wallonie,1,0,algemeneKennis,FRANK,10/12/2012,Vlaams-Brabant; Antwerpen; Limburg; Oost-Vlaanderen; West-Vlaanderen; Waals-Brabant; Luik; Henegouwen; Luxemburg,false
 EINDE

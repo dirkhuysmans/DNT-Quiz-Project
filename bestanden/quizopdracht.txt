@@ -1,3 +1,6 @@
-0,Wat is de hoofdstad van brazilië?,2
-0,Geef 3 Provincies van België,2
+Hoofdsteden/Provincies,Wat is de hoofdstad van Franrijk?,2
+Hoofdsteden/Provincies,Wat is de hoofdstad van Spanje?,2
+Hoofdsteden/Provincies,In welke provincie ligt de hoofdstad van Belgie?,5
+Hoofdsteden/Provincies,In welke provincie ligt Genk?,3
+Hoofdsteden/Provincies,In welke provincie ligt Antwerpen,4
 EINDE

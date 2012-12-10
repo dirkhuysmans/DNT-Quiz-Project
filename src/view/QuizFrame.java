@@ -37,7 +37,7 @@ public class QuizFrame extends JFrame {
 	private JTextField txtOnderwerp;
 	private List<Quiz> lijstQuizCatalogus = new ArrayList();
 	private JTextField maxScore;
-	private JTextField totScore;
+	private JTextField totScore; 
 
 	public QuizFrame(OpstartController opstartController,
 			final ToevoegenQuizController toevoegenQuizController,

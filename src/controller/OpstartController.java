@@ -17,6 +17,7 @@ import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 
 import persistenty.TextDaoFacade;
+import persistenty.SqlDaoFacade;
 import view.IO;
 import view.Menu;
 import view.QuizFrame;
@@ -30,7 +31,8 @@ public class OpstartController {
 	//private  OpdrachtOverzichtController opdrachtOverzichtController;
 	public OpstartController(){
 		//inlezen tekstbestanden, opvullen containers
-		toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
+		//toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
+		toevoegenQuizController = new ToevoegenQuizController(new SqlDaoFacade() );
 		//inschrijvingController = new InschrijvingController();
 		//lessenroosterOverzichtController = new LessenroosterOverzichtController();
 		//opdrachtOverzichtController = new OpdrachtOverzichtController();

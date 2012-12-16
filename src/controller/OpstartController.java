@@ -75,8 +75,7 @@ public class OpstartController {
 		String provincies="Vlaams-Brabant;Antwerpen;Limburg;Oost-Vlaanderen;West-Vlaanderen;Waals-Brabant;Luik;Henegouwen;Luxemburg";
 		String hint2="Vlaanderen; Wallonie";
 		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provincies, false, hint2, 1,
-				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
-		
+				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);		
 		opdrachtCatalogus.voegOpdrachtToe(opdracht2);
 		
 		

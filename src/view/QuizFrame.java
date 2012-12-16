@@ -163,7 +163,6 @@ public class QuizFrame extends JFrame {
 						.getSelectedItem());
 				int maxLeerjaar = Integer.parseInt((String) cmbLeerjaarTot
 						.getSelectedItem());
-
 				boolean isUniekeDeelname = boxUniekeDeelname.isSelected();
 				boolean isTest = boxIsTest.isSelected();
 				Leraar auteur = (Leraar) cmbAuteur.getSelectedItem();

@@ -252,6 +252,7 @@ public class Datum implements Comparable<Datum> {
 	 * Returns een negatief getal indien de eerste datum kleiner is. <br>
 	 * Returns een positief getal indien de eerste datum groter is.
 	 */
+	@Override
 	public int compareTo(Datum datum){
 	return (this.jaar*10000+this.maand*100+this.dag) - (datum.jaar*10000+datum.maand*100+datum.dag);
 			

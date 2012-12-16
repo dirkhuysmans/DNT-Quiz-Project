@@ -46,7 +46,7 @@ public class Opgave1 {
 		String deelnemer = IO.leesStringMetVenster("Typ naam deelnemer", "Deelnames aan quiz");
 		List <String> deelnames = new ArrayList<String>();
 		for (Entry<String,List<String>> entry:entries){
-			List <String> deelnemers = (ArrayList<String>)entry.getValue();	
+			List <String> deelnemers = entry.getValue();	
 			int index = deelnemers.indexOf(deelnemer);
 			if (index > -1){
 				deelnames.add(entry.getKey().toString());

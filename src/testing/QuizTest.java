@@ -2,18 +2,8 @@ package testing;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Opdracht;
 import model.Quiz;
-import model.QuizOpdracht;
-import model.enumKlassen.Leraar;
-import model.enumKlassen.OpdrachtCategorie;
-import model.enumKlassen.QuizStatussen;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 /**
  * Testklasse Quiz

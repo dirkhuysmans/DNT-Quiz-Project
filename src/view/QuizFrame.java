@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.Container;
-import java.awt.Dialog;
-import java.awt.Window;
 import java.awt.event.*;
 
 import javax.swing.DefaultListModel;
@@ -10,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -21,7 +18,6 @@ import controller.*;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
-import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
@@ -49,7 +45,6 @@ public class QuizFrame extends JFrame {
 		container.setBackground(Color.WHITE);
 		container.setLayout(null);
 		container.setSize(50, 50);
-
 		//
 		//
 		//
@@ -160,6 +155,7 @@ public class QuizFrame extends JFrame {
 		//
 		JButton btnRegistreerQuiz = new JButton("Registreer Quiz");
 		btnRegistreerQuiz.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				String onderwerp = txtOnderwerp.getText();
@@ -204,6 +200,7 @@ public class QuizFrame extends JFrame {
 		//
 		JButton btnAnnuleer = new JButton("Annuleer");
 		btnAnnuleer.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				try {
@@ -275,6 +272,7 @@ public class QuizFrame extends JFrame {
 		//
 		JButton btnToTheRight = new JButton(">");
 		btnToTheRight.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {				
 				System.out.println(jListOpdracht.getSelectedValue());
 				gekozenOpdrachtModel.addElement(jListOpdracht.getSelectedValue());
@@ -294,6 +292,7 @@ public class QuizFrame extends JFrame {
 		
 		JButton btnToTheLeft = new JButton("<");
 		btnToTheLeft.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {						
 				model.addElement(jListGekozenOpdracht.getSelectedValue());
 				jListOpdracht.clearSelection();

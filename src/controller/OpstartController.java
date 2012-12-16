@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import model.FileContainer;
 import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
@@ -17,7 +16,6 @@ import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 
 import persistenty.TextDaoFacade;
-import persistenty.SqlDaoFacade;
 import view.IO;
 import view.Menu;
 import view.QuizFrame;
@@ -31,13 +29,13 @@ public class OpstartController {
 	//private  OpdrachtOverzichtController opdrachtOverzichtController;
 	public OpstartController(){
 		//inlezen tekstbestanden, opvullen containers
-		//toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
-		toevoegenQuizController = new ToevoegenQuizController(new SqlDaoFacade() );
+		toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
 		//inschrijvingController = new InschrijvingController();
 		//lessenroosterOverzichtController = new LessenroosterOverzichtController();
 		//opdrachtOverzichtController = new OpdrachtOverzichtController();
 		menu = new Menu("Beheren van opdrachten(leraar)","Beheren van quizzen/testen(leraar)","Deelnemen aan quiz(leerling)","Overzicht scores(leraar)","Quiz rapport(deelnemer quiz)","Instellingen van de quiz applicatie");
 	}
+	
 	public void execute() throws Exception{
 		int keuze = menu.getMenuKeuze();
 		
@@ -114,9 +112,9 @@ public class OpstartController {
 				    }	
 		}
 	}
+	
 	public static void main(String[] args) throws Exception {
 		new OpstartController().execute();
-
 	}
 
 }

@@ -1,10 +1,7 @@
 package utils.gregorian;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
 import utils.MaandEnum;
 
 /**
@@ -41,9 +38,9 @@ public class Datum {
 	public Datum() {
 		//GregorianCalendar kalender = new GregorianCalendar(getDag(), getMaand(), getJaar());
 		kalender = new GregorianCalendar();
-		this.dag =kalender.get(GregorianCalendar.DAY_OF_MONTH);
-		this.maand= kalender.get(GregorianCalendar.MONTH)+1;
-		this.jaar = kalender.get(GregorianCalendar.YEAR);
+		this.dag =kalender.get(Calendar.DAY_OF_MONTH);
+		this.maand= kalender.get(Calendar.MONTH)+1;
+		this.jaar = kalender.get(Calendar.YEAR);
 	}
 
 	/**
@@ -235,6 +232,6 @@ public class Datum {
 	
 	public Datum nieuweDatum (int aantalDagen){
 		kalender.add(dag, aantalDagen); 
-		return (Datum)this; 
+		return this; 
 	}
 }

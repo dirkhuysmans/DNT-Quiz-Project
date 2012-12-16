@@ -1,5 +1,6 @@
 package persistenty;
 
+import model.Opdracht;
 import model.Quiz;
 
 public class TextDaoFacade implements DaoFacade{
@@ -12,6 +13,12 @@ public class TextDaoFacade implements DaoFacade{
 		System.out.println(quiz.isTest());
 		System.out.println(quiz.isUniekeDeelname());
 		System.out.println(quiz.getQuizStatus());
+	}
+
+	@Override
+	public void createOpdracht(Opdracht opdracht) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -15,6 +15,7 @@ import model.QuizCatalogus;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
 
+import persistenty.SqlDaoFacade;
 import persistenty.TextDaoFacade;
 import view.IO;
 import view.Menu;
@@ -24,12 +25,14 @@ public class OpstartController {
 	private Menu menu;
 	private JFrame quiz2, quiz, lessenroosterOverzicht, opdrachtOverzicht;
 	private ToevoegenQuizController toevoegenQuizController;
+	private ToevoegenOpdrachtController toevoegenOpdrachtController;
 	//private InschrijvingController inschrijvingController;
 	//private LessenroosterOverzichtController lessenroosterOverzichtController;
 	//private  OpdrachtOverzichtController opdrachtOverzichtController;
 	public OpstartController(){
 		//inlezen tekstbestanden, opvullen containers
 		toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
+		toevoegenOpdrachtController = new ToevoegenOpdrachtController (new SqlDaoFacade());
 		//inschrijvingController = new InschrijvingController();
 		//lessenroosterOverzichtController = new LessenroosterOverzichtController();
 		//opdrachtOverzichtController = new OpdrachtOverzichtController();
@@ -90,7 +93,7 @@ public class OpstartController {
 		switch (keuze){
 			case 1: //openen lessenroosterOverzicht frame
 			        break;
-			case 2:	quiz = new QuizFrame(this,toevoegenQuizController,quizCatalogus,opdrachtCatalogus);
+			case 2:	quiz = new QuizFrame(this,toevoegenQuizController, toevoegenOpdrachtController, quizCatalogus,opdrachtCatalogus);
 	        		quiz.setVisible(true);
 	        		//quiz.MAXIMIZED_BOTH;
 				    break;

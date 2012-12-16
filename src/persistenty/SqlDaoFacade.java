@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import model.Opdracht;
 import model.Quiz;
 
 public class SqlDaoFacade implements DaoFacade{
@@ -29,6 +30,7 @@ public class SqlDaoFacade implements DaoFacade{
 			System.out.println("aiai" + sqlEx.getMessage());
 		}
 	}
+	
 	public Connection makeConnection(String DB_URL){
 		//String DB_URL = "jdbc:mysql://localhost/QuizDB";
 		Connection con = null;
@@ -39,5 +41,11 @@ public class SqlDaoFacade implements DaoFacade{
 			System.out.println("No connection " + sqlEx.getMessage());
 		}
 		return con;
+	}
+	
+	@Override
+	public void createOpdracht(Opdracht opdracht) {
+		// TODO Auto-generated method stub
+		
 	}
 }

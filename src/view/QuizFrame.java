@@ -18,6 +18,7 @@ import controller.*;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 
+import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
@@ -30,17 +31,21 @@ import javax.swing.ListSelectionModel;
 public class QuizFrame extends JFrame {
 	private OpstartController opstartController;
 	private ToevoegenQuizController toevoegenQuizController;
+	private ToevoegenOpdrachtController toevoegenOpdrachtController;
 	private JTextField txtOnderwerp;
 	private List<Quiz> lijstQuizCatalogus = new ArrayList();
 	private JTextField maxScore;
 	private JTextField totScore; 
-
+	List<Opdracht> opdrachten = null;
+	List<Opdracht> gekozenOpdrachten = new ArrayList<Opdracht>();
+	
 	public QuizFrame(OpstartController opstartController,
-			final ToevoegenQuizController toevoegenQuizController,
-			QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
+			final ToevoegenQuizController toevoegenQuizController, final ToevoegenOpdrachtController 
+			toevoegenOpdrachtController, QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
 		super("Beheren van quizzen/testen(leraar)");
 		this.opstartController = opstartController;
 		this.toevoegenQuizController = toevoegenQuizController;
+		this.toevoegenOpdrachtController = toevoegenOpdrachtController;
 		Container container = getContentPane();
 		container.setBackground(Color.WHITE);
 		container.setLayout(null);
@@ -175,7 +180,7 @@ public class QuizFrame extends JFrame {
 					try {
 						toevoegenQuizController.maakQuiz(onderwerp,
 								minLeerjaar, maxLeerjaar, isUniekeDeelname,
-								isTest, quizStatus, auteur);
+								isTest, quizStatus, auteur, gekozenOpdrachten);						
 					} catch (IllegalArgumentException iaex) {
 						IO.toonStringMetVenster(iaex);
 						// e.printStackTrace();
@@ -227,12 +232,12 @@ public class QuizFrame extends JFrame {
 		// combobox alle opdrachten
 		//
 
+		opdrachten = toevoegenOpdrachtController.getOpdrachten();
 		JComboBox cmbAlleOpdrachten = new JComboBox();
 		cmbAlleOpdrachten.setBounds(198, 235, 357, 24);
 		cmbAlleOpdrachten.addItem("");
-		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
-			cmbAlleOpdrachten.addItem(opdrachtCatalogus
-					.getOpdrachtenCatalogus().get(i));
+		for (Opdracht opdracht : opdrachten) {
+			cmbAlleOpdrachten.addItem(opdracht);
 		}
 		getContentPane().add(cmbAlleOpdrachten);
 		//
@@ -247,9 +252,10 @@ public class QuizFrame extends JFrame {
 		cmbCategorie.addItem(OpdrachtCategorie.rekenen);
 		getContentPane().add(cmbCategorie);
 
-		final DefaultListModel model = new DefaultListModel();				
-		for (int i = 0; i < opdrachtCatalogus.getOpdrachtenCatalogus().size(); i++) {
-			model.addElement(opdrachtCatalogus.getOpdrachtenCatalogus().get(i));
+		final DefaultListModel model = new DefaultListModel();
+		
+		for (Opdracht opdracht : opdrachten) {
+			model.addElement(opdracht);
 		}
 		final DefaultListModel gekozenOpdrachtModel = new DefaultListModel();
 		
@@ -275,6 +281,7 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {				
 				System.out.println(jListOpdracht.getSelectedValue());
 				gekozenOpdrachtModel.addElement(jListOpdracht.getSelectedValue());
+				gekozenOpdrachten.add((Opdracht) jListOpdracht.getSelectedValue());
 				jListGekozenOpdracht.clearSelection();
 				jListGekozenOpdracht.setModel(gekozenOpdrachtModel);
 				model.removeElement(jListOpdracht.getSelectedValue());
@@ -295,7 +302,8 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {						
 				model.addElement(jListGekozenOpdracht.getSelectedValue());
 				jListOpdracht.clearSelection();
-				jListOpdracht.setModel(model);				
+				jListOpdracht.setModel(model);	
+				gekozenOpdrachten.remove((Opdracht) jListGekozenOpdracht.getSelectedValue());
 				gekozenOpdrachtModel.removeElement(jListGekozenOpdracht.getSelectedValue());
 				jListGekozenOpdracht.clearSelection();
 				jListGekozenOpdracht.setModel(gekozenOpdrachtModel);

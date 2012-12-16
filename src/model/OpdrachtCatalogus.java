@@ -488,14 +488,11 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 				break;
 			
 			default:
-				break;
-				
+				break;				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new Exception("Volgende fout opgetreden bij inlezen vanuit txt bestand: " + e.getMessage());
-		}
-		
-	}
-	
+		}		
+	}	
 }

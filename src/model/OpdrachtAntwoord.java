@@ -3,8 +3,6 @@ package model;
  * @author Dirk Huysmans
  */
 
-import java.util.Date;
-
 public class OpdrachtAntwoord {
 
 	/**
@@ -13,7 +11,7 @@ public class OpdrachtAntwoord {
 	
 	private String laatsteAntwoord;
 	private int aantalPogingen;
-	private Date antwoordTijd;
+	private int antwoordTijd;
 	private QuizOpdracht quizOpdracht;
 	
 
@@ -25,7 +23,7 @@ public class OpdrachtAntwoord {
 	 * @param quizOpdracht
 	 */
 	public OpdrachtAntwoord(String laatsteAntwoord, int aantalPogingen,
-			Date antwoordTijd, QuizOpdracht quizOpdracht) {
+			int antwoordTijd, QuizOpdracht quizOpdracht) {
 		this.laatsteAntwoord = laatsteAntwoord;
 		this.aantalPogingen = aantalPogingen;
 		this.antwoordTijd = antwoordTijd;
@@ -41,7 +39,7 @@ public class OpdrachtAntwoord {
 	public void setAantalPogingen(int aantalPogingen) {
 		this.aantalPogingen = aantalPogingen;
 	}
-	public void setAntwoordTijd(Date antwoordtijd) {
+	public void setAntwoordTijd(int antwoordtijd) {
 		this.antwoordTijd = antwoordtijd;
 	}
 	public void setQuizOpdracht(QuizOpdracht quizOpdracht) {
@@ -58,7 +56,8 @@ public class OpdrachtAntwoord {
 	public int getAantalPogingen() {
 		return aantalPogingen;
 	}
-	public Date getAntwoordTijd() {
+	
+	public int getAntwoordTijd() {
 		return antwoordTijd;
 	}
 	public QuizOpdracht getQuizOpdracht() {

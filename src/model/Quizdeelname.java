@@ -1,13 +1,19 @@
 package model;
 
+import java.util.ArrayList;
+
 //import utils.gregorian.Datum;
 import utils.datum.Datum;
 
 
 public class Quizdeelname {
-
+/**
+ * @author Dirk Huysmans
+ */
+	
 	private Leerling leerling;
-	private OpdrachtAntwoord opdrachtAntwoord;
+	//private OpdrachtAntwoord opdrachtAntwoord;
+	private ArrayList <OpdrachtAntwoord> lijstOpdrachtAntwoord = new ArrayList<OpdrachtAntwoord>();
 	private Quiz quiz;
 	private Datum datumDeelname;
 	
@@ -22,7 +28,7 @@ public class Quizdeelname {
 	public Quizdeelname(Leerling leerling, OpdrachtAntwoord opdrachtAntwoord,
 			Quiz quiz, Datum datum) {
 		this.leerling = leerling;
-		this.opdrachtAntwoord = opdrachtAntwoord;
+		this.lijstOpdrachtAntwoord.add(opdrachtAntwoord);
 		this.quiz = quiz;
 		this.datumDeelname = datum;
 	}
@@ -35,7 +41,7 @@ public class Quizdeelname {
 		this.leerling = leerling;
 	}
 	public void setOpdrachtAntwoord(OpdrachtAntwoord opdrachtAntwoord) {
-		this.opdrachtAntwoord = opdrachtAntwoord;
+		this.lijstOpdrachtAntwoord.add(opdrachtAntwoord);
 	}
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
@@ -50,20 +56,23 @@ public class Quizdeelname {
 	public Leerling getLeerling() {
 		return leerling;
 	}
-	public OpdrachtAntwoord getOpdrachtAntwoord() {
-		return opdrachtAntwoord;
+	public ArrayList<OpdrachtAntwoord> getListOpdrachtAntwoord() {
+		return lijstOpdrachtAntwoord;
 	}
+	
 	public Quiz getQuiz() {
 		return quiz;
 	}
 	public Datum getDatum() {
 		return datumDeelname;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Quizdeelname [leerling=" + leerling + ", opdrachtAntwoord="
-				+ opdrachtAntwoord + ", quiz=" + quiz + ", datum=" + datumDeelname
-				+ "]";
+		return "Quizdeelname [leerling=" + leerling
+				+ ", lijstOpdrachtAntwoord=" + lijstOpdrachtAntwoord
+				+ ", quiz=" + quiz + ", datumDeelname=" + datumDeelname + "]";
 	}
+	
+		
 }

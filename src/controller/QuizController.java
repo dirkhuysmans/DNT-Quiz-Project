@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import statePattern.InConstructieStatus;
+import statePattern.QuizStatus;
+
 import model.EenvoudigeOpdracht;
 import model.FileContainer;
 import model.Meerkeuze;
@@ -40,9 +43,14 @@ public class QuizController extends FileContainer{
 			
 			Leraar auteur1 = Leraar.MYRIAM;
 			
-			QuizStatussen quizStatus = QuizStatussen.AFGEWERKT;
-			Quiz quiz = new Quiz("Hoofdsteden/Provincies", 2, 4,  true,true, quizStatus, auteur1);
+			
+		
+			
+			Quiz quiz = new Quiz("Hoofdsteden/Provincies", 2, 4,  true,true);
 						quizCatalogus.voegQuizToe(quiz);
+			
+			QuizStatus inConstructieStatus = new InConstructieStatus(quiz);
+			QuizStatus quizStatus = inConstructieStatus;
 			
 			Opdracht opdracht1 = new EenvoudigeOpdracht("Wat is de hoofdstad van Franrijk?","Parijs");
 			oc.voegOpdrachtToe(opdracht1);

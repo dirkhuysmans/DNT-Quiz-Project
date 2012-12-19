@@ -28,6 +28,8 @@ import model.enumKlassen.OpdrachtCategorie;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
+import statePattern.QuizStatus;
+
 public class QuizFrame extends JFrame {
 	private OpstartController opstartController;
 	private ToevoegenQuizController toevoegenQuizController;
@@ -164,15 +166,13 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String onderwerp = txtOnderwerp.getText();
-				int minLeerjaar = Integer.parseInt((String) cmbLeerjaarVan
-						.getSelectedItem());
-				int maxLeerjaar = Integer.parseInt((String) cmbLeerjaarTot
-						.getSelectedItem());
+				int minLeerjaar = Integer.parseInt((String) cmbLeerjaarVan.getSelectedItem());
+				int maxLeerjaar = Integer.parseInt((String) cmbLeerjaarTot.getSelectedItem());
 				boolean isUniekeDeelname = boxUniekeDeelname.isSelected();
 				boolean isTest = boxIsTest.isSelected();
 				Leraar auteur = (Leraar) cmbAuteur.getSelectedItem();
-				QuizStatussen quizStatus = (QuizStatussen) cmbStatus
-						.getSelectedItem();
+				//QuizStatussen quizStatus = (QuizStatussen) cmbStatus.getSelectedItem();
+				QuizStatus quizStatus = (QuizStatus) cmbStatus.getSelectedItem();
 				if (maxLeerjaar < minLeerjaar) {
 					JOptionPane.showMessageDialog(null, "Het maximum leerjaar kan niet" +
 							" minder zijn dan het minimum leerjaar");

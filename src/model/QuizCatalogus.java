@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import statePattern.InConstructieStatus;
 import utils.datum.Datum;
 
 import model.enumKlassen.Leraar;
@@ -127,9 +129,13 @@ public class QuizCatalogus extends FileContainer{
 		String quizStatus = velden[5];
 		Datum datum = new Datum(velden[6]);
 		String leraar = velden[7];
-		QuizStatussen quizStatusEnum = QuizStatussen.valueOf(quizStatus);
+		//QuizStatussen quizStatusEnum = QuizStatussen.valueOf(quizStatus);
 		Leraar auteurEnum = Leraar.valueOf(leraar);
-		Quiz quiz = new Quiz(onderwerp, minLeerJaar, maxLeerJaar, isUniekeDeelname,isTest, quizStatusEnum, datum, auteurEnum);
+		//if((QuizStatus)quizStatus instanceof InConstructieStatus)){
+			
+		//}
+		//Quiz quiz = new Quiz(onderwerp, minLeerJaar, maxLeerJaar, isUniekeDeelname,isTest, quizStatusEnum, datum, auteurEnum);
+		Quiz quiz = new Quiz(onderwerp, minLeerJaar, maxLeerJaar, isUniekeDeelname,isTest);
 		this.lijstQuizCatalogus.add(quiz);
 	}
 

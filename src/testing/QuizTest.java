@@ -30,8 +30,7 @@ public class QuizTest {
 	 */
 	@Test
 	public void testQuizStringIntBooleanBoolean() {
-		//QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;
-		
+		//QuizStatussen quizStatus = QuizStatussen.INCONSTRUCTIE;		
 		Quiz quiz = new Quiz("rekenen",3,5, true,true);
 		assertEquals("eerste parameter onderwerp","rekenen",quiz.getOnderwerp());
 		assertEquals("tweede parameter leerjaar",3,quiz.getMinLeerjaar());

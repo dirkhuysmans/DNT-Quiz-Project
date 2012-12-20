@@ -8,6 +8,7 @@ import model.QuizOpdracht;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.QuizStatussen;
 import persistenty.DaoFacade;
+import statePattern.QuizStatus;
 import view.IO;
 
 public class ToevoegenQuizController {
@@ -21,7 +22,7 @@ public class ToevoegenQuizController {
 	}
 
 	public void maakQuiz(String onderwerp, int minLeerJaar, int maxLeerjaar,
-			boolean isUniekeDeelname, boolean isTest, QuizStatussen quizStatus,
+			boolean isUniekeDeelname, boolean isTest, QuizStatus quizStatus,
 			Leraar auteur, List opdrachten) throws IllegalArgumentException,
 			Exception {
 		try {

@@ -35,7 +35,7 @@ public class SqlDaoFacade implements DaoFacade{
 		//String DB_URL = "jdbc:mysql://localhost/QuizDB";
 		Connection con = null;
 		try{
-			con = DriverManager.getConnection(DB_URL,"root","Kimruben1");
+			con = DriverManager.getConnection(DB_URL,"root","Quizdnt123");
 		}
 		catch (SQLException sqlEx){
 			System.out.println("No connection " + sqlEx.getMessage());

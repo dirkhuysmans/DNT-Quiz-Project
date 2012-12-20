@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import statePattern.AfgeslotenStatus;
+import statePattern.AfgewerktStatus;
+import statePattern.InConstructieStatus;
+import statePattern.LaatsteKansStatus;
+import statePattern.OpengesteldStatus;
+import statePattern.QuizStatus;
 import utils.datum.Datum;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.QuizStatussen;
@@ -32,11 +38,20 @@ public class Quiz implements Serializable {
 	private int minLeerjaar, maxLeerjaar;
 	private boolean isTest;
 	private boolean isUniekeDeelname;
-	private QuizStatussen quizStatus;
+	//private QuizStatussen quizStatus;
 	private Leraar auteur;
 	private Datum datumRegistratie;
 	private List<QuizOpdracht> quizOpdrachten = new ArrayList<QuizOpdracht>();
-
+	//
+	// voor het gebruik van het state-pattern
+	//
+	QuizStatus inConstructieStatus;
+	QuizStatus afgewerktStatus;
+	QuizStatus opengesteldStatus;
+	QuizStatus laatsteKansStatus;
+	QuizStatus afgeslotenStatus;
+	
+	QuizStatus quizStatus ;
 	//
 	// Constructor
 	//
@@ -47,7 +62,6 @@ public class Quiz implements Serializable {
 	public Quiz(String onderwerp) {
 		this.onderwerp = onderwerp;
 	}
-
 	/**
 	 * @param onderwerp				onderwerp van de quiz
 	 * @param leerJaar				formuleren voor welk leeljaar de quiz bestemd is (min 1 max 6)
@@ -66,9 +80,18 @@ public class Quiz implements Serializable {
 		if (isTest) { // indien quiz in testfase
 			isUniekeDeelname = false;
 		}
-		this.quizStatus = QuizStatussen.INCONSTRUCTIE;
+		//this.quizStatus = QuizStatussen.INCONSTRUCTIE;
 		this.datumRegistratie = new Datum();
 		this.auteur = Leraar.MYRIAM;
+		//
+		// voor het status-pattern
+		//
+		inConstructieStatus = new InConstructieStatus(this);
+		afgewerktStatus = new AfgewerktStatus(this);
+		opengesteldStatus = new OpengesteldStatus(this);
+		laatsteKansStatus = new LaatsteKansStatus(this);
+		afgeslotenStatus = new AfgeslotenStatus(this);
+		quizStatus = inConstructieStatus;
 	}
 	
 	/**
@@ -81,7 +104,7 @@ public class Quiz implements Serializable {
 	 * @param datumRegistratie
 	 * @param auteur
 	 */
-	public Quiz(String onderwerp, int minLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datumRegistratie ,Leraar auteur){
+	public Quiz(String onderwerp, int minLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatus quizStatus, Datum datumRegistratie ,Leraar auteur){
 		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.minLeerjaar = controleLeerjaar(minLeerJaar);
 		this.maxLeerjaar = this.minLeerjaar;
@@ -90,10 +113,18 @@ public class Quiz implements Serializable {
 		if (isTest) { // indien quiz in testfase
 			isUniekeDeelname = true;
 		}
-		this.quizStatus = quizStatus;
+		//this.quizStatus = quizStatus;
 		this.datumRegistratie = datumRegistratie;
 		this.auteur = auteur;
-		
+		//
+		// voor het status-pattern
+		//
+		inConstructieStatus = new InConstructieStatus(this);
+		afgewerktStatus = new AfgewerktStatus(this);
+		opengesteldStatus = new OpengesteldStatus(this);
+		laatsteKansStatus = new LaatsteKansStatus(this);
+		afgeslotenStatus = new AfgeslotenStatus(this);
+		quizStatus = quizStatus;
 	}
 
 	/**
@@ -107,7 +138,7 @@ public class Quiz implements Serializable {
 	 * @param datumRegistratie
 	 * @param auteur
 	 */
-	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus, Datum datumRegistratie ,Leraar auteur){
+	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatus quizStatus, Datum datumRegistratie ,Leraar auteur){
 		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.minLeerjaar = controleLeerjaar(minLeerJaar);
 		this.maxLeerjaar = controleLeerjaar(maxLeerJaar);
@@ -116,10 +147,18 @@ public class Quiz implements Serializable {
 		if (isTest) { // indien quiz in testfase
 			isUniekeDeelname = true;
 		}
-		this.quizStatus = quizStatus;
+		//this.quizStatus = quizStatus;
 		this.datumRegistratie = datumRegistratie;
 		this.auteur = auteur;
-		
+		//
+		// voor het status-pattern
+		//
+		inConstructieStatus = new InConstructieStatus(this);
+		afgewerktStatus = new AfgewerktStatus(this);
+		opengesteldStatus = new OpengesteldStatus(this);
+		laatsteKansStatus = new LaatsteKansStatus(this);
+		afgeslotenStatus = new AfgeslotenStatus(this);
+		quizStatus = quizStatus;
 	}
 	/**
 	 * 
@@ -131,7 +170,7 @@ public class Quiz implements Serializable {
 	 * @param quizStatus
 	 * @param auteur
 	 */
-	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatussen quizStatus,Leraar auteur){
+	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, QuizStatus quizStatus,Leraar auteur){
 		this.onderwerp = controleInhoudVeld(onderwerp);
 		this.minLeerjaar = controleLeerjaar(minLeerJaar);
 		this.maxLeerjaar = controleLeerjaar(maxLeerJaar);
@@ -140,10 +179,18 @@ public class Quiz implements Serializable {
 		if (isTest) { // indien quiz in testfase
 			isUniekeDeelname = true;
 		}
-		this.quizStatus = quizStatus;
+		//this.quizStatus = quizStatus;
 		this.datumRegistratie = new Datum();
 		this.auteur = auteur;
-		
+		//
+		// voor het status-pattern
+		//
+		inConstructieStatus = new InConstructieStatus(this);
+		afgewerktStatus = new AfgewerktStatus(this);
+		opengesteldStatus = new OpengesteldStatus(this);
+		laatsteKansStatus = new LaatsteKansStatus(this);
+		afgeslotenStatus = new AfgeslotenStatus(this);
+		quizStatus = quizStatus;
 	}
 
 	//
@@ -169,9 +216,9 @@ public class Quiz implements Serializable {
 		return isUniekeDeelname;
 	}
 
-	public QuizStatussen getQuizStatus() {
-		return quizStatus;
-	}
+	//public QuizStatussen getQuizStatus() {
+	//	return quizStatus;
+	//}
 
 	public Leraar getLeraar() {
 		
@@ -205,9 +252,9 @@ public class Quiz implements Serializable {
 		this.isUniekeDeelname = isUniekeDeelname;
 	}
 
-	public void setQuizStatus(QuizStatussen quizStatus) {
-		this.quizStatus = quizStatus;
-	}
+	//public void setQuizStatus(QuizStatussen quizStatus) {
+	//	this.quizStatus = quizStatus;
+	//}
 
 	public void setLeraar(Leraar auteur) {
 		this.auteur = auteur;
@@ -372,7 +419,34 @@ public class Quiz implements Serializable {
 		} else
 			return 1;
 	}
+	//
+	// voor het gebruik van statepattern
+	//
+	public QuizStatus getInConstructieStatus() {
+		return inConstructieStatus;
+	}
+	public QuizStatus getAfgewerktStatus() {
+		return afgewerktStatus;
+	}
+	public QuizStatus getOpengesteldStatus() {
+		return opengesteldStatus;
+	}
+	public QuizStatus getLaatsteKansStatus() {
+		return laatsteKansStatus;
+	}
+	public QuizStatus getAfgeslotenStatus() {
+		return afgeslotenStatus;
+	}
+	public QuizStatus getQuizStatus() {
+		return quizStatus;
+	}
+	//
+	//
+	//
 
+	public void setQuizStatus(QuizStatus quizStatus){
+		this.quizStatus = quizStatus;
+	}
 	@Override
 	public String toString() {
 		String tekst = "";

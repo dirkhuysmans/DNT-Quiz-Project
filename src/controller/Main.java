@@ -135,7 +135,7 @@ public class Main {
 				System.out.println("test?(j/n): ");
 				temp = sc.next();
 				boolean test = temp.equals("j");
-				Quiz quiz = new Quiz(onderwerp, minLeerjaar, maxLeerjaar, uniek, test,  QuizStatussen.INCONSTRUCTIE, Leraar.CARLA);
+				Quiz quiz = new Quiz(onderwerp, minLeerjaar, maxLeerjaar, uniek, test);
 				//catalogus.voegQuizToe(quiz);
 //				catalogus.wegschrijvenNaarFile();
 				break;

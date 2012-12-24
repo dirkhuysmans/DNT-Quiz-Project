@@ -1,10 +1,12 @@
 package persistenty;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.logging.Logger;
+
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
+import statePattern.InConstructieStatus;
+import statePattern.QuizStatus;
 
 import model.Opdracht;
 import model.Quiz;
@@ -13,34 +15,56 @@ public class SqlDaoFacade implements DaoFacade{
 
 	@Override
 	public void createQuiz(Quiz quiz){
-		Connection con = null;
-		String DB_URL = "jdbc:mysql://localhost/QuizDB";
-		makeConnection(DB_URL);
 		try{
 			
-			Statement st = con.createStatement();
+			Statement statement = null;
+			String DB_URL = "jdbc:mysql://localhost/QuizDB";
 			
-			ResultSet rs = st.executeQuery("Select * from QuizDB.Quiz");
+			Connection con = DriverManager.getConnection(DB_URL,"root","Quizdnt123");
+				
+			statement = con.createStatement();
+			voegQuizToe(con,quiz);
 			
-			while(rs.next()){
-				System.out.println(rs.getString(2));
-			}
+			if (con != null) {
+                con.close();
+            }
 		}
 		catch (SQLException sqlEx){
 			System.out.println("aiai" + sqlEx.getMessage());
 		}
 	}
 	
-	public Connection makeConnection(String DB_URL){
-		//String DB_URL = "jdbc:mysql://localhost/QuizDB";
-		Connection con = null;
-		try{
-			con = DriverManager.getConnection(DB_URL,"root","Quizdnt123");
-		}
-		catch (SQLException sqlEx){
-			System.out.println("No connection " + sqlEx.getMessage());
-		}
-		return con;
+	public void voegQuizToe(Connection con, Quiz quiz) throws SQLException{
+		PreparedStatement insertQuiz = null;
+		
+		try {
+			QuizStatus quizStatus = quiz.getQuizStatus();
+			String status = quizStatus.toString();
+			insertQuiz = con.prepareStatement("INSERT INTO Quiz " +
+                    "(onderwerp,leerjaren,isTest,isUniekeDeelname,quizSatus) " +
+                    "values (?,?,?,?,?)");
+			
+			insertQuiz.setString(1,quiz.getOnderwerp());
+			insertQuiz.setInt(2,quiz.getMinLeerjaar());
+			insertQuiz.setBoolean(3,quiz.isTest());
+			insertQuiz.setBoolean(4, quiz.isUniekeDeelname());
+			insertQuiz.setString(5, status);
+			
+			insertQuiz.executeUpdate();
+
+        } catch (SQLException ex) {
+        	ex.printStackTrace();
+
+        } finally {
+
+            try {
+                if (insertQuiz != null) {
+                	insertQuiz.close();
+                }
+            } catch (SQLException ex) {
+            }
+        }
+
 	}
 	
 	@Override

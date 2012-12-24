@@ -31,6 +31,7 @@ import javax.swing.ListSelectionModel;
 import statePattern.QuizStatus;
 
 public class QuizFrame extends JFrame {
+	QuizStatus quizStatus ;
 	private OpstartController opstartController;
 	private ToevoegenQuizController toevoegenQuizController;
 	private ToevoegenOpdrachtController toevoegenOpdrachtController;
@@ -154,7 +155,14 @@ public class QuizFrame extends JFrame {
 		//
 		// combobox QuizStatussen
 		//
-		final JComboBox cmbStatus = new JComboBox(QuizStatussen.values());
+		//final JComboBox cmbStatus = new JComboBox(QuizStatussen.values()  oo);
+		final JComboBox cmbStatus = new JComboBox();
+		cmbStatus.addItem("inConstructie");
+		cmbStatus.addItem("afgewerkt");
+		cmbStatus.addItem("opengesteld");
+		cmbStatus.addItem("laatsteKans");
+		cmbStatus.addItem("afgesloten");
+		
 		cmbStatus.setBounds(188, 196, 140, 24);
 		getContentPane().add(cmbStatus);
 		//
@@ -166,16 +174,17 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String onderwerp = txtOnderwerp.getText();
-
-				int minLeerjaar = Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString());
-				int maxLeerjaar = Integer.parseInt(cmbLeerjaarTot
-						.getSelectedItem().toString());
-				
+				//int minLeerjaar = Integer.parseInt((String) cmbLeerjaarVan.getSelectedItem());
+				int minLeerjaar = Integer.parseInt( cmbLeerjaarVan.getSelectedItem()+"");
+				//int maxLeerjaar = Integer.parseInt((String) cmbLeerjaarTot.getSelectedItem());
+				int maxLeerjaar = Integer.parseInt(cmbLeerjaarTot.getSelectedItem()+"");
 				boolean isUniekeDeelname = boxUniekeDeelname.isSelected();
 				boolean isTest = boxIsTest.isSelected();
 				Leraar auteur = (Leraar) cmbAuteur.getSelectedItem();
 				//QuizStatussen quizStatus = (QuizStatussen) cmbStatus.getSelectedItem();
-				QuizStatus quizStatus = (QuizStatus) cmbStatus.getSelectedItem();
+				//QuizStatus quizStatus = (QuizStatus) cmbStatus.getSelectedItem();
+				String quizStatus = cmbStatus.getSelectedItem()+ "";
+				
 				if (maxLeerjaar < minLeerjaar) {
 					JOptionPane.showMessageDialog(null, "Het maximum leerjaar kan niet" +
 							" minder zijn dan het minimum leerjaar");

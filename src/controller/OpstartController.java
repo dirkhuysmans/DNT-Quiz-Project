@@ -31,7 +31,9 @@ public class OpstartController {
 	//private  OpdrachtOverzichtController opdrachtOverzichtController;
 	public OpstartController(){
 		//inlezen tekstbestanden, opvullen containers
-		toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
+		//toevoegenQuizController = new ToevoegenQuizController(new TextDaoFacade() );
+		//toevoegenOpdrachtController = new ToevoegenOpdrachtController (new TextDaoFacade());
+		toevoegenQuizController = new ToevoegenQuizController(new SqlDaoFacade() );
 		toevoegenOpdrachtController = new ToevoegenOpdrachtController (new SqlDaoFacade());
 		//inschrijvingController = new InschrijvingController();
 		//lessenroosterOverzichtController = new LessenroosterOverzichtController();

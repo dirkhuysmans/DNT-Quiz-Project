@@ -192,7 +192,29 @@ public class Quiz implements Serializable {
 		afgeslotenStatus = new AfgeslotenStatus(this);
 		quizStatus = quizStatus;
 	}
-
+	public Quiz(String onderwerp, int minLeerJaar, int maxLeerJaar, boolean isUniekeDeelname,boolean isTest, String status,Leraar auteur){
+		this.onderwerp = controleInhoudVeld(onderwerp);
+		this.minLeerjaar = controleLeerjaar(minLeerJaar);
+		this.maxLeerjaar = controleLeerjaar(maxLeerJaar);
+		this.isTest = isTest;
+		this.isUniekeDeelname = isUniekeDeelname;
+		if (isTest) { // indien quiz in testfase
+			isUniekeDeelname = true;
+		}
+		//this.quizStatus = quizStatus;
+		this.datumRegistratie = new Datum();
+		this.auteur = auteur;
+		//
+		// voor het status-pattern
+		//
+		inConstructieStatus = new InConstructieStatus(this);
+		afgewerktStatus = new AfgewerktStatus(this);
+		opengesteldStatus = new OpengesteldStatus(this);
+		laatsteKansStatus = new LaatsteKansStatus(this);
+		afgeslotenStatus = new AfgeslotenStatus(this);
+		
+		quizStatus = getSelectedQuizSatus(status);
+	}
 	//
 	// Getters
 	//
@@ -215,10 +237,6 @@ public class Quiz implements Serializable {
 	public boolean isUniekeDeelname() {
 		return isUniekeDeelname;
 	}
-
-	//public QuizStatussen getQuizStatus() {
-	//	return quizStatus;
-	//}
 
 	public Leraar getLeraar() {
 		
@@ -271,6 +289,34 @@ public class Quiz implements Serializable {
 	//
 	// Methodes
 	//
+	private QuizStatus getSelectedQuizSatus(String quizStatus){
+		if(quizStatus.equals("inConstructie")){
+			return this.getInConstructieStatus();
+		}
+		else{
+			if(quizStatus.equals("afgewerkt")){
+				return this.getAfgewerktStatus();
+			}
+			else{
+				if(quizStatus.equals("opengesteld")){
+					return this.getOpengesteldStatus();
+				}
+				else{
+					if(quizStatus.equals("laatsteKans")){
+						return this.getLaatsteKansStatus();
+					}
+					else{
+						if(quizStatus.equals("afgesloten")){
+							return this.getAfgeslotenStatus();
+						}
+						else{
+							return null;
+						}
+					}
+				}
+			}
+		}
+	}
 	/**
 	 * methode om het leerJaar op een geldige waarde te controleren <br>
 	 * waarde min 1 en max 6

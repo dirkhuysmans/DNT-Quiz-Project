@@ -22,10 +22,11 @@ public class ToevoegenQuizController {
 	}
 
 	public void maakQuiz(String onderwerp, int minLeerJaar, int maxLeerjaar,
-			boolean isUniekeDeelname, boolean isTest, QuizStatus quizStatus,
+			boolean isUniekeDeelname, boolean isTest, String quizStatus,
 			Leraar auteur, List opdrachten) throws IllegalArgumentException,
 			Exception {
 		try {
+			
 			quiz = new Quiz(onderwerp, minLeerJaar, maxLeerjaar,
 					isUniekeDeelname, isTest, quizStatus, auteur);
 			quiz.setQuizOpdracht(opdrachten);

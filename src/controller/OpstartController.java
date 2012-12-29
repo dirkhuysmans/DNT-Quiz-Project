@@ -58,11 +58,11 @@ public class OpstartController {
 		List<String> hints1= new ArrayList<String>();
 		hints1.add("Carnavalstad");
 		String hint1="Carnavalstad";
-		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdSteden,hint1, 1,
-				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
+//		Opdracht opdracht1 = new Meerkeuze("Wat is de hoofdstad van brazilië?","Rio de Janeiro", hoofdSteden,hint1, 1,
+//				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);
 		
 		OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
-		opdrachtCatalogus.voegOpdrachtToe(opdracht1);
+//		opdrachtCatalogus.voegOpdrachtToe(opdracht1);
 		
 		Map <Integer, String>provinciesBelgie = new HashMap<Integer, String>();
 		provinciesBelgie.put(1, "Vlaams-Brabant");
@@ -79,9 +79,9 @@ public class OpstartController {
 		hints2.add("Wallonie");
 		String provincies="Vlaams-Brabant;Antwerpen;Limburg;Oost-Vlaanderen;West-Vlaanderen;Waals-Brabant;Luik;Henegouwen;Luxemburg";
 		String hint2="Vlaanderen; Wallonie";
-		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provincies, false, hint2, 1,
-				0, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);		
-		opdrachtCatalogus.voegOpdrachtToe(opdracht2);
+//		Opdracht opdracht2 = new Opsomming("Geef 3 Provincies van België","", provincies, false, hint2, 1,
+//				null, OpdrachtCategorie.algemeneKennis, Leraar.FRANK);		
+//		opdrachtCatalogus.voegOpdrachtToe(opdracht2);
 		
 		
 		//OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();

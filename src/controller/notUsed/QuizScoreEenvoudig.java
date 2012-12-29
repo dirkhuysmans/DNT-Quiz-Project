@@ -1,5 +1,6 @@
-package controller;
+package controller.notUsed;
 
+import controller.IQuizScore;
 import model.OpdrachtAntwoord;
 import model.Quizdeelname;
 

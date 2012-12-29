@@ -26,6 +26,8 @@ public class EenvoudigeOpdracht extends Opdracht{
 */
 package model;
 
+import java.sql.Time;
+
 import utils.datum.Datum;
 import model.enumKlassen.Leraar;
 import model.enumKlassen.OpdrachtCategorie;
@@ -46,7 +48,7 @@ public class EenvoudigeOpdracht extends Opdracht{
 	}
 	
 	public EenvoudigeOpdracht(String vraag, String antwoord,
-			String hints, int maxAantalPogingen, int maxAntwoordTijd,
+			String hints, int maxAantalPogingen, Time maxAntwoordTijd,
 			OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum) {
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
 				auteur, opmaakDatum);

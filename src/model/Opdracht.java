@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import model.enumKlassen.OpdrachtCategorie;
  *
  */
 
-public abstract class Opdracht implements Serializable{
+public class Opdracht implements Serializable{
 	/**
 	 * 
 	 */
@@ -25,7 +26,7 @@ public abstract class Opdracht implements Serializable{
 	private String antwoord="";
 	private String hints;
 	private int maxAantalPogingen = 1;
-	private int maxAntwoordTijd=0;
+	private Time maxAntwoordTijd= null;
 	private OpdrachtCategorie categorie;
 	private Leraar auteur = Leraar.MYRIAM;
 	protected Datum opmaakDatum = new Datum();
@@ -51,7 +52,7 @@ public abstract class Opdracht implements Serializable{
 	}
 	
 	public Opdracht (String vraag, String antwoord, String hints, int maxAantalPogingen, 
-			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
+			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur){
 		this.vraag=vraag;
 		this.antwoord = antwoord;
 		this.hints = hints;
@@ -61,9 +62,19 @@ public abstract class Opdracht implements Serializable{
 		this.auteur = auteur;
 	}
 
+	public Opdracht (String vraag, String antwoord, int maxAantalPogingen, String hints,
+			Time maxAntwoordTijd){
+		this.vraag=vraag;
+		this.antwoord = antwoord;
+		this.hints = hints;
+		this.maxAantalPogingen = maxAantalPogingen;
+		this.maxAntwoordTijd = maxAntwoordTijd;
+		/*this.categorie = categorie;
+		this.auteur = auteur;*/
+	}
 	
 	public Opdracht (String vraag, String antwoord, String hints, int maxAantalPogingen, 
-			int maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum){
+			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum){
 		this.vraag=vraag;
 		this.antwoord = antwoord;
 		this.hints = hints;
@@ -125,11 +136,11 @@ public abstract class Opdracht implements Serializable{
 		return maxAantalPogingen;
 	}
 
-	public int getMaxAntwoordTijd() {
+	public Time getMaxAntwoordTijd() {
 		return maxAntwoordTijd;
 	}
 
-	public void setMaxAntwoordTijd(int antwoordTijd) {
+	public void setMaxAntwoordTijd(Time antwoordTijd) {
 		this.maxAntwoordTijd = antwoordTijd;
 	}
 

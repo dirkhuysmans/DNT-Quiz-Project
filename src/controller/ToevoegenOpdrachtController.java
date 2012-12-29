@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.enumKlassen.Leraar;
@@ -22,29 +24,44 @@ public class ToevoegenOpdrachtController {
 	}
 
 	public void maakOpdracht(String vraag, String antwoord, String hints,
-			int maxAantalPogingen, int maxAntwoordTijd,
+			int maxAantalPogingen, Time maxAntwoordTijd,
 			OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum)
 			throws IllegalArgumentException, Exception {
 		try {
-			// opdracht = new Opdracht(vraag, antwoord);
+			opdracht = new Opdracht(vraag, antwoord, hints, maxAantalPogingen,
+					maxAntwoordTijd, categorie, auteur);
 
-			/*
-			 * opdracht = new Opdracht(vraag, antwoord, hints,
-			 * maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
-			 */
 			daoFacade.createOpdracht(opdracht);
 		} catch (IllegalArgumentException iaex) {
-			IO.toonStringMetVenster(iaex + "");
+			IO.toonStringMetVenster(iaex.getMessage() + "");
 			// e.printStackTrace();
 		} catch (Exception ex) {
-			IO.toonStringMetVenster(ex + "");
+			IO.toonStringMetVenster(ex.getMessage() + "");
 			// e.printStackTrace();
 		}
 	}
 
+	public List<Opdracht> getAlleOpdrachten() {
+		try {
+			return opdrachtCatalogus.getOpdrachtenCatalogus();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		
+			return null;
+		}
+	}
 	
-	  public List<Opdracht> getOpdrachten() { 
-		  return opdrachtCatalogus.getOpdrachtenCatalogus(); 
-		  }
-	 
+	public static List<Opdracht> getOpdrachtenPerType(String geselecteerdType){
+		
+		return null;
+	}
+
+	public static List<String> getOpdrachtenTypes() {
+		List<String> types = new ArrayList();
+		types.add("Meerkeuze");
+		types.add("Opsomming");
+		types.add("Eenvoudige Opdracht");
+		types.add("Reproductie");
+		return types;
+	}
 }

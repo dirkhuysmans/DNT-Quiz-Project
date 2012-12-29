@@ -314,10 +314,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import persistenty.SqlDaoFacade;
 import utils.datum.Datum;
 
 import model.enumKlassen.Leraar;
@@ -332,7 +335,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 	
 	public static List<Opdracht> opdrachtenCatalogus = new ArrayList<Opdracht>();
 	private List<String> stringCatalogus = new ArrayList<String>();
-	
+	SqlDaoFacade sqlDaoFacade = null;
 	/**
 	 * 
 	 * @param opdracht
@@ -362,7 +365,12 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 		return catalogus;
 	}
 	
-	public  List<Opdracht> getOpdrachtenCatalogus(){
+	public  List<Opdracht> getOpdrachtenCatalogus() throws Exception{
+		sqlDaoFacade = new SqlDaoFacade();
+		List<Opdracht> opdrachten = sqlDaoFacade.selectAlleOpdrachten();
+		for(Opdracht opdracht : opdrachten){
+			voegOpdrachtToe(opdracht);
+		}
 		return opdrachtenCatalogus;
 	}
 	
@@ -453,7 +461,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 			String antwoord = velden[2];
 			String hints = velden[3];
 			int maxAantalPogingen= Integer.parseInt(velden[4]);
-			int maxAntwoordTijd= Integer.parseInt(velden[5]);
+			Time maxAntwoordTijd= new Time(Integer.parseInt(velden[5]));
 			String cat = velden[6];
 			OpdrachtCategorie categorie = OpdrachtCategorie.valueOf(cat); 
 			String aut = velden[7];

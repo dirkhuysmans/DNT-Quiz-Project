@@ -22,13 +22,14 @@ public class ToevoegenQuizController {
 	}
 
 	public void maakQuiz(String onderwerp, int minLeerJaar, int maxLeerjaar,
-			boolean isUniekeDeelname, boolean isTest, String quizStatus,
+			boolean isTest, boolean isUniekeDeelname, String quizStatus,
 			Leraar auteur, List opdrachten) throws IllegalArgumentException,
 			Exception {
-		try {
+		try {			
+//			INSERT INTO QuizDB.Quiz (quizId, onderwerp, minLeerjaar, maxLeerjaar, isTest, isUniekeDeelname, quizSatus) VALUES ( 1 ,  Hoofdsteden ,  2 , 1, 1,  Afgewerkt );
 			
-			quiz = new Quiz(onderwerp, minLeerJaar, maxLeerjaar,
-					isUniekeDeelname, isTest, quizStatus, auteur);
+			quiz = new Quiz(onderwerp, minLeerJaar, maxLeerjaar, isTest,
+					isUniekeDeelname, quizStatus, auteur);
 			quiz.setQuizOpdracht(opdrachten);
 			daoFacade.createQuiz(quiz);
 		} catch (IllegalArgumentException iaex) {

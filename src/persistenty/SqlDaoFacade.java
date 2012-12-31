@@ -17,7 +17,8 @@ public class SqlDaoFacade implements DaoFacade {
 	private static final String insertQuiz = "insert into Quiz(Onderwerp, VanLeerjaar, TotLeerjaar, IsTest,IsUniekeDeelname,QuizSatus) values(?,?,?,?,?,?)";
 	private static final String leesAlleQuizzen = "select * from quiz";
 	private static final String leesQuizzenTotLeerjaar = "select * from quiz where vanLeerjaar <= ?";
-	private static final String insertOpdracht = "insert into opdracht(Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, MaxAntwoordTijd) values (?,?,?,?,?)";
+	private static final String insertOpdracht = "insert into opdracht(Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
     private static final String leesAlleOpdrachten = "select * from opdracht";
     private static final String selecteerEenvoudigeOpdrachten = "select vraag, juisteAntwood, maxAantalPogingen, antwoorHints, maxAntwoordTijd from opdracht, eenvoudigeOpdracht " +
     		"where opdrachtId = eenvoudigeOpdrachtVolgnr";
@@ -72,6 +73,7 @@ public class SqlDaoFacade implements DaoFacade {
 		}
 	}
 
+	@Override
 	public List<Quiz> selectAlleQuizzen(){
 		Connection con =null;
 		Statement statement = null;
@@ -93,6 +95,7 @@ public class SqlDaoFacade implements DaoFacade {
 		}
 	}
 	
+	@Override
 	public List<Quiz> selectQuizTotBepaaldLeerjaar(int hoogsteLeerjaar){
 		Connection con =null;
 		PreparedStatement prepStatement = null;
@@ -136,6 +139,8 @@ public class SqlDaoFacade implements DaoFacade {
 			addOpdracht.setInt(3, opdracht.getMaxAantalPogingen());
 			addOpdracht.setString(4, opdracht.getHints());
 			addOpdracht.setTime(5, opdracht.getMaxAntwoordTijd());
+//			addOpdracht.setCategorie(6, )
+// auteur, type
 			addOpdracht.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -149,6 +154,7 @@ public class SqlDaoFacade implements DaoFacade {
 		}		
 	}
 	
+	@Override
 	public List<Opdracht> selectAlleOpdrachten(){
 		Connection con =null;
 		Statement statement = null;
@@ -170,6 +176,7 @@ public class SqlDaoFacade implements DaoFacade {
 		}
 	}
 	
+	@Override
 	public List<Opdracht> selectOpdrachtenPerType(String type) throws Exception{
 		Connection con =null;
 		Statement statement = null;

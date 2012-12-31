@@ -51,12 +51,11 @@ public class ToevoegenOpdrachtController {
 		}
 	}
 	
-	public static List<Opdracht> getOpdrachtenPerType(String geselecteerdType){
-		
-		return null;
+	public List<Opdracht> getOpdrachtenPerType(String geselecteerdType) throws Exception{		
+		return daoFacade.selectOpdrachtenPerType(geselecteerdType);
 	}
 
-	public static List<String> getOpdrachtenTypes() {
+	public List<String> getOpdrachtenTypes() {
 		List<String> types = new ArrayList();
 		types.add("Meerkeuze");
 		types.add("Opsomming");

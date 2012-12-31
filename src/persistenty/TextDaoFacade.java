@@ -1,5 +1,7 @@
 package persistenty;
 
+import java.util.List;
+
 import model.Opdracht;
 import model.Quiz;
 
@@ -19,6 +21,30 @@ public class TextDaoFacade implements DaoFacade{
 	public void createOpdracht(Opdracht opdracht) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Quiz> selectAlleQuizzen() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Quiz> selectQuizTotBepaaldLeerjaar(int hoogsteLeerjaar) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Opdracht> selectAlleOpdrachten() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Opdracht> selectOpdrachtenPerType(String type) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

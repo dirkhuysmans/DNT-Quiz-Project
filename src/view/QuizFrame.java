@@ -5,6 +5,7 @@ import java.awt.Window;
 import java.awt.event.*;
 
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
@@ -58,11 +59,12 @@ public class QuizFrame extends JFrame {
 		opdrachten = toevoegenOpdrachtController.getAlleOpdrachten();
 		Container container = getContentPane();
 		container.setBackground(Color.WHITE);
-		container.setLayout(null);
-		container.setSize(50, 50);
-		//
-		//
-		//
+		GroupLayout layout = new GroupLayout(container);
+		container.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		
+		
 		JLabel lblOnderwerp = new JLabel("Onderwerp :");
 		lblOnderwerp.setBounds(36, 24, 112, 15);
 		getContentPane().add(lblOnderwerp);
@@ -73,6 +75,7 @@ public class QuizFrame extends JFrame {
 		txtOnderwerp.setBounds(188, 22, 114, 19);
 		getContentPane().add(txtOnderwerp);
 		txtOnderwerp.setColumns(10);
+		
 		//
 		// label tekst "Leerjaar :"
 		//
@@ -257,7 +260,7 @@ public class QuizFrame extends JFrame {
 		//
 		final JComboBox cmbType = new JComboBox();
 		cmbType.setBounds(34, 235, 154, 25);
-		List<String> types = ToevoegenOpdrachtController.getOpdrachtenTypes();
+		List<String> types = toevoegenOpdrachtController.getOpdrachtenTypes();
 		cmbType.addItem("");
 		for (String type : types) {
 			cmbType.addItem(type);
@@ -267,11 +270,16 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String geselecteerdType = cmbType.getSelectedItem().toString();
 				String[] tempType = geselecteerdType.split(" ");
-				for (int i = 0; i < tempType.length; i++) {
+				for (int i = 0; i <= tempType.length; i++) {
 					geselecteerdType += tempType[i];
 				}
-				opdrachten = toevoegenOpdrachtController
-						.getOpdrachtenPerType(geselecteerdType);
+				try {
+					opdrachten = toevoegenOpdrachtController
+							.getOpdrachtenPerType(geselecteerdType);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				model.clear();
 				for(Opdracht opdracht : opdrachten){
 					model.addElement(opdracht);
@@ -280,17 +288,20 @@ public class QuizFrame extends JFrame {
 				jListOpdracht.setModel(model);
 			}
 		});
-
 		getContentPane().add(cmbType);
-		//
-		// combobox alle opdrachten
-		//
+		
 
 		JButton btnAlleOpdrachten = new JButton("Alle Opdrachten");
 		btnAlleOpdrachten.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				opdrachten = toevoegenOpdrachtController.getAlleOpdrachten();
+				model.clear();
+				for(Opdracht opdracht : opdrachten){
+					model.addElement(opdracht);
+				}
+				jListOpdracht.clearSelection();
+				jListOpdracht.setModel(model);
 			}
 		});
 		btnAlleOpdrachten.setBounds(190, 235, 150, 25);

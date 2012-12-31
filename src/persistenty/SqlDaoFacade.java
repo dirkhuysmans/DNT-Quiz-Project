@@ -33,7 +33,8 @@ public class SqlDaoFacade implements DaoFacade {
 	private Connection maakVerbinding() {
 		try {
 			Connection con = DriverManager.getConnection(DB_URL, "root",
-					"Scoren92");
+					//"Scoren92");
+					"Quizdnt123");
 			return con;
 		} catch (SQLException sqlEx) {
 			System.out.println(sqlEx.getMessage());

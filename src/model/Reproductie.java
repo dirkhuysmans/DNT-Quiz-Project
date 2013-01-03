@@ -33,11 +33,12 @@ public class Reproductie extends Opdracht{
 	 * @param opmaakdatum
 	 */
 	public Reproductie(String vraag, String antwoord, String trefwoorden, int minAantalTrefWoorden, 
-			String hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakdatum) {
-		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakdatum);
+			String hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
+		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		// TODO Auto-generated constructor stub
 		this.trefwoorden = trefwoorden;
 		this.minAantalJuisteTrefwoorden = minAantalTrefWoorden;
+		setOpmaakDatum(new Datum());
 	}
 	
 

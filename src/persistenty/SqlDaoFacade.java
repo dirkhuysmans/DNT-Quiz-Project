@@ -33,8 +33,8 @@ public class SqlDaoFacade implements DaoFacade {
 	private Connection maakVerbinding() {
 		try {
 			Connection con = DriverManager.getConnection(DB_URL, "root",
-					//"Scoren92");
-					"Quizdnt123");
+					"Scoren92");
+//					"Quizdnt123");
 			return con;
 		} catch (SQLException sqlEx) {
 			System.out.println(sqlEx.getMessage());
@@ -133,6 +133,7 @@ public class SqlDaoFacade implements DaoFacade {
 	public void createOpdracht(Opdracht opdracht) {
 		Connection con = maakVerbinding();
 		PreparedStatement addOpdracht = null;
+		String type = opdracht.getClass().toString();
 		try {			
 			addOpdracht = con.prepareStatement(insertOpdracht);
 			addOpdracht.setString(1, opdracht.getVraag());
@@ -140,8 +141,9 @@ public class SqlDaoFacade implements DaoFacade {
 			addOpdracht.setInt(3, opdracht.getMaxAantalPogingen());
 			addOpdracht.setString(4, opdracht.getHints());
 			addOpdracht.setTime(5, opdracht.getMaxAntwoordTijd());
-//			addOpdracht.setCategorie(6, )
-// auteur, type
+			addOpdracht.setString(6, opdracht.getCategorie().toString());
+			addOpdracht.setString(7, opdracht.getAuteur().toString());
+			addOpdracht.setString(8, type);
 			addOpdracht.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();

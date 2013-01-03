@@ -49,10 +49,10 @@ public class EenvoudigeOpdracht extends Opdracht{
 	
 	public EenvoudigeOpdracht(String vraag, String antwoord,
 			String hints, int maxAantalPogingen, Time maxAntwoordTijd,
-			OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum) {
+			OpdrachtCategorie categorie, Leraar auteur) {		
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie,
-				auteur, opmaakDatum);
+				auteur);
+		setOpmaakDatum(new Datum());
 		// TODO Auto-generated constructor stub
 	}
-
 }

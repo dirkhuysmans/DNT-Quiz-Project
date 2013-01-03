@@ -27,15 +27,16 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 		
 		this.opsomming = opsomming;
 		this.inJuisteVolgorde = juisteVolgorde;
+		setOpmaakDatum(new Datum());
 	}
 	
-	public Opsomming(String vraag, String antwoord, String opsomming, boolean juisteVolgorde, String hints,
-			int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum) {
-		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-		
-		this.opsomming = opsomming;
-		this.inJuisteVolgorde = juisteVolgorde;
-	}
+//	public Opsomming(String vraag, String antwoord, String opsomming, boolean juisteVolgorde, String hints,
+//			int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum) {
+//		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+//		
+//		this.opsomming = opsomming;
+//		this.inJuisteVolgorde = juisteVolgorde;
+//	}
 	
 	public String getOpsomming(){
 		return this.opsomming;

@@ -472,26 +472,26 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 			
 			switch (type){
 			case "EenvoudigeOpdracht":
-				EenvoudigeOpdracht eenvoudigeOpdracht = new EenvoudigeOpdracht(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+				EenvoudigeOpdracht eenvoudigeOpdracht = new EenvoudigeOpdracht(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(eenvoudigeOpdracht);
 				break;
 				
 			case "Meerkeuze":
 				String meerkeuze = velden[9];
-				Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+				Meerkeuze mk = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(mk);
 				break;
 			case "Opsomming":
 				String opsomming = velden[9];
 				boolean inJuisteVolgorde = Boolean.parseBoolean(velden[10]);
-				Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+				Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(os);
 				break;
 				
 			case "Reproductie":
 				String trefwoorden = velden[9];
 				int aantalJuistTrefwoorden = Integer.parseInt(velden[10]);
-				Reproductie reprod = new Reproductie(vraag, antwoord, trefwoorden, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
+				Reproductie reprod = new Reproductie(vraag, antwoord, trefwoorden, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(reprod);
 				break;
 			

@@ -55,4 +55,6 @@ public class EenvoudigeOpdracht extends Opdracht{
 		setOpmaakDatum(new Datum());
 		// TODO Auto-generated constructor stub
 	}
+
+	
 }

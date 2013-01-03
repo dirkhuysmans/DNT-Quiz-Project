@@ -344,11 +344,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 	 * @throws Exception 
 	 */
 	public void voegOpdrachtToe(Opdracht opdracht) throws Exception{
-		if (opdrachtenCatalogus.contains(opdracht)) {
-			throw new Exception("Deze opdracht staat al in de opdrachtcatalogus en kan niet toegevoegd worden.");
-		}
-		else{
-		opdrachtenCatalogus.add(opdracht);
+		if (!opdrachtenCatalogus.contains(opdracht)) {
+			opdrachtenCatalogus.add(opdracht);
 		}
 	}
 		
@@ -365,7 +362,8 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 		return catalogus;
 	}
 	
-	public  List<Opdracht> getOpdrachtenCatalogus() throws Exception{
+	public List<Opdracht> getOpdrachtenCatalogus() throws Exception{
+		opdrachtenCatalogus.clear();
 		sqlDaoFacade = new SqlDaoFacade();
 		List<Opdracht> opdrachten = sqlDaoFacade.selectAlleOpdrachten();
 		for(Opdracht opdracht : opdrachten){
@@ -377,8 +375,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 	@Override
 	public Iterator<Opdracht> iterator() {
 		return opdrachtenCatalogus.iterator();
-	}
-	
+	}	
 
 	public Opdracht getOpdracht(int k) throws IndexOutOfBoundsException{
 		return opdrachtenCatalogus.get(k-1);		
@@ -390,23 +387,7 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 	@Override
 	public void toevoegenLijn(String lijn) {
 		stringCatalogus.add(lijn);		
-	}
-	
-	
-	public static void main(String[] args) {
-		OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
-		boolean stop = false;
-		Opdracht opdracht = null;
-		while(!stop){
-			
-		}
-		System.out.println(catalogus);
-		System.out.println("Kies degene die weg moet: ");
-		Scanner sc = new Scanner (System.in);
-		int i = sc.nextInt();
-		catalogus.verwijderOpdracht(i);
-		System.out.println(catalogus);
-	}
+	}	
 
 	@Override
 	public String getFile() {
@@ -428,11 +409,11 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 		}
 		else if(opdracht instanceof Opsomming){
 			Opsomming opsomming = (Opsomming) opdracht;
-			bw.write("," + opsomming.getOpsomming() + "," + opsomming.getInJuisteVolgorde());
+			bw.write("," + opsomming.getLijstOpsomming() + "," + opsomming.getInJuisteVolgorde());
 		}
 		else if(opdracht instanceof Reproductie){
 			Reproductie reproductie = (Reproductie) opdracht;
-			bw.write("," + reproductie.getTrefwoorden() +","+ reproductie.getMinAantalJuisteTrefwoorden());
+			bw.write("," + reproductie.getLijstTrefwoorden() +","+ reproductie.getMinAantalJuisteTrefwoorden());
 		}
 			bw.write(stringOpdracht+"\n");
 			
@@ -484,14 +465,14 @@ public class OpdrachtCatalogus extends FileContainer implements Iterable<Opdrach
 			case "Opsomming":
 				String opsomming = velden[9];
 				boolean inJuisteVolgorde = Boolean.parseBoolean(velden[10]);
-				Opsomming os = new Opsomming(vraag, antwoord, opsomming, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
+				Opsomming os = new Opsomming(vraag, antwoord, inJuisteVolgorde, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(os);
 				break;
 				
 			case "Reproductie":
 				String trefwoorden = velden[9];
 				int aantalJuistTrefwoorden = Integer.parseInt(velden[10]);
-				Reproductie reprod = new Reproductie(vraag, antwoord, trefwoorden, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
+				Reproductie reprod = new Reproductie(vraag, antwoord, aantalJuistTrefwoorden, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 				this.voegOpdrachtToe(reprod);
 				break;
 			

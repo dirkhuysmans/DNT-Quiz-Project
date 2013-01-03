@@ -269,10 +269,6 @@ public class QuizFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String geselecteerdType = cmbType.getSelectedItem().toString();
-				String[] tempType = geselecteerdType.split(" ");
-				for (int i = 0; i <= tempType.length; i++) {
-					geselecteerdType += tempType[i];
-				}
 				try {
 					opdrachten = toevoegenOpdrachtController
 							.getOpdrachtenPerType(geselecteerdType);
@@ -288,8 +284,7 @@ public class QuizFrame extends JFrame {
 				jListOpdracht.setModel(model);
 			}
 		});
-		getContentPane().add(cmbType);
-		
+		getContentPane().add(cmbType);		
 
 		JButton btnAlleOpdrachten = new JButton("Alle Opdrachten");
 		btnAlleOpdrachten.addActionListener(new ActionListener() {

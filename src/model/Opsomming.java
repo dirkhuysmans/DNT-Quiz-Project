@@ -18,32 +18,18 @@ import model.enumKlassen.OpdrachtCategorie;
 
 public class Opsomming extends Opdracht implements Valideerbaar{
 	private static final long serialVersionUID = 1L;	
-	private String opsomming;
 	private boolean inJuisteVolgorde;
 
-	public Opsomming(String vraag, String antwoord, String opsomming, boolean juisteVolgorde, String hints,
+	public Opsomming(String vraag, String antwoord, boolean juisteVolgorde, String hints,
 			int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
 		
-		this.opsomming = opsomming;
 		this.inJuisteVolgorde = juisteVolgorde;
 		setOpmaakDatum(new Datum());
-	}
-	
-//	public Opsomming(String vraag, String antwoord, String opsomming, boolean juisteVolgorde, String hints,
-//			int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum) {
-//		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakDatum);
-//		
-//		this.opsomming = opsomming;
-//		this.inJuisteVolgorde = juisteVolgorde;
-//	}
-	
-	public String getOpsomming(){
-		return this.opsomming;
-	}
+	}	
 	
 	public Map<Integer, String>  getLijstOpsomming(){
-		String[] velden = this.opsomming.split(";");
+		String[] velden = this.antwoord.split(";");
 		Map <Integer, String> lijstOpsomming = new HashMap <Integer, String>();
 		int i = 0;
 		for (String opsomming : velden) {

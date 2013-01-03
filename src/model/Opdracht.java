@@ -17,13 +17,13 @@ import model.enumKlassen.OpdrachtCategorie;
  *
  */
 
-public class Opdracht implements Serializable{
+public abstract class Opdracht implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String vraag="";
-	private String antwoord="";
+	protected String antwoord="";
 	private String hints;
 	private int maxAantalPogingen = 1;
 	private Time maxAntwoordTijd= null;

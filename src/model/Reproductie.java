@@ -16,14 +16,12 @@ import model.enumKlassen.OpdrachtCategorie;
 public class Reproductie extends Opdracht{
 		
 	private static final long serialVersionUID = 1L;
-	String trefwoorden;
 	int minAantalJuisteTrefwoorden = 0;
 	
 	/**
 	 * @author Dirk Huysmans
 	 * @param vraag
 	 * @param antwoord
-	 * @param trefwoorden
 	 * @param minAantalTrefWoorden
 	 * @param hints
 	 * @param maxAantalPogingen
@@ -32,30 +30,19 @@ public class Reproductie extends Opdracht{
 	 * @param auteur
 	 * @param opmaakdatum
 	 */
-	public Reproductie(String vraag, String antwoord, String trefwoorden, int minAantalTrefWoorden, 
+	public Reproductie(String vraag, String antwoord, int minAantalTrefWoorden, 
 			String hints, int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur) {
 		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur);
-		// TODO Auto-generated constructor stub
-		this.trefwoorden = trefwoorden;
 		this.minAantalJuisteTrefwoorden = minAantalTrefWoorden;
 		setOpmaakDatum(new Datum());
-	}
-	
-
-	public void setTrefwoorden(String trefwoorden) {
-		this.trefwoorden = trefwoorden;
 	}
 
 	public void setMinAantalJuisteTrefwoorden(int minAantalJuisteTrefwoorden) {
 		this.minAantalJuisteTrefwoorden = minAantalJuisteTrefwoorden;
 	}
 
-	public String getTrefwoorden() {
-		return trefwoorden;
-	}
-
 	public Map<Integer, String>  getLijstTrefwoorden(){
-		String[] velden = this.trefwoorden.split(";");
+		String[] velden = this.antwoord.split(";");
 		Map <Integer, String> lijstTrefwoorden = new HashMap <Integer, String>();
 		int i = 0;
 		for (String trefwoord : velden) {

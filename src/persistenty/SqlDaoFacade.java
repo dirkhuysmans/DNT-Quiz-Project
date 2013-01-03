@@ -10,8 +10,12 @@ import javax.swing.text.StyleContext.SmallAttributeSet;
 import statePattern.InConstructieStatus;
 import statePattern.QuizStatus;
 
+import model.EenvoudigeOpdracht;
+import model.Meerkeuze;
 import model.Opdracht;
+import model.Opsomming;
 import model.Quiz;
+import model.Reproductie;
 
 public class SqlDaoFacade implements DaoFacade {
 	private static final String insertQuiz = "insert into Quiz(Onderwerp, VanLeerjaar, TotLeerjaar, IsTest,IsUniekeDeelname,QuizSatus) values(?,?,?,?,?,?)";
@@ -20,21 +24,21 @@ public class SqlDaoFacade implements DaoFacade {
 	private static final String insertOpdracht = "insert into opdracht(Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
 			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
     private static final String leesAlleOpdrachten = "select * from opdracht";
-    private static final String selecteerEenvoudigeOpdrachten = "select vraag, juisteAntwood, maxAantalPogingen, antwoorHints, maxAntwoordTijd from opdracht, eenvoudigeOpdracht " +
-    		"where opdrachtId = eenvoudigeOpdrachtVolgnr";
-    private static final String selecteerMeerkeuzeOpdrachten = "select vraag, juisteAntwood, maxAantalPogingen, antwoorHints, maxAntwoordTijd from opdracht, meerkeuze " +
-    		"where opdrachtId = eenvoudigeOpdrachtVolgnr";
-    private static final String selecteerOpsommingsOpdrachten = "select vraag, juisteAntwood, maxAantalPogingen, antwoorHints, maxAntwoordTijd from opdracht, opsomming " +
-    		"where opdrachtId = eenvoudigeOpdrachtVolgnr";
-    private static final String selecteerReproductieOpdrachten = "select vraag, juisteAntwood, maxAantalPogingen, antwoorHints, maxAntwoordTijd from opdracht, reproductie " +
-    		"where opdrachtId = eenvoudigeOpdrachtVolgnr";
+    private static final String selecteerEenvoudigeOpdrachten = "select type, vraag, juisteAntwoord, maxAantalPogingen, " +
+    		"antwoorHints, maxAntwoordTijd from opdracht inner join eenvoudigeOpdracht on (opdrachtId = eenvoudigeOpdrachtVolgnr)";
+    private static final String selecteerMeerkeuzeOpdrachten = "select type, vraag, JuisteAntwoord, keuzen, " +
+    		"antwoorHints, maxAantalPogingen, MaxantwoordTijd from opdracht inner join meerkeuze on (opdrachtId = meerkeuzeVolgnr)";
+    private static final String selecteerOpsommingsOpdrachten = "select type, vraag, JuisteAntwoord, inJuisteVolgorde, " +
+    		"antwoorHints, maxAantalPogingen, MaxantwoordTijd from opdracht inner join opsomming on (opdrachtId = opsommingVolgnr)";
+    private static final String selecteerReproductieOpdrachten = "select type, vraag, JuisteAntwoord, minAantalJuisteTrefwoorden, " +
+    		"antwoorHints, maxAantalPogingen, MaxantwoordTijd from opdracht inner join reproductie on (opdrachtId = reproductieVolgnr)";
 	static final String DB_URL = "jdbc:mysql://localhost/QuizDB";
 
 	private Connection maakVerbinding() {
 		try {
 			Connection con = DriverManager.getConnection(DB_URL, "root",
-					"Scoren92");
-//					"Quizdnt123");
+//					"Scoren92");
+					"Quizdnt123");
 			return con;
 		} catch (SQLException sqlEx) {
 			System.out.println(sqlEx.getMessage());
@@ -169,6 +173,10 @@ public class SqlDaoFacade implements DaoFacade {
 			rs = statement.executeQuery(leesAlleOpdrachten);
 			while(rs.next()){
 				opdrachten.add(zetDBOpdrachtOmNaarObject(rs));
+				if (rs.getString("type").equalsIgnoreCase("opsomming")){
+				System.out.println(rs.getString("Vraag") +" "+  rs.getString("JuisteAntwoord") +" "+ rs.getBoolean(3));
+				}
+				else{System.out.println(rs.getString("Vraag") +" "+  rs.getString("JuisteAntwoord"));}
 			}
 			return opdrachten;
 		}catch(SQLException e){
@@ -212,8 +220,21 @@ public class SqlDaoFacade implements DaoFacade {
 	}
 	
 	private Opdracht zetDBOpdrachtOmNaarObject(ResultSet rs) throws SQLException{
-		return new Opdracht(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getInt("MaxAantalPogingen"),
-				rs.getString("antwoorHints"), rs.getTime("MaxAntwoordTijd"));
+		if(rs.getString("type").equalsIgnoreCase("eenvoudigeopdracht")){
+			return new EenvoudigeOpdracht(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getString("antwoorHints"),
+					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
+		}else if (rs.getString("type").equalsIgnoreCase("Meerkeuze")){
+			return new Meerkeuze(rs.getString("Vraag"), rs.getString("JuisteAntwoord"),rs.getString(3), rs.getString("antwoorHints"),
+					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
+		}else if (rs.getString("type").equalsIgnoreCase("Opsomming")){
+			return new Opsomming(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getBoolean(3), rs.getString("antwoorHints"), 
+					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
+		}else if(rs.getString("type").equalsIgnoreCase("Reproductie")){
+			return new Reproductie(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getInt("minAantalJuisteTrefwoorden"), rs.getString("antwoorHints"),
+					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
+		}
+		
+		return null;
 	}
 	
 	/**

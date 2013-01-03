@@ -27,13 +27,6 @@ public class Meerkeuze extends Opdracht implements Valideerbaar{
 		this.meerkeuze = meerkeuze; 
 	}	
 
-	
-	public Meerkeuze(String vraag, String antwoord, String meerkeuze, String hints, int maxAantalPogingen,
-			Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakdatum) {
-		super(vraag, antwoord, hints, maxAantalPogingen, maxAntwoordTijd, categorie, auteur, opmaakdatum);
-		this.meerkeuze = meerkeuze; 
-	}	
-
 	public void setMeerkeuze(String meerkeuze) {
 		this.meerkeuze = meerkeuze;
 	}

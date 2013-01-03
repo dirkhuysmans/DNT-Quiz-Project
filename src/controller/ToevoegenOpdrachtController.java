@@ -27,9 +27,8 @@ public class ToevoegenOpdrachtController {
 		opdrachtCatalogus = new OpdrachtCatalogus();
 	}
 
-	public void maakOpdracht(String vraag, String antwoord, String meerkeuze, String opsomming, boolean juisteVolgorde, String trefwoorden,
-			int minAantalTrefWoorden, String hints, int maxAantalPogingen, Time maxAntwoordTijd,
-			OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum, String type)
+	public void maakOpdracht(String vraag, String antwoord, String meerkeuze, boolean juisteVolgorde, int minAantalTrefWoorden, String hints, 
+			int maxAantalPogingen, Time maxAntwoordTijd, OpdrachtCategorie categorie, Leraar auteur, Datum opmaakDatum, String type)
 			throws IllegalArgumentException, Exception {
 		try {
 			if(type.equals("EevoudigeOpdracht")){
@@ -39,10 +38,10 @@ public class ToevoegenOpdrachtController {
 				opdracht = new Meerkeuze(vraag, antwoord, meerkeuze, hints, maxAantalPogingen,
 						maxAntwoordTijd, categorie, auteur);
 			}else if(type.equals("Opsomming")){
-				opdracht = new Opsomming(vraag, antwoord, opsomming, juisteVolgorde, hints, maxAantalPogingen,
+				opdracht = new Opsomming(vraag, antwoord, juisteVolgorde, hints, maxAantalPogingen,
 						maxAntwoordTijd, categorie, auteur);
 			}else if(type.equals("Reproductie")){
-				opdracht = new Reproductie(vraag, antwoord, trefwoorden, minAantalTrefWoorden, hints, maxAantalPogingen,
+				opdracht = new Reproductie(vraag, antwoord, minAantalTrefWoorden, hints, maxAantalPogingen,
 						maxAntwoordTijd, categorie, auteur);
 			}else{opdracht = null;}
 			

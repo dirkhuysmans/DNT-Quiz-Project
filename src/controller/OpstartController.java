@@ -57,7 +57,7 @@ public class OpstartController {
 			quiz = new QuizFrame(this, toevoegenQuizController,
 					toevoegenOpdrachtController, quizCatalogus,
 					opdrachtCatalogus);
-			quiz.setBounds(20, 20, 900, 600);
+			quiz.setBounds(20, 20, 1100, 600);
 			quiz.setVisible(true);
 			// quiz.MAXIMIZED_BOTH;
 			break;

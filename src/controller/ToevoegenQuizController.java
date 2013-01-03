@@ -25,9 +25,7 @@ public class ToevoegenQuizController {
 			boolean isTest, boolean isUniekeDeelname, String quizStatus,
 			Leraar auteur, List opdrachten) throws IllegalArgumentException,
 			Exception {
-		try {			
-//			INSERT INTO QuizDB.Quiz (quizId, onderwerp, minLeerjaar, maxLeerjaar, isTest, isUniekeDeelname, quizSatus) VALUES ( 1 ,  Hoofdsteden ,  2 , 1, 1,  Afgewerkt );
-			
+		try {						
 			quiz = new Quiz(onderwerp, minLeerJaar, maxLeerjaar, isTest,
 					isUniekeDeelname, quizStatus, auteur);
 			quiz.setQuizOpdracht(opdrachten);

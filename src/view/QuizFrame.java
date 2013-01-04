@@ -44,9 +44,11 @@ public class QuizFrame extends JFrame {
 	List<Opdracht> opdrachten = null;
 	List<Opdracht> gekozenOpdrachten = new ArrayList<Opdracht>();
 	boolean dubbelOpdracht = false;
-	JList jListOpdracht=null;
-	JList jListGekozenOpdracht=null;
+	JList jListOpdracht = null;
+	JList jListGekozenOpdracht = null;
 	DefaultListModel model = null;
+	JComboBox cmbType = null;
+	JComboBox cmbCategorie = null;
 	
 	public QuizFrame(OpstartController opstartController,
 			final ToevoegenQuizController toevoegenQuizController,
@@ -62,9 +64,8 @@ public class QuizFrame extends JFrame {
 		GroupLayout layout = new GroupLayout(container);
 		container.setLayout(layout);
 		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		
-		
+		layout.setAutoCreateContainerGaps(true);		
+
 		JLabel lblOnderwerp = new JLabel("Onderwerp :");
 		lblOnderwerp.setBounds(36, 24, 112, 15);
 		getContentPane().add(lblOnderwerp);
@@ -75,7 +76,7 @@ public class QuizFrame extends JFrame {
 		txtOnderwerp.setBounds(188, 22, 114, 19);
 		getContentPane().add(txtOnderwerp);
 		txtOnderwerp.setColumns(10);
-		
+
 		//
 		// label tekst "Leerjaar :"
 		//
@@ -270,29 +271,33 @@ public class QuizFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String geselecteerdType = cmbType.getSelectedItem().toString();
 				try {
-					opdrachten = toevoegenOpdrachtController
-							.getOpdrachtenPerType(geselecteerdType);
+					if (!geselecteerdType.equals("")) {
+						opdrachten = toevoegenOpdrachtController
+								.getOpdrachtenPerType(geselecteerdType);
+					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				model.clear();
-				for(Opdracht opdracht : opdrachten){
+				for (Opdracht opdracht : opdrachten) {
 					model.addElement(opdracht);
 				}
 				jListOpdracht.clearSelection();
 				jListOpdracht.setModel(model);
 			}
 		});
-		getContentPane().add(cmbType);		
+		getContentPane().add(cmbType);
 
 		JButton btnAlleOpdrachten = new JButton("Alle Opdrachten");
 		btnAlleOpdrachten.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				cmbType.setSelectedItem("");
+				cmbCategorie.setSelectedItem("");
 				opdrachten = toevoegenOpdrachtController.getAlleOpdrachten();
 				model.clear();
-				for(Opdracht opdracht : opdrachten){
+				for (Opdracht opdracht : opdrachten) {
 					model.addElement(opdracht);
 				}
 				jListOpdracht.clearSelection();
@@ -301,15 +306,38 @@ public class QuizFrame extends JFrame {
 		});
 		btnAlleOpdrachten.setBounds(190, 235, 150, 25);
 		getContentPane().add(btnAlleOpdrachten);
-		
 
-		JComboBox cmbCategorie = new JComboBox();
+		cmbCategorie = new JComboBox();
 		cmbCategorie.setBounds(350, 235, 154, 25);
+		List<String> categorieen = toevoegenOpdrachtController.getCategorieen();
 		cmbCategorie.addItem("");
-		cmbCategorie.addItem(OpdrachtCategorie.algemeneKennis);
-		cmbCategorie.addItem(OpdrachtCategorie.FranseTaal);
-		cmbCategorie.addItem(OpdrachtCategorie.NederlandseTaal);
-		cmbCategorie.addItem(OpdrachtCategorie.rekenen);
+		for (String categorie : categorieen) {
+			cmbCategorie.addItem(categorie);
+		}
+		cmbCategorie.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String geselecteerdeCategorie = cmbCategorie.getSelectedItem()
+						.toString();
+				try {
+					if (!geselecteerdeCategorie.equals("")) {
+						opdrachten = toevoegenOpdrachtController
+								.getOpdrachtenPerCategorie(geselecteerdeCategorie);
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				model.clear();
+				if (opdrachten != null) {
+					for (Opdracht opdracht : opdrachten) {
+						model.addElement(opdracht);
+					}
+				}
+				jListOpdracht.clearSelection();
+				jListOpdracht.setModel(model);
+			}
+		});
 		getContentPane().add(cmbCategorie);
 
 		model = new DefaultListModel();

@@ -32,13 +32,15 @@ public class SqlDaoFacade implements DaoFacade {
     		"antwoorHints, maxAantalPogingen, MaxantwoordTijd from opdracht inner join opsomming on (opdrachtId = opsommingVolgnr)";
     private static final String selecteerReproductieOpdrachten = "select type, vraag, JuisteAntwoord, minAantalJuisteTrefwoorden, " +
     		"antwoorHints, maxAantalPogingen, MaxantwoordTijd from opdracht inner join reproductie on (opdrachtId = reproductieVolgnr)";
+    private static final String selecteerOpdrachtenPerCategorie = "select type, vraag, JuisteAntwoord " +
+    		"antwoorHints, maxAantalPogingen, MaxantwoordTijd, categorie from opdracht where categorie = ?";
 	static final String DB_URL = "jdbc:mysql://localhost/QuizDB";
 
 	private Connection maakVerbinding() {
 		try {
 			Connection con = DriverManager.getConnection(DB_URL, "root",
-//					"Scoren92");
-					"Quizdnt123");
+					"Scoren92");
+//					"Quizdnt123");
 			return con;
 		} catch (SQLException sqlEx) {
 			System.out.println(sqlEx.getMessage());
@@ -174,9 +176,9 @@ public class SqlDaoFacade implements DaoFacade {
 			while(rs.next()){
 				opdrachten.add(zetDBOpdrachtOmNaarObject(rs));
 				if (rs.getString("type").equalsIgnoreCase("opsomming")){
-				System.out.println(rs.getString("Vraag") +" "+  rs.getString("JuisteAntwoord") +" "+ rs.getBoolean(3));
+				System.out.println(rs.getString("vraag") +" "+  rs.getString("juisteantwoord") +" "+ rs.getBoolean(3));
 				}
-				else{System.out.println(rs.getString("Vraag") +" "+  rs.getString("JuisteAntwoord"));}
+				else{System.out.println(rs.getString("vraag") +" "+  rs.getString("juisteantwoord"));}
 			}
 			return opdrachten;
 		}catch(SQLException e){
@@ -218,19 +220,43 @@ public class SqlDaoFacade implements DaoFacade {
 			close(rs, statement, con);
 		}
 	}
+
+	@Override
+	public List<Opdracht> selectOpdrachtenPerCategorie(String geselecteerd) throws Exception {
+		Connection con =null;
+		PreparedStatement prepStatement = null;
+		ResultSet rs = null;
+		try{
+			List<Opdracht> opdrachten = new ArrayList<Opdracht>();
+			con = maakVerbinding();
+			prepStatement = con.prepareStatement(selecteerOpdrachtenPerCategorie);
+			geselecteerd.toLowerCase();
+			prepStatement.setString(1, geselecteerd);
+			rs = prepStatement.executeQuery();
+			while(rs.next()){
+				opdrachten.add(zetDBOpdrachtOmNaarObject(rs));
+			}
+			return opdrachten;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+			return null;
+		}finally{
+			close(rs, prepStatement, con);
+		}
+	}
 	
 	private Opdracht zetDBOpdrachtOmNaarObject(ResultSet rs) throws SQLException{
 		if(rs.getString("type").equalsIgnoreCase("eenvoudigeopdracht")){
-			return new EenvoudigeOpdracht(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getString("antwoorHints"),
+			return new EenvoudigeOpdracht(rs.getString("Vraag"), rs.getString(2), rs.getString("antwoorHints"),
 					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
 		}else if (rs.getString("type").equalsIgnoreCase("Meerkeuze")){
-			return new Meerkeuze(rs.getString("Vraag"), rs.getString("JuisteAntwoord"),rs.getString(3), rs.getString("antwoorHints"),
+			return new Meerkeuze(rs.getString("Vraag"), rs.getString(2),rs.getString(3), rs.getString("antwoorHints"),
 					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
 		}else if (rs.getString("type").equalsIgnoreCase("Opsomming")){
-			return new Opsomming(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getBoolean(3), rs.getString("antwoorHints"), 
+			return new Opsomming(rs.getString("Vraag"), rs.getString(2), rs.getBoolean(3), rs.getString("antwoorHints"), 
 					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
 		}else if(rs.getString("type").equalsIgnoreCase("Reproductie")){
-			return new Reproductie(rs.getString("Vraag"), rs.getString("JuisteAntwoord"), rs.getInt("minAantalJuisteTrefwoorden"), rs.getString("antwoorHints"),
+			return new Reproductie(rs.getString("Vraag"), rs.getString(2), rs.getInt(4), rs.getString("antwoorHints"),
 					rs.getInt("MaxAantalPogingen"), rs.getTime("MaxAntwoordTijd"), null, null);	
 		}
 		

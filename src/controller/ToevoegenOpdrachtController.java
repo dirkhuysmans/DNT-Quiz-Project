@@ -79,4 +79,17 @@ public class ToevoegenOpdrachtController {
 		types.add("Reproductie");
 		return types;
 	}
+
+	public List<String> getCategorieen() {
+		List<String> categorieen = new ArrayList<String>();
+		categorieen.add(OpdrachtCategorie.algemeneKennis.toString());
+		categorieen.add(OpdrachtCategorie.NederlandseTaal.toString());
+		categorieen.add(OpdrachtCategorie.FranseTaal.toString());
+		categorieen.add(OpdrachtCategorie.rekenen.toString());
+		return categorieen;
+	}
+
+	public List<Opdracht> getOpdrachtenPerCategorie(String geselecteerdType) throws Exception {
+		return daoFacade.selectOpdrachtenPerCategorie(geselecteerdType);
+	}
 }

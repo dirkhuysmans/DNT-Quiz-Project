@@ -47,4 +47,11 @@ public class TextDaoFacade implements DaoFacade{
 		return null;
 	}
 
+	@Override
+	public List<Opdracht> selectOpdrachtenPerCategorie(String geselecteerdType)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

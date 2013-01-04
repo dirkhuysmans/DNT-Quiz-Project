@@ -21,7 +21,7 @@ public class SqlDaoFacade implements DaoFacade {
 	private static final String insertQuiz = "insert into Quiz(Onderwerp, VanLeerjaar, TotLeerjaar, IsTest,IsUniekeDeelname,QuizSatus) values(?,?,?,?,?,?)";
 	private static final String leesAlleQuizzen = "select * from quiz";
 	private static final String leesQuizzenTotLeerjaar = "select * from quiz where vanLeerjaar <= ?";
-	private static final String insertOpdracht = "insert into opdracht(Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+	private static final String insertOpdracht = "insert into opdracht(opdrachtId, Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
 			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
     private static final String leesAlleOpdrachten = "select * from opdracht";
     private static final String selecteerEenvoudigeOpdrachten = "select type, vraag, juisteAntwoord, maxAantalPogingen, " +
@@ -35,6 +35,15 @@ public class SqlDaoFacade implements DaoFacade {
     private static final String selecteerOpdrachtenPerCategorie = "select type, vraag, JuisteAntwoord " +
     		"antwoorHints, maxAantalPogingen, MaxantwoordTijd, categorie from opdracht where categorie = ?";
 	static final String DB_URL = "jdbc:mysql://localhost/QuizDB";
+//	private static final String insertEenvoudigeOpdracht = "insert into eenvoudigeopdracht(opdrachtId, Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+//			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
+//	private static final String insertOpsommingOpdracht = "insert into opsomming(opdrachtId, Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+//			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
+//	private static final String insertMeerkeuzeOpdracht = "insert into meerkeuze(opdrachtId, Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+//			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
+//	private static final String insertReproductieOpdracht = "insert into reproductie(opdrachtId, Vraag, JuisteAntwoord, maxAantalPogingen, antwoorHints, " +
+//			"MaxAntwoordTijd, Categorie, auteur, type) values (?,?,?,?,?,?,?,?)";
+	static int i = 100;
 
 	private Connection maakVerbinding() {
 		try {
@@ -142,6 +151,7 @@ public class SqlDaoFacade implements DaoFacade {
 		String type = opdracht.getClass().toString();
 		try {			
 			addOpdracht = con.prepareStatement(insertOpdracht);
+			addOpdracht.setInt(1, i);
 			addOpdracht.setString(1, opdracht.getVraag());
 			addOpdracht.setString(2, opdracht.getAntwoord());
 			addOpdracht.setInt(3, opdracht.getMaxAantalPogingen());
@@ -151,6 +161,8 @@ public class SqlDaoFacade implements DaoFacade {
 			addOpdracht.setString(7, opdracht.getAuteur().toString());
 			addOpdracht.setString(8, type);
 			addOpdracht.executeUpdate();
+			createOpdrachtLink(i, opdracht);
+			i++;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -163,6 +175,24 @@ public class SqlDaoFacade implements DaoFacade {
 		}		
 	}
 	
+	private void createOpdrachtLink(int i, Opdracht opdracht) {
+		String type = opdracht.getClass().toString();
+		Connection con = maakVerbinding();
+		PreparedStatement createLink = null;
+		if (type.equals("EenvoudigeOpdracht")){
+//			createLink = con.prepareStatement(sql);
+			
+		}else if (type.equals("Opsomming")){
+			
+		}else if (type.equals("Meerkeuze")){
+			
+		}else if (type.equals("Reproductie")){
+			
+		}else{
+			
+		}
+	}
+
 	@Override
 	public List<Opdracht> selectAlleOpdrachten(){
 		Connection con =null;

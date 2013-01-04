@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,11 @@ public class QuizFrame extends JFrame {
 	DefaultListModel model = null;
 	JComboBox cmbType = null;
 	JComboBox cmbCategorie = null;
-	
+	JScrollPane jOpdrachtPane = null;
+	JScrollPane jGekozenOpdrachtPane = null;
+	JComboBox cmbLeerjaarTot = null;
+	JComboBox cmbLeerjaarVan = null;
+
 	public QuizFrame(OpstartController opstartController,
 			final ToevoegenQuizController toevoegenQuizController,
 			final ToevoegenOpdrachtController toevoegenOpdrachtController,
@@ -64,7 +70,7 @@ public class QuizFrame extends JFrame {
 		GroupLayout layout = new GroupLayout(container);
 		container.setLayout(layout);
 		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);		
+		layout.setAutoCreateContainerGaps(true);
 
 		JLabel lblOnderwerp = new JLabel("Onderwerp :");
 		lblOnderwerp.setBounds(36, 24, 112, 15);
@@ -93,12 +99,22 @@ public class QuizFrame extends JFrame {
 		// combobox leerjaren van
 		// waarden van 1 tot en met 6
 		//
-		final JComboBox cmbLeerjaarVan = new JComboBox();
+		cmbLeerjaarVan = new JComboBox();
 		for (int i = 1; i <= 6; i++) {
 			cmbLeerjaarVan.addItem(i);
 		}
 		cmbLeerjaarVan.setBounds(188, 44, 50, 24);
+//		cmbLeerjaarVan.add
+		cmbLeerjaarVan.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString())<Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString())){
+				cmbLeerjaarTot.setSelectedItem(Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString()));
+				}
+			}
+		});
 		getContentPane().add(cmbLeerjaarVan);
+
 		//
 		// label tekt "Tot"
 		//
@@ -109,14 +125,19 @@ public class QuizFrame extends JFrame {
 		// combobox leerjaren tot
 		// waarden van 1 tot en met 6
 		//
-		final JComboBox cmbLeerjaarTot = new JComboBox();
+		cmbLeerjaarTot = new JComboBox();
+		for (int i = 1; i <= 6; i++) {
+			cmbLeerjaarTot.addItem(i);
+		}
 		cmbLeerjaarTot.setBounds(188, 80, 50, 24);
-		cmbLeerjaarTot.addItem(1);
-		cmbLeerjaarTot.addItem(2);
-		cmbLeerjaarTot.addItem(3);
-		cmbLeerjaarTot.addItem(4);
-		cmbLeerjaarTot.addItem(5);
-		cmbLeerjaarTot.addItem(6);
+		cmbLeerjaarTot.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString())>Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString())){
+				cmbLeerjaarVan.setSelectedItem(Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString()));
+				}
+			}
+		});
 		getContentPane().add(cmbLeerjaarTot);
 		//
 		// label tekst "Test ?"
@@ -350,15 +371,17 @@ public class QuizFrame extends JFrame {
 		jListOpdracht = new JList(model);
 		jListOpdracht.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListOpdracht.setBackground(Color.LIGHT_GRAY);
-		jListOpdracht.setBounds(43, 350, 375, 150);
-		getContentPane().add(jListOpdracht);
+		jOpdrachtPane = new JScrollPane(jListOpdracht);
+		jOpdrachtPane.setBounds(43, 350, 375, 150);
+		container.add(jOpdrachtPane);
 
 		jListGekozenOpdracht = new JList();
 		jListGekozenOpdracht
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jListGekozenOpdracht.setBackground(Color.LIGHT_GRAY);
-		jListGekozenOpdracht.setBounds(616, 350, 375, 150);
-		getContentPane().add(jListGekozenOpdracht);
+		jGekozenOpdrachtPane = new JScrollPane(jListGekozenOpdracht);
+		jGekozenOpdrachtPane.setBounds(616, 350, 375, 150);
+		container.add(jGekozenOpdrachtPane);
 
 		//
 		// button om naar rechts te doen
@@ -460,11 +483,6 @@ public class QuizFrame extends JFrame {
 
 	private void toonMenu() throws Exception {
 		opstartController.execute();
-	}
-
-	public static void main(String[] args) {
-		// PlanningFrame pl = new PlanningFrame(new OpstartController());
-		// pl.setVisible(true);
 	}
 
 	class CheckBoxListener implements ItemListener {

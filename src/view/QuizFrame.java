@@ -104,12 +104,16 @@ public class QuizFrame extends JFrame {
 			cmbLeerjaarVan.addItem(i);
 		}
 		cmbLeerjaarVan.setBounds(188, 44, 50, 24);
-//		cmbLeerjaarVan.add
+		// cmbLeerjaarVan.add
 		cmbLeerjaarVan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString())<Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString())){
-				cmbLeerjaarTot.setSelectedItem(Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString()));
+				if (Integer.parseInt(cmbLeerjaarTot.getSelectedItem()
+						.toString()) < Integer.parseInt(cmbLeerjaarVan
+						.getSelectedItem().toString())) {
+					cmbLeerjaarTot.setSelectedItem(Integer
+							.parseInt(cmbLeerjaarVan.getSelectedItem()
+									.toString()));
 				}
 			}
 		});
@@ -133,8 +137,12 @@ public class QuizFrame extends JFrame {
 		cmbLeerjaarTot.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Integer.parseInt(cmbLeerjaarVan.getSelectedItem().toString())>Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString())){
-				cmbLeerjaarVan.setSelectedItem(Integer.parseInt(cmbLeerjaarTot.getSelectedItem().toString()));
+				if (Integer.parseInt(cmbLeerjaarVan.getSelectedItem()
+						.toString()) > Integer.parseInt(cmbLeerjaarTot
+						.getSelectedItem().toString())) {
+					cmbLeerjaarVan.setSelectedItem(Integer
+							.parseInt(cmbLeerjaarTot.getSelectedItem()
+									.toString()));
 				}
 			}
 		});
@@ -330,10 +338,9 @@ public class QuizFrame extends JFrame {
 
 		cmbCategorie = new JComboBox();
 		cmbCategorie.setBounds(350, 235, 154, 25);
-		List<String> categorieen = toevoegenOpdrachtController.getCategorieen();
 		cmbCategorie.addItem("");
-		for (String categorie : categorieen) {
-			cmbCategorie.addItem(categorie);
+		for (OpdrachtCategorie opdrachtCategorie : OpdrachtCategorie.values()) {
+			cmbCategorie.addItem(opdrachtCategorie.toString());
 		}
 		cmbCategorie.addActionListener(new ActionListener() {
 			@Override
@@ -384,14 +391,12 @@ public class QuizFrame extends JFrame {
 		container.add(jGekozenOpdrachtPane);
 
 		//
-		// button om naar rechts te doen
+		// button om opdrachten te selecteren voor de quiz
 		//
 		JButton btnToTheRight = new JButton(">");
 		btnToTheRight.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// System.out.println(jListOpdracht.getSelectedValue());
-
 				if (!gekozenOpdrachten.isEmpty()
 						&& jListOpdracht.getSelectedValue()
 								.equals(gekozenOpdrachten.get(gekozenOpdrachten

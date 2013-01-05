@@ -42,11 +42,15 @@ public class FillDatabase {
 		opdrachten.add(new Opsomming("som de verschillende maanden van het jaar op", "januari; februari; maart; april; mei; juni; juli; augustus; september; oktober; november",
 				true, null, 1, new Time(0,1,0), OpdrachtCategorie.NederlandseTaal, Leraar.FRANK));
 		opdrachten.add(new Meerkeuze("Hoeveel is 37+(4*9)", "73", "67;71;73;79", null, 1, new Time(0,0,8), OpdrachtCategorie.rekenen, Leraar.TOM));
+		
+		for(Opdracht opdracht : opdrachten){
+			sqlDaoFacade.createOpdracht(opdracht);
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 //		createQuizzen();
-		sqlDaoFacade.createOpdracht(new Meerkeuze("Hoeveel is 37+(4*9)", "73", "67;71;73;79", null, 1, new Time(0,0,8), OpdrachtCategorie.rekenen, Leraar.TOM));
+		createOpdrachten();
 	}
 
 }
